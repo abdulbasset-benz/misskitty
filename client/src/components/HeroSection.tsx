@@ -1,5 +1,5 @@
 import heroImg from "@/assets/heroim.jpg";
-import { Button } from "./button";
+import { Button } from "./ui/button";
 import { Link } from "react-router";
 
 const HeroSection = () => {
@@ -29,7 +29,10 @@ const HeroSection = () => {
         </p>
 
         <div className="pt-10">
-          <Button asChild className="px-10 py-5 text-lg font-semibold tracking-wider rounded-full bg-white text-black border border-transparent hover:bg-transparent hover:text-white hover:border-white transition-all duration-300 shadow-lg">
+          <Button
+            asChild
+            className="px-10 py-5 text-lg font-semibold tracking-wider rounded-full bg-white text-black border border-transparent hover:bg-transparent hover:text-white hover:border-white transition-all duration-300 shadow-lg"
+          >
             <Link to="/collection">See our Collection</Link>
           </Button>
         </div>
