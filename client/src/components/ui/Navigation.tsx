@@ -20,26 +20,26 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-16 items-center justify-between">
+    <nav className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ">
+      <div className="container mx-auto flex h-16 items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="flex items-center space-x-2">
-          <div className="h-8 w-8 rounded-md bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-lg">L</span>
+        <Link to="/" className="flex items-center space-x-2 pl-2">
+          <div className="size-10 rounded-md bg-primary flex items-center justify-center">
+            <span className="text-primary-foreground font-bold text-lg font-aboreto">MK</span>
           </div>
-          <span className="font-bold text-xl">Logo</span>
+          <span className="font-bold text-xl font-aboreto">Miss Kitty</span>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <NavigationMenu>
+          <NavigationMenu className='font-poppins'>
             <NavigationMenuList>
               <NavigationMenuItem>
                 <Link
                   to="/"
                   className={cn(
-                    "group inline-flex h-10 w-max items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-                    isActive('/') && "bg-accent text-accent-foreground"
+                    "group inline-flex h-12 w-max items-center justify-center rounded-md px-4 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                    isActive('/') && " text-accent-foreground bg-grey-100"
                   )}
                 >
                   Home
@@ -48,11 +48,11 @@ const Navigation = () => {
 
               <NavigationMenuItem>
                 <NavigationMenuTrigger
-                  className={cn(
-                    isActive('/products') && "bg-accent text-accent-foreground"
+                  className={cn( "capitalize font-medium text-lg",
+                    isActive('/products') && ""
                   )}
                 >
-                  Products
+                  Collection
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
@@ -60,10 +60,10 @@ const Navigation = () => {
                       <NavigationMenuLink asChild>
                         <Link
                           to="/products"
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md hover:bg-yellow-200"
                         >
                           <div className="mb-2 mt-4 text-lg font-medium">
-                            All Products
+                            All collection
                           </div>
                           <p className="text-sm leading-tight text-muted-foreground">
                             Browse our complete product catalog
@@ -74,16 +74,16 @@ const Navigation = () => {
                     <div className="grid gap-1">
                       <Link
                         to="/products/electronics"
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-yellow-100 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
-                        <div className="text-sm font-medium leading-none">Electronics</div>
+                        <div className="text-sm font-medium leading-none">Dresses</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Latest gadgets and devices
                         </p>
                       </Link>
                       <Link
                         to="/products/clothing"
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-yellow-100 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="text-sm font-medium leading-none">Clothing</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -92,7 +92,7 @@ const Navigation = () => {
                       </Link>
                       <Link
                         to="/products/home"
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-yellow-100 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                       >
                         <div className="text-sm font-medium leading-none">Home & Garden</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
@@ -107,13 +107,13 @@ const Navigation = () => {
           </NavigationMenu>
 
           {/* CTA Button */}
-          <Button asChild>
-            <Link to="/contact">Get Started</Link>
+          <Button asChild className="px-10 py-5 text-lg font-semibold tracking-wider rounded-full bg-white text-black border border-transparent hover:bg-transparent hover:text-white hover:border-white transition-all duration-300 shadow-lg font-aboreto">
+            <Link to="/contact">Contact Us</Link>
           </Button>
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden">
+        <div className="md:hidden px-4">
           <Sheet>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
@@ -121,7 +121,7 @@ const Navigation = () => {
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-              <nav className="flex flex-col gap-4 mt-8">
+              <nav className="flex flex-col gap-4 mt-8 p-3">
                 <Link
                   to="/"
                   className={cn(
