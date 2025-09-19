@@ -20,7 +20,7 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ">
+    <nav className="fixed top-0 z-50 w-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 ">
       <div className="container mx-auto flex h-16 items-center justify-between">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2 pl-2">
@@ -107,9 +107,9 @@ const Navigation = () => {
           </NavigationMenu>
 
           {/* CTA Button */}
-          <Button asChild className="px-10 py-5 text-lg font-semibold tracking-wider rounded-full bg-white text-black border border-transparent hover:bg-transparent hover:text-white hover:border-white transition-all duration-300 shadow-lg font-aboreto">
+          {/* <Button asChild className="px-10 py-5 text-lg font-semibold tracking-wider rounded-full bg-white text-black border border-transparent hover:bg-transparent hover:text-white hover:border-white transition-all duration-300 shadow-lg font-aboreto">
             <Link to="/contact">Contact Us</Link>
-          </Button>
+          </Button> */}
         </div>
 
         {/* Mobile Navigation */}
@@ -132,7 +132,7 @@ const Navigation = () => {
                   Home
                 </Link>
                 <div className="flex flex-col gap-2">
-                  <span className="text-lg font-semibold">Products</span>
+                  <span className="text-lg font-semibold">Collection</span>
                   <div className="pl-4 flex flex-col gap-2">
                     <Link
                       to="/products"
@@ -140,29 +140,10 @@ const Navigation = () => {
                     >
                       All Products
                     </Link>
-                    <Link
-                      to="/products/electronics"
-                      className="text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      Electronics
-                    </Link>
-                    <Link
-                      to="/products/clothing"
-                      className="text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      Clothing
-                    </Link>
-                    <Link
-                      to="/products/home"
-                      className="text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      Home & Garden
-                    </Link>
+                    
                   </div>
                 </div>
-                <Button asChild className="mt-4">
-                  <Link to="/contact">Get Started</Link>
-                </Button>
+                
               </nav>
             </SheetContent>
           </Sheet>
