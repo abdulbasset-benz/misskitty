@@ -1,5 +1,3 @@
-// ProductCard.tsx
-import React from 'react';
 
 type ProductCardProps = {
   id: number;
@@ -44,7 +42,6 @@ const ProductCard = ({
           }`}
         />
 
-        {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-2">
           {!inStock && (
             <span className="bg-gray-800 text-white text-xs font-medium px-2 py-1 rounded">
