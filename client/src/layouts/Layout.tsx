@@ -1,4 +1,5 @@
 import Navigation from "@/components/Navigation"
+import Footer from "@/components/Footer"
 import { Outlet } from "react-router"
 const Layout = () => {
   return (
@@ -7,7 +8,7 @@ const Layout = () => {
       <main>
         <Outlet /> {/* This renders the current page */}
       </main>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   )
 }
