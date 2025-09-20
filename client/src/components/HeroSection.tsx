@@ -28,7 +28,7 @@ const HeroSection = () => {
 
 
        <p className="mt-8 text-lg md:text-2xl text-[#D1D5DB] max-w-2xl leading-relaxed">
-  Exclusive gowns crafted for <span className="text-[#F5DEB3] font-semibold">timeless sophistication</span>.
+  Exclusive gowns crafted for <span className="text-[#f7ce83] font-semibold">timeless sophistication</span>.
 </p>
 
 
