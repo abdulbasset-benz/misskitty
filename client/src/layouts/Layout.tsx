@@ -6,7 +6,7 @@ const Layout = () => {
     <div className="app-layout">
       <Navigation />
       <main>
-        <Outlet /> {/* This renders the current page */}
+        <Outlet />
       </main>
       <Footer />
     </div>
