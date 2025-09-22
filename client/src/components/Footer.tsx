@@ -65,71 +65,11 @@ const Footer = () => {
                   Products
                 </a>
               </li>
-              <li>
-                <a 
-                  href="#" 
-                  className="text-gray-300 hover:text-[#f7ce83] transition-colors"
-                >
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#" 
-                  className="text-gray-300 hover:text-[#f7ce83] transition-colors"
-                >
-                  Contact
-                </a>
-              </li>
+              
             </ul>
           </div>
 
-          {/* Categories */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4">Categories</h4>
-            <ul className="space-y-2">
-              <li>
-                <a 
-                  href="#" 
-                  className="text-gray-300 hover:text-[#f7ce83] transition-colors"
-                >
-                  Evening Gowns
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#" 
-                  className="text-gray-300 hover:text-[#f7ce83] transition-colors"
-                >
-                  Cocktail Dresses
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#" 
-                  className="text-gray-300 hover:text-[#f7ce83] transition-colors"
-                >
-                  Casual Wear
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#" 
-                  className="text-gray-300 hover:text-[#f7ce83] transition-colors"
-                >
-                  Special Occasions
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="#" 
-                  className="text-gray-300 hover:text-[#f7ce83] transition-colors"
-                >
-                  New Arrivals
-                </a>
-              </li>
-            </ul>
-          </div>
+         
         </div>
 
         {/* Contact Info */}
@@ -141,7 +81,7 @@ const Footer = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <div>
-                <p className="text-sm text-gray-300">Oran, Algeria</p>
+                <p className="text-sm text-gray-300">Algiers, Algeria</p>
               </div>
             </div>
             
@@ -173,17 +113,7 @@ const Footer = () => {
             <p className="text-sm text-gray-400">
               © 2024 Miss Kitty. All rights reserved.
             </p>
-            <div className="flex space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-[#f7ce83] transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" className="text-gray-400 hover:text-[#f7ce83] transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-[#f7ce83] transition-colors">
-                Return Policy
-              </a>
-            </div>
+            
           </div>
         </div>
       </div>
