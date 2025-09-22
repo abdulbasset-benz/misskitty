@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import productsRoutes from './routes/productsRoutes.js';
 
 dotenv.config();
 const app = express();
@@ -13,6 +14,10 @@ app.use(
 );
 
 app.use(express.json());
+
+app.use("uploads", express.static("uploads"));
+
+app.use('/api/products', productsRoutes);
 
 app.get("/", (req, res) => {
   res.send( "Server is running 🚀" );
