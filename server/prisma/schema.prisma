@@ -15,30 +15,30 @@ datasource db {
 }
 
 model Product {
-  id          Int       @id @default(autoincrement())
+  id          Int   @id @default(autoincrement())
   name        String
   image       String?
   description String?
   price       Float
-  stock       Int       @default(0)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  stock       Int @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   orders      Order[]
 }
 
 model Order {
-  id              Int     @id @default(autoincrement())
-  customerName    String
-  customerPhone   String
-  customerAddress String
+  id Int @id @default(autoincrement())
+  CustomerName String
+  CustomerPhone String
+  CustomerAddress String
 
   productId Int
-  product   Product @relation(fields: [productId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
 }
 
 model Admin {
-  id       Int    @id @default(autoincrement())
-  email    String @unique
+  id Int @id @default(autoincrement())
+  email String @unique
   password String
 }
