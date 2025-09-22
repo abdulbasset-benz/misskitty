@@ -1,16 +1,13 @@
-import { Link, useLocation } from 'react-router';
-import { Button } from '@/components/ui/button';
+import { Link, useLocation } from "react-router";
+import { Button } from "@/components/ui/button";
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Menu } from 'lucide-react';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/navigation-menu";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const Navigation = () => {
   const location = useLocation();
@@ -25,21 +22,23 @@ const Navigation = () => {
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2 pl-2">
           <div className="size-10 rounded-md bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-lg font-aboreto">MK</span>
+            <span className="text-primary-foreground font-bold text-lg font-aboreto">
+              MK
+            </span>
           </div>
           <span className="font-bold text-xl font-aboreto">Miss Kitty</span>
         </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-6">
-          <NavigationMenu className='font-poppins'>
+          <NavigationMenu className="font-poppins">
             <NavigationMenuList>
               <NavigationMenuItem>
                 <Link
                   to="/"
                   className={cn(
                     "group inline-flex h-12 w-max items-center justify-center rounded-md px-4 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
-                    isActive('/') && " text-accent-foreground bg-grey-100"
+                    isActive("/") && " text-accent-foreground bg-grey-100"
                   )}
                 >
                   Home
@@ -47,69 +46,18 @@ const Navigation = () => {
               </NavigationMenuItem>
 
               <NavigationMenuItem>
-                <NavigationMenuTrigger
-                  className={cn( "capitalize font-medium text-lg",
-                    isActive('/products') && ""
+                <Link
+                  to="/products"
+                  className={cn(
+                    "group inline-flex h-12 w-max items-center justify-center rounded-md px-4 py-2 text-lg font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus:text-accent-foreground focus:outline-none disabled:pointer-events-none disabled:opacity-50",
+                    isActive("/") && " text-accent-foreground bg-grey-100"
                   )}
                 >
                   Collection
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <div className="grid gap-3 p-6 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-                    <div className="row-span-3">
-                      <NavigationMenuLink asChild>
-                        <Link
-                          to="/products"
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md hover:bg-yellow-200"
-                        >
-                          <div className="mb-2 mt-4 text-lg font-medium">
-                            All collection
-                          </div>
-                          <p className="text-sm leading-tight text-muted-foreground">
-                            Browse our complete product catalog
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </div>
-                    <div className="grid gap-1">
-                      <Link
-                        to="/products/electronics"
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-yellow-100 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="text-sm font-medium leading-none">Dresses</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Latest gadgets and devices
-                        </p>
-                      </Link>
-                      <Link
-                        to="/products/clothing"
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-yellow-100 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="text-sm font-medium leading-none">Clothing</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Fashion and apparel
-                        </p>
-                      </Link>
-                      <Link
-                        to="/products/home"
-                        className="block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-yellow-100 hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                      >
-                        <div className="text-sm font-medium leading-none">Home & Garden</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Everything for your home
-                        </p>
-                      </Link>
-                    </div>
-                  </div>
-                </NavigationMenuContent>
+                </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
-
-          {/* CTA Button */}
-          {/* <Button asChild className="px-10 py-5 text-lg font-semibold tracking-wider rounded-full bg-white text-black border border-transparent hover:bg-transparent hover:text-white hover:border-white transition-all duration-300 shadow-lg font-aboreto">
-            <Link to="/contact">Contact Us</Link>
-          </Button> */}
         </div>
 
         {/* Mobile Navigation */}
@@ -126,7 +74,7 @@ const Navigation = () => {
                   to="/"
                   className={cn(
                     "flex items-center py-2 text-lg font-semibold",
-                    isActive('/') && "text-primary"
+                    isActive("/") && "text-primary"
                   )}
                 >
                   Home
@@ -140,10 +88,8 @@ const Navigation = () => {
                     >
                       All Products
                     </Link>
-                    
                   </div>
                 </div>
-                
               </nav>
             </SheetContent>
           </Sheet>

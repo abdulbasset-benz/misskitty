@@ -1,3 +1,4 @@
+import { Link, useNavigate } from "react-router";
 
 type ProductCardProps = {
   id: number;
@@ -24,9 +25,11 @@ const ProductCard = ({
   onSale = false,
   onOrderClick,
 }: ProductCardProps) => {
+  const navigate = useNavigate();
   
   const handleOrderClick = () => {
     if (inStock && onOrderClick) {
+      navigate('/orders');
       onOrderClick(id);
     }
   };
@@ -109,9 +112,7 @@ const ProductCard = ({
           </div>
           
           {/* Order Button */}
-          <button
-            onClick={handleOrderClick}
-            disabled={!inStock}
+          <Link to={inStock ? "/orders" : "#"}
             className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
               inStock
                 ? 'bg-[#f7ce83] text-black hover:bg-[#f5c563] hover:shadow-md transform hover:scale-105 active:scale-95'
@@ -119,7 +120,7 @@ const ProductCard = ({
             }`}
           >
             {inStock ? 'Order Now' : 'Unavailable'}
-          </button>
+          </Link>
         </div>
       </div>
     </div>

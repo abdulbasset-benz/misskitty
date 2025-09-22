@@ -20,31 +20,32 @@ const HeroSection = () => {
       {/* Content */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 z-10">
         <h1 className="text-5xl md:text-8xl font-bold uppercase tracking-wide text-[#F8FAFC] drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
-  Grace in Every Detail
-</h1>
+          Grace in Every Detail
+        </h1>
 
         {/* Accent underline */}
         <div className="mt-5 h-[4px] w-32 bg-gradient-to-r from-[#D4AF37] via-[#F5DEB3] to-[#D4AF37] rounded-full shadow-lg"></div>
 
-
-       <p className="mt-8 text-lg md:text-2xl text-[#D1D5DB] max-w-2xl leading-relaxed">
-  Exclusive gowns crafted for <span className="text-[#f7ce83] font-semibold">timeless sophistication</span>.
-</p>
-
+        <p className="mt-8 text-lg md:text-2xl text-[#D1D5DB] max-w-2xl leading-relaxed">
+          Exclusive gowns crafted for{" "}
+          <span className="text-[#f7ce83] font-semibold">
+            timeless sophistication
+          </span>
+          .
+        </p>
 
         {/* CTA */}
         <div className="pt-12">
           <Button
-  asChild
-  className="px-10 py-5 text-lg font-semibold tracking-wider rounded-full 
+            asChild
+            className="px-10 py-5 text-lg font-semibold tracking-wider rounded-full 
              bg-[#D4AF37] text-black 
              border border-transparent 
              hover:bg-transparent hover:text-[#F8FAFC] hover:border-[#D4AF37] 
              transition-all duration-500 shadow-xl backdrop-blur-sm"
->
-  <Link to="/collection">See our Collection</Link>
-</Button>
-
+          >
+            <Link to="/products">See our Collection</Link>
+          </Button>
         </div>
 
         {/* Carousel at the bottom */}
