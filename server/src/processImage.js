@@ -3,12 +3,16 @@ import sharp from "sharp";
 import path from "path";
 import fs from "fs";
 
-// Temp storage in memory (before processing with Sharp)
+// Multer config: store in memory
 const storage = multer.memoryStorage();
 export const upload = multer({ storage });
 
-// Process image and save it
+// Process a single Multer file
 export const processImage = async (file, folder = "uploads") => {
+  if (!file) {
+    throw new Error("No file provided");
+  }
+
   const filename = `product-${Date.now()}-${file.originalname}`;
   const outputPath = path.join(folder, filename);
 
@@ -17,7 +21,6 @@ export const processImage = async (file, folder = "uploads") => {
     fs.mkdirSync(folder, { recursive: true });
   }
 
-  // Resize & save
   await sharp(file.buffer)
     .resize(600, 600, { fit: "cover" })
     .toFormat("jpeg")
@@ -25,4 +28,19 @@ export const processImage = async (file, folder = "uploads") => {
     .toFile(outputPath);
 
   return filename;
+};
+
+// Process multiple Multer files
+export const processMultipleImages = async (files, folder = "uploads") => {
+  if (!Array.isArray(files) || files.length === 0) {
+    return [];
+  }
+
+  const processedImages = await Promise.all(
+    files.map(async (file) => {
+      return await processImage(file, folder);
+    })
+  );
+
+  return processedImages;
 };
