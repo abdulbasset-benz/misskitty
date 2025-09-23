@@ -8,18 +8,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Product {
-  id          Int   @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
   price       Float
-  stock       Int @default(0)
+  stock       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -28,24 +27,24 @@ model Product {
 }
 
 model ProductImage {
-  in Int @id @default(autoincrement())
-  url String
+  id        Int     @id @default(autoincrement())  // Changed from 'in' to 'id'
+  filename  String                                 // Changed from 'url' to 'filename'
   productId Int
-  product Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 }
 
 model Order {
-  id Int @id @default(autoincrement())
-  CustomerName String
-  CustomerPhone String
+  id              Int     @id @default(autoincrement())
+  CustomerName    String
+  CustomerPhone   String
   CustomerAddress String
 
   productId Int
-  product Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id])
 }
 
 model Admin {
-  id Int @id @default(autoincrement())
-  email String @unique
+  id       Int    @id @default(autoincrement())
+  email    String @unique
   password String
 }
