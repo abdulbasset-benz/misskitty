@@ -6,15 +6,11 @@ export const createProduct = async (req, res) => {
   try {
     const { name, description, price, stock } = req.body;
 
-    console.log('Request body:', req.body);
-    console.log('Request files:', req.files);
-
     let processedImages = [];
 
     // Handle uploaded files (via Multer)
     if (req.files && req.files.length > 0) {
       processedImages = await processMultipleImages(req.files);
-      console.log('Processed images:', processedImages);
     }
 
     if (processedImages.length === 0) {
@@ -31,23 +27,22 @@ export const createProduct = async (req, res) => {
         price: parseFloat(price),
         stock: parseInt(stock),
         images: {
-          create: processedImages.map((imageFilename) => ({ 
-            filename: imageFilename // Use 'filename' field as per your schema
+          create: processedImages.map((imageFilename) => ({
+            filename: imageFilename,
           })),
         },
       },
       include: { images: true },
     });
 
-    // Transform response to include full URLs
     const productWithUrls = {
       ...product,
-      images: product.images.map(image => ({
+      images: product.images.map((image) => ({
         id: image.id,
         filename: image.filename,
-        url: `${req.protocol}://${req.get('host')}/uploads/${image.filename}`,
-        productId: image.productId
-      }))
+        url: `${req.protocol}://${req.get("host")}/uploads/${image.filename}`,
+        productId: image.productId,
+      })),
     };
 
     res.status(201).json(productWithUrls);
@@ -62,28 +57,42 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   try {
+    console.log("🔍 Fetching products...");
+
     const products = await prisma.product.findMany({
       include: { images: true },
     });
-    
-    // Transform the data to include full URLs for images
-    const productsWithUrls = products.map(product => ({
-      ...product,
-      images: product.images.map(image => ({
-        id: image.id,
-        filename: image.filename,
-        url: `${req.protocol}://${req.get('host')}/uploads/${image.filename}`,
-        productId: image.productId
-      }))
-    }));
-    
+
+    console.log(`📦 Found ${products.length} products`);
+    console.log("Raw products data:", JSON.stringify(products, null, 2));
+
+    const productsWithUrls = products.map((product) => {
+      const transformedProduct = {
+        ...product,
+        images: product.images.map((image) => {
+          const fullUrl = `${req.protocol}://${req.get("host")}/uploads/${
+            image.filename
+          }`;
+          console.log(`Image filename: ${image.filename} -> URL: ${fullUrl}`);
+
+          return {
+            id: image.id,
+            filename: image.filename,
+            url: fullUrl,
+            productId: image.productId,
+          };
+        }),
+      };
+
+      return transformedProduct;
+    });
+
     res.json(productsWithUrls);
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error("❌ Error fetching products:", error);
     res.status(500).json({
       message: "Failed to retrieve products",
       error: error.message,
     });
   }
 };
-
