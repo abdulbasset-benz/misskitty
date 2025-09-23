@@ -5,38 +5,41 @@ import fs from "fs";
 
 // Multer config: store in memory
 const storage = multer.memoryStorage();
-export const upload = multer({ 
+export const upload = multer({
   storage,
   fileFilter: (req, file, cb) => {
-    // Only allow image files
-    if (file.mimetype.startsWith('image/')) {
+    if (file.mimetype.startsWith("image/")) {
       cb(null, true);
     } else {
-      cb(new Error('Only image files are allowed'), false);
+      cb(new Error("Only image files are allowed"), false);
     }
   },
-  limits: {
-    fileSize: 5 * 1024 * 1024 // 5MB limit
-  }
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
 });
 
-// Process a single Multer file
-export const processImage = async (file, folder = "uploads") => {
-  if (!file) {
-    throw new Error("No file provided");
-  }
+// Absolute uploads folder at project root
+const uploadDir = path.join(process.cwd(), "uploads");
 
-  // Get the file extension from original name, but default to jpg
+// Process a single Multer file
+export const processImage = async (file) => {
+  if (!file) throw new Error("No file provided");
+
+  // Get extension from original name
   const originalExt = path.extname(file.originalname).toLowerCase();
-  const baseName = path.basename(file.originalname, originalExt);
-  
-  // Always save as .jpg since we're converting to JPEG
-  const filename = `product-${Date.now()}-${baseName}.jpg`;
-  const outputPath = path.join(folder, filename);
+
+  // Sanitize filename
+  const safeBaseName = path
+    .basename(file.originalname, originalExt)
+    .replace(/\s+/g, "-")
+    .replace(/[^a-zA-Z0-9-_]/g, "");
+
+  // Always save as JPG
+  const filename = `product-${Date.now()}-${safeBaseName}.jpg`;
+  const outputPath = path.join(uploadDir, filename);
 
   // Ensure uploads folder exists
-  if (!fs.existsSync(folder)) {
-    fs.mkdirSync(folder, { recursive: true });
+  if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
   }
 
   try {
@@ -54,27 +57,16 @@ export const processImage = async (file, folder = "uploads") => {
   }
 };
 
-// Process multiple Multer files
-export const processMultipleImages = async (files, folder = "uploads") => {
-  if (!Array.isArray(files) || files.length === 0) {
-    console.log("No files to process");
-    return [];
-  }
+// Process multiple files
+export const processMultipleImages = async (files) => {
+  if (!Array.isArray(files) || files.length === 0) return [];
 
   console.log(`Processing ${files.length} images...`);
 
-  try {
-    const processedImages = await Promise.all(
-      files.map(async (file, index) => {
-        console.log(`Processing image ${index + 1}/${files.length}: ${file.originalname}`);
-        return await processImage(file, folder);
-      })
-    );
-
-    console.log(`✅ Successfully processed ${processedImages.length} images`);
-    return processedImages;
-  } catch (error) {
-    console.error(`❌ Error processing multiple images: ${error.message}`);
-    throw error;
-  }
+  return Promise.all(
+    files.map((file, index) => {
+      console.log(`Processing image ${index + 1}/${files.length}: ${file.originalname}`);
+      return processImage(file);
+    })
+  );
 };
