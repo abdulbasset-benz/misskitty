@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import productsRoutes from "./routes/productsRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
+
 
 dotenv.config();
 
@@ -29,6 +31,8 @@ const uploadDir = path.join(process.cwd(), "uploads");
 app.use("/uploads", express.static(uploadDir));
 
 app.use("/api", productsRoutes);
+app.use("/api/admin", adminRoutes);
+
 
 app.get("/", (req, res) => {
   res.send("Server is running 🚀");
