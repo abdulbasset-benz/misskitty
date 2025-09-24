@@ -50,7 +50,9 @@ const Products = () => {
     <div className="mt-20">
       {/* Hero Section */}
       <div className="bg-[#F0ECE6] flex flex-col items-center justify-center w-full p-6 gap-4">
-        <h1 className="font-aboreto font-bold text-4xl md:text-7xl">Our Collection</h1>
+        <h1 className="font-aboreto font-bold text-4xl md:text-7xl">
+          Our Collection
+        </h1>
         <p className="text-center font-poppins text-gray-500 max-w-2xl">
           Explore our curated selection of luxury gowns and dresses, each piece
           meticulously crafted to celebrate your unique style and grace.
@@ -143,6 +145,7 @@ const Products = () => {
                   description={product.description}
                   price={product.price}
                   inStock={product.stock > 0}
+                  images={product.images} // Pass all images for lightbox
                 />
               ))}
             </div>
