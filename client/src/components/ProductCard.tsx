@@ -1,4 +1,11 @@
 import { Link } from "react-router";
+import LightboxModal from "@/components/LightboxModal";
+
+type ProductImage = {
+  id: number;
+  filename: string;
+  url: string;
+};
 
 type ProductCardProps = {
   id: number;
@@ -7,6 +14,7 @@ type ProductCardProps = {
   description: string;
   price: number;
   inStock?: boolean;
+  images?: ProductImage[]; // Add images prop for lightbox
 };
 
 const ProductCard = ({
@@ -16,36 +24,66 @@ const ProductCard = ({
   description,
   price,
   inStock = true,
+  images = [], // Default empty array
 }: ProductCardProps) => {
+  // Transform images for lightbox
+  const lightboxImages = images.map((img) => ({
+    id: img.id,
+    url: img.url,
+    alt: name,
+  }));
+
   return (
     <div className="relative bg-white rounded-lg shadow-sm overflow-hidden w-full max-w-xs mx-auto border border-gray-200">
       {/* Image Container */}
-      <Link
-        to={inStock ? `/products/${id}` : "#"}
-        className="relative bg-gray-100 block h-64 w-full overflow-hidden"
-      >
-        <img
-          src={image}
-          alt={name}
-          className={`h-full w-full object-cover ${
-            !inStock ? "grayscale opacity-75" : ""
-          }`}
-        />
+      <div className="relative bg-gray-100 h-64 w-full overflow-hidden">
+        {/* If we have multiple images, use lightbox. Otherwise, link to product page */}
+        {lightboxImages.length > 1 ? (
+          <LightboxModal
+            images={lightboxImages}
+            trigger={
+              <button className="w-full h-full">
+                <img
+                  src={image}
+                  alt={name}
+                  className={`h-full w-full object-cover hover:scale-105 transition-transform duration-300 ${
+                    !inStock ? "grayscale opacity-75" : ""
+                  }`}
+                />
+              </button>
+            }
+          />
+        ) : (
+          <Link
+            to={inStock ? `/products/${id}` : "#"}
+            className="block h-full w-full"
+          >
+            <img
+              src={image}
+              alt={name}
+              className={`h-full w-full object-cover hover:scale-105 transition-transform duration-300 ${
+                !inStock ? "grayscale opacity-75" : ""
+              }`}
+            />
+          </Link>
+        )}
 
         {/* Stock badge */}
         {!inStock && (
           <>
-            <span className="absolute top-3 left-3 bg-gray-800 text-white text-xs font-medium px-2 py-1 rounded">
+            <span className="absolute top-3 left-3 bg-gray-800 text-white text-xs font-medium px-2 py-1 rounded z-10">
               OUT OF STOCK
             </span>
-            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+            <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10">
               <span className="text-white font-semibold text-lg">
                 Out of Stock
               </span>
             </div>
           </>
         )}
-      </Link>
+
+        
+      </div>
 
       {/* Card Content */}
       <div className="p-4 flex flex-col gap-3">
