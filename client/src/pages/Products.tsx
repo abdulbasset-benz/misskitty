@@ -1,3 +1,7 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+import ProductCard from "@/components/ProductCard";
 import {
   Accordion,
   AccordionContent,
@@ -15,70 +19,33 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-import ProductCard from "@/components/ProductCard";
-import dress1 from "@/assets/dress-1.jpg";
-import dress2 from "@/assets/dress-2.jpg";
-import dress3 from "@/assets/dress-3.jpg";
-import dress4 from "@/assets/dress-4.jpg";
-
+type ProductImage = {
+  id: number;
+  filename: string;
+  url: string;
+};
 
 type Product = {
   id: number;
-  image: string;
   name: string;
-  category: string;
+  description: string;
   price: number;
-  originalPrice?: number;
-  inStock?: boolean;
-  isNew?: boolean;
-  onSale?: boolean;
+  stock: number;
+  images: ProductImage[];
 };
 
 const Products = () => {
-  const featuredProducts: Product[] = [
-    {
-      id: 1,
-      image: dress1,
-      name: "Elegant Evening Gown",
-      category: "Evening Wear",
-      price: 20000,
-      originalPrice: 399,
-      inStock: true,
-      isNew: true,
-      onSale: true,
-    },
-    {
-      id: 2,
-      image: dress2,
-      name: "Classic Cocktail Dress",
-      category: "Cocktail",
-      price: 30000,
-      inStock: true,
-      isNew: false,
-      onSale: false,
-    },
-    {
-      id: 3,
-      image: dress3,
-      name: "Vintage Inspired Gown",
-      category: "Vintage",
-      price: 15000,
-      originalPrice: 299,
-      inStock: false,
-      isNew: false,
-      onSale: true,
-    },
-    {
-      id: 4,
-      image: dress4,
-      name: "Modern Chic Dress",
-      category: "Modern",
-      price: 25000,
-      inStock: true,
-      isNew: true,
-      onSale: false,
-    },
-  ];
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get<Product[]>("http://localhost:5000/api/products")
+      .then((res) => setProducts(res.data))
+      .catch((err) => console.error("❌ Error fetching products:", err))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <div className="mt-20">
       {/* Hero Section */}
@@ -90,97 +57,96 @@ const Products = () => {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 w-[90%] mx-auto my-10">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-6 w-[90%] mx-auto my-10 h-screen">
         {/* Filters Sidebar */}
-        <aside className=" md:col-span-1 font-poppins  md:sticky">
+        <aside className="md:col-span-1 font-poppins md:sticky">
           <div className="border border-[#F0ECE6] p-4 rounded-lg">
+            <h2 className="font-bold text-lg mb-4">Filters</h2>
+            <Accordion type="multiple">
+              {/* Size */}
+              <AccordionItem value="size">
+                <AccordionTrigger>Size</AccordionTrigger>
+                <AccordionContent>
+                  <div className="flex flex-wrap gap-2">
+                    {["XS", "S", "M", "L", "XL", "2X"].map((size) => (
+                      <button
+                        key={size}
+                        className="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-100 text-sm"
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
 
-          <h2 className="font-bold  text-lg mb-4">Filters</h2>
+              {/* Availability */}
+              <AccordionItem value="availability">
+                <AccordionTrigger>Availability</AccordionTrigger>
+                <AccordionContent>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Checkbox id="in-stock" />
+                    <Label htmlFor="in-stock">Available</Label>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Checkbox id="out-stock" />
+                    <Label htmlFor="out-stock">Out of Stock</Label>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
 
-          <Accordion type="multiple">
-            {/* Size */}
-            <AccordionItem value="size">
-              <AccordionTrigger>Size</AccordionTrigger>
-              <AccordionContent>
-                <div className="flex flex-wrap gap-2">
-                  {["XS", "S", "M", "L", "XL", "2X"].map((size) => (
-                    <button
-                      key={size}
-                      className="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-100 text-sm"
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
+              {/* Category */}
+              <AccordionItem value="category">
+                <AccordionTrigger>Category</AccordionTrigger>
+                <AccordionContent>
+                  <Select>
+                    <SelectTrigger className="w-full">
+                      <SelectValue placeholder="Choose category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="shirts">Shirts</SelectItem>
+                      <SelectItem value="tshirts">T-Shirts</SelectItem>
+                      <SelectItem value="jackets">Jackets</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </AccordionContent>
+              </AccordionItem>
 
-            {/* Availability */}
-            <AccordionItem value="availability">
-              <AccordionTrigger>Availability</AccordionTrigger>
-              <AccordionContent>
-                <div className="flex items-center space-x-2 mb-2">
-                  <Checkbox id="in-stock" />
-                  <Label htmlFor="in-stock">Available (450)</Label>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <Checkbox id="out-stock" />
-                  <Label htmlFor="out-stock">Out of Stock (18)</Label>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Category */}
-            <AccordionItem value="category">
-              <AccordionTrigger>Category</AccordionTrigger>
-              <AccordionContent>
-                <Select>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Choose category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="shirts">Shirts</SelectItem>
-                    <SelectItem value="tshirts">T-Shirts</SelectItem>
-                    <SelectItem value="jackets">Jackets</SelectItem>
-                  </SelectContent>
-                </Select>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Price Range */}
-            <AccordionItem value="price">
-              <AccordionTrigger>Price Range</AccordionTrigger>
-              <AccordionContent>
-                <div className="p-2">
-                  <Slider defaultValue={[100]} max={500} step={10} />
-                  <p className="text-sm text-gray-500 mt-2">Up to $500</p>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+              {/* Price Range */}
+              <AccordionItem value="price">
+                <AccordionTrigger>Price Range</AccordionTrigger>
+                <AccordionContent>
+                  <div className="p-2">
+                    <Slider defaultValue={[100]} max={500} step={10} />
+                    <p className="text-sm text-gray-500 mt-2">Up to $500</p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
         </aside>
 
         {/* Products Grid */}
         <section className="md:col-span-3">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            {featuredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                image={product.image}
-                name={product.name}
-                category={product.category}
-                price={product.price}
-                originalPrice={product.originalPrice}
-                inStock={product.inStock}
-                isNew={product.isNew}
-                onSale={product.onSale}
-              />
-            ))}
-          </div>
-
-          
+          {loading ? (
+            <p>Loading products...</p>
+          ) : products.length === 0 ? (
+            <p>No products found.</p>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+              {products.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  id={product.id}
+                  image={product.images[0]?.url || "/placeholder.png"}
+                  name={product.name}
+                  description={product.description}
+                  price={product.price}
+                  inStock={product.stock > 0}
+                />
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </div>

@@ -1,5 +1,5 @@
+// src/App.tsx
 import { BrowserRouter, Routes, Route } from "react-router";
-import "./App.css";
 import Layout from "@/layouts/Layout";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
@@ -10,21 +10,36 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AddProductsPage from "./pages/admin/AddProductsPage";
+import AdminLogin from "./pages/admin/AdminLogin";
+import RequireAdminAuth from "./components/RequireAdminAuth";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
       <Routes>
-        {/* public routes */}
+        {/* Public routes */}
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="products" element={<Products />} />
           <Route path="orders" element={<OrderPage />} />
+          <Route path="products/:id" element={<ProductDetails />} />
+
         </Route>
 
-        {/* admin routes */}
-        <Route path="/admin" element={<AdminLayout />}>
+        {/* Admin login (public) */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+
+        {/* Protected Admin routes */}
+        <Route
+          path="/admin"
+          element={
+            <RequireAdminAuth>
+              <AdminLayout />
+            </RequireAdminAuth>
+          }
+        >
           <Route index element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="products/add" element={<AddProductsPage />} />
