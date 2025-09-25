@@ -7,14 +7,16 @@ type ProductImage = {
   url: string;
 };
 
-type ProductCardProps = {
+export type ProductCardProps = {
   id: number;
   image: string;
   name: string;
   description: string;
   price: number;
-  inStock?: boolean;
-  images?: ProductImage[]; // Add images prop for lightbox
+  inStock: boolean;
+  images: ProductImage[];
+  sizes?: string[];
+  colors?: string[];
 };
 
 const ProductCard = ({
@@ -24,7 +26,9 @@ const ProductCard = ({
   description,
   price,
   inStock = true,
-  images = [], // Default empty array
+  images = [],
+  sizes = [],
+  colors = [],
 }: ProductCardProps) => {
   // Transform images for lightbox
   const lightboxImages = images.map((img) => ({
@@ -37,7 +41,6 @@ const ProductCard = ({
     <div className="relative bg-white rounded-lg shadow-sm overflow-hidden w-full max-w-xs mx-auto border border-gray-200">
       {/* Image Container */}
       <div className="relative bg-gray-100 h-64 w-full overflow-hidden">
-        {/* If we have multiple images, use lightbox. Otherwise, link to product page */}
         {lightboxImages.length > 1 ? (
           <LightboxModal
             images={lightboxImages}
@@ -81,8 +84,6 @@ const ProductCard = ({
             </div>
           </>
         )}
-
-        
       </div>
 
       {/* Card Content */}
@@ -98,6 +99,38 @@ const ProductCard = ({
         <p className="text-gray-600 font-poppins line-clamp-2 text-sm">
           {description}
         </p>
+
+        {/* Sizes */}
+        {sizes.length > 0 && (
+          <div className="flex flex-wrap gap-2 text-xs">
+            <span className="font-medium text-gray-700">Sizes:</span>
+            {sizes.map((size, idx) => (
+              <span
+                key={idx}
+                className="px-2 py-1 border rounded-md text-gray-700 bg-gray-50"
+              >
+                {size}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Colors */}
+        {colors.length > 0 && (
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-gray-700 text-xs">Colors:</span>
+            <div className="flex gap-2">
+              {colors.map((color, idx) => (
+                <span
+                  key={idx}
+                  title={color}
+                  className="w-5 h-5 rounded-full border"
+                  style={{ backgroundColor: color }}
+                ></span>
+              ))}
+            </div>
+          </div>
+        )}
 
         <span
           className={`text-lg font-semibold ${
