@@ -5,10 +5,26 @@ import path from "path";
 
 const uploadDir = path.join(process.cwd(), "uploads");
 
+// Helper function to parse array from string or return array as-is
+const parseArrayField = (field) => {
+  if (!field) return [];
+  if (Array.isArray(field)) return field;
+  if (typeof field === 'string') {
+    try {
+      // Try to parse as JSON first
+      return JSON.parse(field);
+    } catch {
+      // If not JSON, split by comma and clean up
+      return field.split(',').map(item => item.trim()).filter(item => item.length > 0);
+    }
+  }
+  return [];
+};
+
 // 🟢 CREATE product
 export const createProduct = async (req, res) => {
   try {
-    const { name, description, price, stock } = req.body;
+    const { name, description, price, stock, sizes, colors } = req.body;
 
     let processedImages = [];
 
@@ -20,12 +36,18 @@ export const createProduct = async (req, res) => {
       return res.status(400).json({ message: "At least one image is required" });
     }
 
+    // Parse sizes and colors arrays
+    const sizesArray = parseArrayField(sizes);
+    const colorsArray = parseArrayField(colors);
+
     const product = await prisma.product.create({
       data: {
         name,
         description,
         price: parseFloat(price),
         stock: parseInt(stock),
+        sizes: sizesArray,
+        colors: colorsArray,
         images: {
           create: processedImages.map((imageFilename) => ({
             filename: imageFilename,
@@ -103,7 +125,7 @@ export const getProductById = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, stock } = req.body;
+    const { name, description, price, stock, sizes, colors } = req.body;
 
     let processedImages = [];
 
@@ -120,6 +142,10 @@ export const updateProduct = async (req, res) => {
       await prisma.image.deleteMany({ where: { productId: parseInt(id) } });
     }
 
+    // Parse sizes and colors arrays
+    const sizesArray = parseArrayField(sizes);
+    const colorsArray = parseArrayField(colors);
+
     const updatedProduct = await prisma.product.update({
       where: { id: parseInt(id) },
       data: {
@@ -127,6 +153,8 @@ export const updateProduct = async (req, res) => {
         description,
         price: parseFloat(price),
         stock: parseInt(stock),
+        sizes: sizesArray,
+        colors: colorsArray,
         ...(processedImages.length > 0 && {
           images: {
             create: processedImages.map((filename) => ({ filename })),
