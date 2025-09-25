@@ -10,9 +10,11 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders";
 import AddProductsPage from "./pages/admin/AddProductsPage";
+import AdminProductDetail from "./pages/admin/AdminProductDetail";
 import AdminLogin from "./pages/admin/AdminLogin";
 import RequireAdminAuth from "./components/RequireAdminAuth";
 import ProductDetails from "./pages/ProductDetails";
+import EditProductPage from "./pages/admin/AdminProductEdit";
 
 function App() {
   return (
@@ -25,7 +27,6 @@ function App() {
           <Route path="products" element={<Products />} />
           <Route path="orders" element={<OrderPage />} />
           <Route path="products/:id" element={<ProductDetails />} />
-
         </Route>
 
         {/* Admin login (public) */}
@@ -43,6 +44,8 @@ function App() {
           <Route index element={<AdminDashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="products/add" element={<AddProductsPage />} />
+          <Route path="products/edit/:id" element={<EditProductPage />} />
+          <Route path="products/:id" element={<AdminProductDetail />} />
           <Route path="orders" element={<AdminOrders />} />
         </Route>
       </Routes>
