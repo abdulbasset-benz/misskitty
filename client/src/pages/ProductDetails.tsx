@@ -184,24 +184,26 @@ Price: ${product.price} DA
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-[#fefaf2]">
-      {/* Enhanced Breadcrumb */}
+      {/* Enhanced Breadcrumb - Mobile Responsive */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <nav className="flex items-center space-x-2 text-sm text-gray-500 font-light">
-            <span className="hover:text-gray-700 transition-colors">Home</span>
-            <ChevronRight className="w-4 h-4" />
-            <span className="hover:text-gray-700 transition-colors">Collection</span>
-            <ChevronRight className="w-4 h-4" />
-            <span className="text-[#d4b985] font-medium">{product.name}</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
+          <nav className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-500 font-light flex-wrap">
+            <span className="hover:text-gray-700 transition-colors py-1">Home</span>
+            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="hover:text-gray-700 transition-colors py-1">Collection</span>
+            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
+            <span className="text-[#d4b985] font-medium py-1 truncate max-w-[150px] sm:max-w-none">
+              {product.name}
+            </span>
           </nav>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Enhanced Images Section */}
-          <div className="space-y-6">
-            <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
+          {/* Enhanced Images Section - Mobile Responsive */}
+          <div className="space-y-4 sm:space-y-6">
+            <div className="relative aspect-square bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
               {lightboxImages.length > 0 ? (
                 <LightboxModal
                   images={lightboxImages}
@@ -225,33 +227,33 @@ Price: ${product.price} DA
                 />
               )}
               
-              {/* Navigation Arrows */}
+              {/* Navigation Arrows - Mobile Responsive */}
               {product.images.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white"
+                    className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-70 sm:opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white"
                   >
-                    <ChevronLeft className="w-5 h-5 text-gray-700" />
+                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white"
+                    className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-70 sm:opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white"
                   >
-                    <ChevronRight className="w-5 h-5 text-gray-700" />
+                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
                   </button>
                 </>
               )}
             </div>
 
-            {/* Enhanced Thumbnail Gallery */}
+            {/* Enhanced Thumbnail Gallery - Mobile Responsive */}
             {product.images.length > 1 && (
-              <div className="flex gap-4 overflow-x-auto pb-4">
+              <div className="flex gap-2 sm:gap-4 overflow-x-auto pb-2 sm:pb-4">
                 {product.images.map((img, index) => (
                   <button
                     key={img.id}
                     onClick={() => setSelectedImageIndex(index)}
-                    className={`flex-shrink-0 w-24 h-24 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                    className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-lg sm:rounded-xl overflow-hidden border-2 transition-all duration-300 ${
                       index === selectedImageIndex
                         ? "border-[#d4b985] shadow-md"
                         : "border-gray-200 hover:border-gray-300"
@@ -268,31 +270,31 @@ Price: ${product.price} DA
             )}
           </div>
 
-          {/* Enhanced Product Info Section - More Compact */}
-          <div className="space-y-6">
+          {/* Enhanced Product Info Section - Mobile Responsive */}
+          <div className="space-y-4 sm:space-y-6">
             {/* Header */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div className="flex items-start justify-between">
-                <h1 className="text-4xl lg:text-5xl font-serif font-light text-gray-900 leading-tight">
+                <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-serif font-light text-gray-900 leading-tight pr-2">
                   {product.name}
                 </h1>
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all duration-300"
+                  className="text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all duration-300 flex-shrink-0"
                 >
-                  <Heart className="w-6 h-6" />
+                  <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
                 </Button>
               </div>
             </div>
 
             {/* Price & Stock */}
-            <div className="space-y-3">
-              <div className="flex items-baseline gap-4">
-                <p className="text-4xl font-light text-gray-900">
+            <div className="space-y-2 sm:space-y-3">
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
+                <p className="text-3xl sm:text-4xl font-light text-gray-900">
                   DZD {product.price.toLocaleString()}
                 </p>
-                <div className={`px-3 py-1 rounded-full text-sm font-medium ${
+                <div className={`px-3 py-1 rounded-full text-sm font-medium w-fit ${
                   product.stock > 0
                     ? "bg-green-50 text-green-700 border border-green-200"
                     : "bg-red-50 text-red-700 border border-red-200"
@@ -302,73 +304,73 @@ Price: ${product.price} DA
               </div>
             </div>
 
-            {/* Compact Features in One Line */}
-            <div className="flex items-center justify-between py-4 border-y gap-2 border-gray-100">
-              <div className="flex items-center gap-3 flex-col text-center">
-                <Truck className="w-5 h-5 text-[#d4b985]" />
+            {/* Features - Responsive Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 py-4 border-y border-gray-100">
+              <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 p-3 bg-gray-50 rounded-lg">
+                <Truck className="w-5 h-5 text-[#d4b985] flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-900">Complimentary Shipping</p>
-                  <p className="text-xs text-gray-500">Free delivery for orders above DZD 10,000</p>
+                  <p className="text-xs text-gray-500 hidden sm:block">Free delivery for orders above DZD 10,000</p>
                 </div>
               </div>
 
-              <div className="flex items-center flex-col gap-3 text-center">
-                <Shield className="w-5 h-5 text-[#d4b985]" />
+              <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 p-3 bg-gray-50 rounded-lg">
+                <Shield className="w-5 h-5 text-[#d4b985] flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-900">Secure Payment</p>
-                  <p className="text-xs text-gray-500">Pay upon delivery with 100% security</p>
+                  <p className="text-xs text-gray-500 hidden sm:block">Pay upon delivery with 100% security</p>
                 </div>
               </div>
 
-              <div className="flex items-center flex-col gap-3 text-center">
-                <Heart className="w-5 h-5 text-[#d4b985]" />
+              <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 p-3 bg-gray-50 rounded-lg">
+                <Heart className="w-5 h-5 text-[#d4b985] flex-shrink-0" />
                 <div>
                   <p className="text-sm font-medium text-gray-900">Crafted with Care</p>
-                  <p className="text-xs text-gray-500">Hand-finished details and premium materials</p>
+                  <p className="text-xs text-gray-500 hidden sm:block">Hand-finished details and premium materials</p>
                 </div>
               </div>
             </div>
 
-            {/* Order Button - Moved Up */}
-            <div className="pt-4">
+            {/* Order Button - Mobile Responsive */}
+            <div className="pt-2 sm:pt-4">
               <Dialog open={isOrderModalOpen} onOpenChange={setIsOrderModalOpen}>
                 <DialogTrigger asChild>
                   <Button
                     disabled={product.stock <= 0}
-                    className={`w-full py-6 text-lg font-light tracking-wide transition-all duration-500 ${
+                    className={`w-full py-4 sm:py-6 text-base sm:text-lg font-light tracking-wide transition-all duration-500 ${
                       product.stock > 0
                         ? "bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black hover:from-[#c0a46c] hover:to-[#e0b972] shadow-lg hover:shadow-xl"
                         : "bg-gray-200 text-gray-500 cursor-not-allowed"
                     }`}
                   >
-                    <ShoppingBag className="w-5 h-5 mr-3" />
+                    <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
                     {product.stock > 0 ? "Order Now" : "Out of Stock"}
                   </Button>
                 </DialogTrigger>
 
-                <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-white/95 backdrop-blur-sm border-0 shadow-2xl">
+                <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-white/95 backdrop-blur-sm border-0 shadow-2xl mx-2 sm:mx-auto">
                   <DialogHeader className="text-center">
                     <div className="w-16 h-1 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] mx-auto mb-4"></div>
-                    <DialogTitle className="text-3xl font-serif font-light">
+                    <DialogTitle className="text-2xl sm:text-3xl font-serif font-light">
                       Complete Your Order
                     </DialogTitle>
-                    <p className="text-gray-600 font-light mt-2">
+                    <p className="text-gray-600 font-light mt-2 text-sm sm:text-base">
                       Provide your details to secure this exquisite piece
                     </p>
                   </DialogHeader>
 
-                  <form onSubmit={handleSubmitOrder} className="space-y-8 mt-6">
+                  <form onSubmit={handleSubmitOrder} className="space-y-6 sm:space-y-8 mt-4 sm:mt-6">
                     {/* Product Preview */}
-                    <div className="bg-gradient-to-br from-gray-50 to-white p-6 rounded-2xl border border-gray-100">
-                      <div className="flex items-center gap-6">
+                    <div className="bg-gradient-to-br from-gray-50 to-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-100">
+                      <div className="flex items-center gap-4 sm:gap-6">
                         <img
                           src={product.images[0]?.url || "/placeholder.png"}
                           alt={product.name}
-                          className="w-20 h-20 object-cover rounded-xl shadow-md"
+                          className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg sm:rounded-xl shadow-md"
                         />
                         <div className="flex-1">
-                          <h3 className="font-serif text-xl text-gray-900">{product.name}</h3>
-                          <p className="text-2xl font-light text-gray-900 mt-1">
+                          <h3 className="font-serif text-lg sm:text-xl text-gray-900">{product.name}</h3>
+                          <p className="text-xl sm:text-2xl font-light text-gray-900 mt-1">
                             DZD {product.price.toLocaleString()}
                           </p>
                         </div>
@@ -376,30 +378,30 @@ Price: ${product.price} DA
                     </div>
 
                     {/* Form Sections */}
-                    <div className="space-y-6">
+                    <div className="space-y-4 sm:space-y-6">
                       <div>
-                        <h4 className="font-serif text-lg text-gray-900 mb-4">Personal Information</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Personal Information</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div className="space-y-2">
-                            <Label htmlFor="userName" className="text-gray-700 font-medium">Full Name *</Label>
+                            <Label htmlFor="userName" className="text-gray-700 font-medium text-sm sm:text-base">Full Name *</Label>
                             <Input
                               id="userName"
                               value={orderForm.userName}
                               onChange={(e) => handleInputChange("userName", e.target.value)}
                               placeholder="Enter your full name"
-                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300"
+                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base"
                               required
                             />
                           </div>
 
                           <div className="space-y-2">
-                            <Label htmlFor="phoneNumber" className="text-gray-700 font-medium">Phone Number *</Label>
+                            <Label htmlFor="phoneNumber" className="text-gray-700 font-medium text-sm sm:text-base">Phone Number *</Label>
                             <Input
                               id="phoneNumber"
                               value={orderForm.phoneNumber}
                               onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
                               placeholder="0555 123 456"
-                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300"
+                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base"
                               required
                             />
                           </div>
@@ -407,86 +409,86 @@ Price: ${product.price} DA
                       </div>
 
                       <div>
-                        <h4 className="font-serif text-lg text-gray-900 mb-4">Delivery Details</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Delivery Details</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div className="space-y-2">
-                            <Label htmlFor="wilaya" className="text-gray-700 font-medium">Wilaya *</Label>
+                            <Label htmlFor="wilaya" className="text-gray-700 font-medium text-sm sm:text-base">Wilaya *</Label>
                             <Select
                               value={orderForm.wilaya}
                               onValueChange={(value) => handleInputChange("wilaya", value)}
                               required
                             >
-                              <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300">
+                              <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
                                 <SelectValue placeholder="Select your wilaya" />
                               </SelectTrigger>
                               <SelectContent>
                                 {ALGERIAN_WILAYAS.map((wilaya) => (
-                                  <SelectItem key={wilaya} value={wilaya}>{wilaya}</SelectItem>
+                                  <SelectItem key={wilaya} value={wilaya} className="text-sm sm:text-base">{wilaya}</SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
                           </div>
                           
                           <div className="space-y-2">
-                            <Label htmlFor="commune" className="text-gray-700 font-medium">Commune *</Label>
+                            <Label htmlFor="commune" className="text-gray-700 font-medium text-sm sm:text-base">Commune *</Label>
                             <Input
                               id="commune"
                               value={orderForm.commune}
                               onChange={(e) => handleInputChange("commune", e.target.value)}
                               placeholder="Enter your commune"
-                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300"
+                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base"
                               required
                             />
                           </div>
                         </div>
 
-                        <div className="space-y-2 mt-4">
-                          <Label htmlFor="address" className="text-gray-700 font-medium">Full Address *</Label>
+                        <div className="space-y-2 mt-3 sm:mt-4">
+                          <Label htmlFor="address" className="text-gray-700 font-medium text-sm sm:text-base">Full Address *</Label>
                           <Textarea
                             id="address"
                             value={orderForm.address}
                             onChange={(e) => handleInputChange("address", e.target.value)}
                             placeholder="Enter your complete delivery address"
-                            className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 min-h-[100px]"
+                            className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
                             required
                           />
                         </div>
                       </div>
 
                       <div>
-                        <h4 className="font-serif text-lg text-gray-900 mb-4">Dress Specifications</h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Dress Specifications</h4>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                           <div className="space-y-2">
-                            <Label htmlFor="size" className="text-gray-700 font-medium">Size *</Label>
+                            <Label htmlFor="size" className="text-gray-700 font-medium text-sm sm:text-base">Size *</Label>
                             <Select
                               value={orderForm.size}
                               onValueChange={(value) => handleInputChange("size", value)}
                               required
                             >
-                              <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300">
+                              <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
                                 <SelectValue placeholder="Select size" />
                               </SelectTrigger>
                               <SelectContent>
                                 {availableSizes.map((size) => (
-                                  <SelectItem key={size} value={size}>{size}</SelectItem>
+                                  <SelectItem key={size} value={size} className="text-sm sm:text-base">{size}</SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
                           </div>
 
                           <div className="space-y-2">
-                            <Label htmlFor="color" className="text-gray-700 font-medium">Color *</Label>
+                            <Label htmlFor="color" className="text-gray-700 font-medium text-sm sm:text-base">Color *</Label>
                             <Select
                               value={orderForm.color}
                               onValueChange={(value) => handleInputChange("color", value)}
                               required
                             >
-                              <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300">
+                              <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
                                 <SelectValue placeholder="Select color" />
                               </SelectTrigger>
                               <SelectContent>
                                 {availableColors.map((color) => (
-                                  <SelectItem key={color} value={color}>{color}</SelectItem>
+                                  <SelectItem key={color} value={color} className="text-sm sm:text-base">{color}</SelectItem>
                                 ))}
                               </SelectContent>
                             </Select>
@@ -497,11 +499,11 @@ Price: ${product.price} DA
 
                     <Button
                       type="submit"
-                      className="w-full py-4 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black text-lg font-light hover:from-[#c0a46c] hover:to-[#e0b972] transition-all duration-500 shadow-lg"
+                      className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black text-base sm:text-lg font-light hover:from-[#c0a46c] hover:to-[#e0b972] transition-all duration-500 shadow-lg"
                     >
                       {isSubmitting ? (
                         <div className="flex items-center gap-2">
-                          <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black"></div>
+                          <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-black"></div>
                           Processing Your Order...
                         </div>
                       ) : (
@@ -517,24 +519,24 @@ Price: ${product.price} DA
               </Dialog>
             </div>
 
-            {/* Description - Moved Below Button */}
-            <div className="space-y-4 pt-6">
+            {/* Description - Mobile Responsive */}
+            <div className="space-y-3 sm:space-y-4 pt-4 sm:pt-6">
               <h3 className="text-lg font-serif text-gray-900">Description</h3>
-              <p className="text-gray-600 leading-relaxed font-light">
+              <p className="text-gray-600 leading-relaxed font-light text-sm sm:text-base">
                 {product.description}
               </p>
             </div>
 
-            {/* Available Options */}
-            <div className="space-y-6 pt-6">
+            {/* Available Options - Mobile Responsive */}
+            <div className="space-y-4 sm:space-y-6 pt-4 sm:pt-6">
               {availableSizes.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-serif text-gray-900 mb-3">Available Sizes</h3>
-                  <div className="flex flex-wrap gap-3">
+                  <h3 className="text-lg font-serif text-gray-900 mb-2 sm:mb-3">Available Sizes</h3>
+                  <div className="flex flex-wrap gap-2 sm:gap-3">
                     {availableSizes.map((size) => (
                       <div
                         key={size}
-                        className="px-4 py-2 border border-gray-200 rounded-lg bg-white hover:border-[#d4b985] transition-all duration-300 cursor-pointer"
+                        className="px-3 py-2 border border-gray-200 rounded-lg bg-white hover:border-[#d4b985] transition-all duration-300 cursor-pointer text-sm sm:text-base"
                       >
                         <span className="text-gray-700 font-medium">{size}</span>
                       </div>
@@ -545,12 +547,12 @@ Price: ${product.price} DA
 
               {availableColors.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-serif text-gray-900 mb-3">Color Options</h3>
-                  <div className="flex flex-wrap gap-3">
+                  <h3 className="text-lg font-serif text-gray-900 mb-2 sm:mb-3">Color Options</h3>
+                  <div className="flex flex-wrap gap-2 sm:gap-3">
                     {availableColors.map((color) => (
                       <div
                         key={color}
-                        className="px-4 py-2 border border-gray-200 rounded-lg bg-white hover:border-[#d4b985] transition-all duration-300 cursor-pointer"
+                        className="px-3 py-2 border border-gray-200 rounded-lg bg-white hover:border-[#d4b985] transition-all duration-300 cursor-pointer text-sm sm:text-base"
                       >
                         <span className="text-gray-700 font-medium">{color}</span>
                       </div>
