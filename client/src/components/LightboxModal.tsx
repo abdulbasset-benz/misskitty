@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 import { ChevronLeft, ChevronRight, X, ZoomIn, ZoomOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -62,7 +62,14 @@ const LightboxModal = ({
       <DialogContent
         className="max-w-[95vw] max-h-[95vh] w-full h-full p-0 bg-black/95 border-none"
         onKeyDown={handleKeyDown}
+        aria-describedby="lightbox-description"
       >
+        <DialogTitle className="sr-only">
+          Image Gallery - {currentImage.alt || `Image ${currentIndex + 1}`}
+        </DialogTitle>
+        <div id="lightbox-description" className="sr-only">
+          Image gallery viewer. Use arrow keys to navigate between images, escape to close, or click the zoom button to zoom in and out.
+        </div>
         <div className="relative w-full h-full flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-4 bg-black/50">
