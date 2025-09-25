@@ -9,13 +9,16 @@ const uploadDir = path.join(process.cwd(), "uploads");
 const parseArrayField = (field) => {
   if (!field) return [];
   if (Array.isArray(field)) return field;
-  if (typeof field === 'string') {
+  if (typeof field === "string") {
     try {
       // Try to parse as JSON first
       return JSON.parse(field);
     } catch {
       // If not JSON, split by comma and clean up
-      return field.split(',').map(item => item.trim()).filter(item => item.length > 0);
+      return field
+        .split(",")
+        .map((item) => item.trim())
+        .filter((item) => item.length > 0);
     }
   }
   return [];
@@ -33,7 +36,9 @@ export const createProduct = async (req, res) => {
     }
 
     if (processedImages.length === 0) {
-      return res.status(400).json({ message: "At least one image is required" });
+      return res
+        .status(400)
+        .json({ message: "At least one image is required" });
     }
 
     // Parse sizes and colors arrays
@@ -68,7 +73,9 @@ export const createProduct = async (req, res) => {
     res.status(201).json(productWithUrls);
   } catch (error) {
     console.error("❌ Error creating product:", error);
-    res.status(500).json({ message: "Failed to create product", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to create product", error: error.message });
   }
 };
 
@@ -90,7 +97,9 @@ export const getProducts = async (req, res) => {
     res.json(productsWithUrls);
   } catch (error) {
     console.error("❌ Error fetching products:", error);
-    res.status(500).json({ message: "Failed to retrieve products", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to retrieve products", error: error.message });
   }
 };
 
@@ -117,7 +126,9 @@ export const getProductById = async (req, res) => {
     res.json(productWithUrls);
   } catch (error) {
     console.error("❌ Error fetching product:", error);
-    res.status(500).json({ message: "Failed to retrieve product", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to retrieve product", error: error.message });
   }
 };
 
@@ -125,21 +136,32 @@ export const getProductById = async (req, res) => {
 export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, stock, sizes, colors } = req.body;
+    const { name, description, price, stock, sizes, colors, removedImages } =
+      req.body;
+
+    // Handle removed images first
+    if (removedImages) {
+      const removedIds = Array.isArray(removedImages)
+        ? removedIds
+        : [removedImages];
+
+      for (const imgId of removedIds) {
+        const image = await prisma.image.findUnique({
+          where: { id: parseInt(imgId) },
+        });
+
+        if (image) {
+          const filePath = path.join(uploadDir, image.filename);
+          if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+          await prisma.image.delete({ where: { id: parseInt(imgId) } });
+        }
+      }
+    }
 
     let processedImages = [];
 
     if (req.files && req.files.length > 0) {
       processedImages = await processMultipleImages(req.files);
-
-      // remove old images from disk + db
-      const oldImages = await prisma.image.findMany({ where: { productId: parseInt(id) } });
-      oldImages.forEach((img) => {
-        const filePath = path.join(uploadDir, img.filename);
-        if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-      });
-
-      await prisma.image.deleteMany({ where: { productId: parseInt(id) } });
     }
 
     // Parse sizes and colors arrays
@@ -164,6 +186,7 @@ export const updateProduct = async (req, res) => {
       include: { images: true },
     });
 
+    // Add image URLs
     const productWithUrls = {
       ...updatedProduct,
       images: updatedProduct.images.map((image) => ({
@@ -175,7 +198,10 @@ export const updateProduct = async (req, res) => {
     res.json(productWithUrls);
   } catch (error) {
     console.error("❌ Error updating product:", error);
-    res.status(500).json({ message: "Failed to update product", error: error.message });
+    res.status(500).json({
+      message: "Failed to update product",
+      error: error.message,
+    });
   }
 };
 
@@ -185,7 +211,9 @@ export const deleteProduct = async (req, res) => {
     const { id } = req.params;
 
     // delete images from disk
-    const images = await prisma.image.findMany({ where: { productId: parseInt(id) } });
+    const images = await prisma.image.findMany({
+      where: { productId: parseInt(id) },
+    });
     images.forEach((img) => {
       const filePath = path.join(uploadDir, img.filename);
       if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
@@ -197,6 +225,8 @@ export const deleteProduct = async (req, res) => {
     res.json({ message: "Product deleted successfully" });
   } catch (error) {
     console.error("❌ Error deleting product:", error);
-    res.status(500).json({ message: "Failed to delete product", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to delete product", error: error.message });
   }
 };

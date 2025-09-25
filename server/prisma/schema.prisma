@@ -45,6 +45,43 @@ model Order {
   product   Product @relation(fields: [productId], references: [id])
 }
 
+model Wilaya {
+  id       Int      @id
+  code     String
+  name     String
+  nameAr   String
+  dairas   Daira[]
+}
+
+model Daira {
+  id        Int      @id @default(autoincrement())
+  name      String
+  nameAr    String
+  wilayaId  Int
+  wilaya    Wilaya   @relation(fields: [wilayaId], references: [id])
+  communes  Commune[]
+}
+
+model Commune {
+  id        Int     @id
+  name      String
+  nameAr    String
+  dairaId   Int
+  daira     Daira   @relation(fields: [dairaId], references: [id])
+}
+
+model City {
+  id              Int    @id @default(autoincrement())
+  commune_name    String
+  commune_name_ascii String
+  daira_name      String
+  daira_name_ascii String
+  wilaya_code     String
+  wilaya_name     String
+  wilaya_name_ascii String
+}
+
+
 model Admin {
   id       Int    @id @default(autoincrement())
   email    String @unique
