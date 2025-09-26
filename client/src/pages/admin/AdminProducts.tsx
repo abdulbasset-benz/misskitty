@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { Trash2, Edit, Eye } from "lucide-react";
 
 type Image = {
@@ -29,6 +29,7 @@ const ProductsPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleteLoading, setDeleteLoading] = useState<number | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchProducts();
@@ -54,24 +55,77 @@ const ProductsPage = () => {
   };
 
   const handleDeleteProduct = async (productId: number) => {
-    if (!window.confirm("Are you sure you want to delete this product? This action cannot be undone.")) {
-      return;
+  console.log('Delete button clicked for product ID:', productId);
+  
+  if (!window.confirm("Are you sure you want to delete this product? This action cannot be undone.")) {
+    console.log('Delete cancelled by user');
+    return;
+  }
+
+  console.log('User confirmed deletion, proceeding...');
+
+  try {
+    setDeleteLoading(productId);
+    console.log('Making DELETE request to:', `http://localhost:5000/api/products/${productId}`);
+    
+    const response = await axios.delete(`http://localhost:5000/api/products/${productId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      timeout: 10000, // 10 second timeout
+    });
+    
+    console.log('Delete response:', response);
+    console.log('Response status:', response.status);
+    console.log('Response data:', response.data);
+    
+    // Remove the product from the state
+    setProducts(prevProducts => {
+      const newProducts = prevProducts.filter(product => product.id !== productId);
+      console.log('Updated products list:', newProducts);
+      return newProducts;
+    });
+    
+    console.log("Product deleted successfully");
+    alert("Product deleted successfully!"); // Add success message
+    
+  } catch (err) {
+    console.error("Full error object:", err);
+    if (typeof err === "object" && err !== null && "response" in err) {
+      console.error("Error response:", err.response);
+      // @ts-expect-error: err is likely an AxiosError
+      console.error("Error message:", err.message);
+      // @ts-expect-error: err is likely an AxiosError
+      console.error("Error status:", err.response?.status);
+      // @ts-expect-error: err is likely an AxiosError
+      console.error("Error data:", err.response?.data);
     }
 
-    try {
-      setDeleteLoading(productId);
-      await axios.delete(`http://localhost:5000/api/products/${productId}`);
-      
-      // Remove the product from the state
-      setProducts(products.filter(product => product.id !== productId));
-      
-      console.log("Product deleted successfully");
-    } catch (err) {
-      console.error("Error deleting product:", err);
-      alert("Failed to delete product. Please try again.");
-    } finally {
-      setDeleteLoading(null);
+    // More specific error handling
+    if (typeof err === "object" && err !== null && "response" in err) {
+      // Server responded with error status
+      // @ts-expect-error: err is likely an AxiosError
+      const errorMessage = err.response.data?.message || `Server error: ${err.response.status}`;
+      alert(`Failed to delete product: ${errorMessage}`);
+    } else if (typeof err === "object" && err !== null && "request" in err) {
+      // Request was made but no response received
+      alert("Failed to delete product: No response from server. Check if server is running.");
+    } else {
+      // Something else happened
+      alert(`Failed to delete product: ${err instanceof Error ? err.message : String(err)}`);
     }
+  } finally {
+    setDeleteLoading(null);
+    console.log('Delete operation completed, loading state cleared');
+  }
+};
+
+  const handleEditProduct = (productId: number) => {
+    navigate(`/admin/products/edit/${productId}`);
+  };
+
+  const handleViewProduct = (productId: number) => {
+    navigate(`/admin/products/${productId}`);
   };
 
   if (loading) {
@@ -198,13 +252,11 @@ const ProductsPage = () => {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    asChild 
-                    className="w-full"
+                    onClick={() => handleViewProduct(product.id)}
+                    className="w-full flex items-center justify-center gap-2"
                   >
-                    <Link to={`/admin/products/${product.id}`} className="flex items-center justify-center gap-2">
-                      <Eye className="h-4 w-4" />
-                      View Details
-                    </Link>
+                    <Eye className="h-4 w-4" />
+                    View Details
                   </Button>
                   
                   {/* Edit and Delete Buttons */}
@@ -212,13 +264,11 @@ const ProductsPage = () => {
                     <Button 
                       variant="outline" 
                       size="sm" 
-                      asChild 
-                      className="flex-1"
+                      onClick={() => handleEditProduct(product.id)}
+                      className="flex-1 flex items-center justify-center gap-2"
                     >
-                      <Link to={`/admin/products/edit/${product.id}`} className="flex items-center justify-center gap-2">
-                        <Edit className="h-4 w-4" />
-                        Edit
-                      </Link>
+                      <Edit className="h-4 w-4" />
+                      Edit
                     </Button>
                     
                     <Button 
