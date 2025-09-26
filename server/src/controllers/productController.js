@@ -1,5 +1,6 @@
 import prisma from "../db/prisma.js";
 import { processMultipleImages } from "../processImage.js";
+
 import fs from "fs";
 import path from "path";
 
@@ -139,72 +140,83 @@ export const updateProduct = async (req, res) => {
     const { name, description, price, stock, sizes, colors, removedImages } =
       req.body;
 
-    // Handle removed images first
-    if (removedImages) {
-      const removedIds = Array.isArray(removedImages)
-        ? removedImages
-        : [removedImages];
+    // Parse sizes and colors from JSON strings to arrays
+    let parsedSizes = [];
+    let parsedColors = [];
 
-      for (const imgId of removedIds) {
-        const image = await prisma.productImage.findUnique({
-          where: { id: parseInt(imgId) },
-        });
-
-        if (image) {
-          const filePath = path.join(uploadDir, image.filename);
-          if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-          await prisma.productImage.delete({ where: { id: parseInt(imgId) } });
-        }
-      }
+    try {
+      parsedSizes = sizes ? JSON.parse(sizes) : [];
+      parsedColors = colors ? JSON.parse(colors) : [];
+    } catch (parseError) {
+      console.error("Error parsing sizes/colors:", parseError);
+      return res.status(400).json({ error: "Invalid sizes or colors format" });
     }
 
-    let processedImages = [];
+    // Ensure product exists
+    const existingProduct = await prisma.product.findUnique({
+      where: { id: Number(id) },
+      include: { images: true },
+    });
 
-    if (req.files && req.files.length > 0) {
-      processedImages = await processMultipleImages(req.files);
+    if (!existingProduct) {
+      return res.status(404).json({ error: "Product not found" });
     }
 
-    // Parse sizes and colors arrays
-    const sizesArray = parseArrayField(sizes);
-    const colorsArray = parseArrayField(colors);
+    // Handle image removal
+    const removedImageIds = removedImages
+      ? removedImages.map((id) => Number(id))
+      : [];
 
-    const updatedProduct = await prisma.product.update({
-      where: { id: parseInt(id) },
-      data: {
-        name,
-        description,
-        price: parseFloat(price),
-        stock: parseInt(stock),
-        sizes: sizesArray,
-        colors: colorsArray,
-        ...(processedImages.length > 0 && {
-          productImage: {
-            create: processedImages.map((filename) => ({ filename })),
+    // Handle new image uploads
+    const newImages = req.files || [];
+    const newImageData = newImages.map((file) => ({
+      filename: file.filename || file.originalname,
+      url: `/uploads/${file.filename || file.originalname}`, // Adjust path as needed
+    }));
+
+    // Update product with transaction to handle image operations
+    const updatedProduct = await prisma.$transaction(async (tx) => {
+      // Remove specified images
+      if (removedImageIds.length > 0) {
+        await tx.productImage.deleteMany({
+          where: {
+            id: { in: removedImageIds },
+            productId: Number(id),
           },
-        }),
-      },
-      include: { productImage: true },
+        });
+      }
+
+      // Add new images
+      if (newImageData.length > 0) {
+        await tx.productImage.createMany({
+          data: newImageData.map((img) => ({
+            filename: img.filename,
+            productId: Number(id),
+          })),
+        });
+      }
+
+      // Update product main fields
+      return await tx.product.update({
+        where: { id: Number(id) },
+        data: {
+          name,
+          description,
+          price: parseFloat(price),
+          stock: Number(stock),
+          sizes: parsedSizes,
+          colors: parsedColors,
+        },
+        include: { images: true },
+      });
     });
 
-    // Add image URLs
-    const productWithUrls = {
-      ...updatedProduct,
-      productImage: updatedProduct.productImage.map((image) => ({
-        ...image,
-        url: `${req.protocol}://${req.get("host")}/uploads/${image.filename}`,
-      })),
-    };
-
-    res.json(productWithUrls);
+    res.json(updatedProduct);
   } catch (error) {
-    console.error("❌ Error updating product:", error);
-    res.status(500).json({
-      message: "Failed to update product",
-      error: error.message,
-    });
+    console.error("Error updating product:", error);
+    res.status(500).json({ error: "Failed to update product" });
   }
 };
-
 
 // 🟢 DELETE product
 export const deleteProduct = async (req, res) => {
@@ -214,8 +226,8 @@ export const deleteProduct = async (req, res) => {
 
     // Validate that the ID is a valid number
     if (!id || isNaN(parseInt(id))) {
-      return res.status(400).json({ 
-        message: "Invalid product ID" 
+      return res.status(400).json({
+        message: "Invalid product ID",
       });
     }
 
@@ -224,12 +236,12 @@ export const deleteProduct = async (req, res) => {
     // Check if product exists first
     const existingProduct = await prisma.product.findUnique({
       where: { id: productId },
-      include: { images: true }
+      include: { images: true },
     });
 
     if (!existingProduct) {
-      return res.status(404).json({ 
-        message: "Product not found" 
+      return res.status(404).json({
+        message: "Product not found",
       });
     }
 
@@ -246,38 +258,37 @@ export const deleteProduct = async (req, res) => {
       });
 
       // Delete images from database
-      await prisma.productImage.deleteMany({ 
-        where: { productId: productId } 
+      await prisma.productImage.deleteMany({
+        where: { productId: productId },
       });
       console.log("Images deleted from database");
     }
 
     // Delete the product
-    await prisma.product.delete({ 
-      where: { id: productId } 
+    await prisma.product.delete({
+      where: { id: productId },
     });
 
     console.log("Product deleted successfully");
-    res.status(200).json({ 
-      success: true, 
-      message: "Product deleted successfully" 
+    res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
     });
-
   } catch (error) {
     console.error("❌ Error deleting product:", error);
-    
+
     // More specific error handling
-    if (error.code === 'P2025') {
+    if (error.code === "P2025") {
       // Prisma error: Record not found
       return res.status(404).json({
         message: "Product not found",
-        error: "The product you're trying to delete doesn't exist"
+        error: "The product you're trying to delete doesn't exist",
       });
     }
 
-    res.status(500).json({ 
-      message: "Failed to delete product", 
-      error: error.message 
+    res.status(500).json({
+      message: "Failed to delete product",
+      error: error.message,
     });
   }
 };
