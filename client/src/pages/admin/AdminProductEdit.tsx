@@ -23,7 +23,7 @@ type Product = {
   images: Image[];
 };
 
-const EditProductPage = () => {
+const AdminProductEdit = () => {
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -94,45 +94,57 @@ const EditProductPage = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-    
-    try {
-      const formDataToSend = new FormData();
-      
-      // Add text fields
-      formDataToSend.append("name", formData.name);
-      formDataToSend.append("description", formData.description);
-      formDataToSend.append("price", formData.price.toString());
-      formDataToSend.append("stock", formData.stock.toString());
-      formDataToSend.append("sizes", formData.sizes);
-      formDataToSend.append("colors", formData.colors);
-      
-      // Add new images
-      formData.newImages.forEach(image => {
-        formDataToSend.append("images", image);
-      });
-      
-      // Add removed image IDs
-      formData.removedImages.forEach(id => {
-        formDataToSend.append("removedImages", id.toString());
-      });
+  e.preventDefault();
+  setSubmitting(true);
 
-      await axios.put(`http://localhost:5000/api/products/${id}`, formDataToSend, {
-        headers: { "Content-Type": "multipart/form-data" }
-      });
-      
-      toast.success("Product updated successfully");
-      // Redirect to product details
-      window.location.href = `/admin/products/${id}`;
-    } catch (err) {
-      console.error("Error updating product:", err);
-      setError("Failed to update product");
-      toast.error("Failed to update product. Please check your inputs.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
+  try {
+    const formDataToSend = new FormData();
+
+    // Add text fields
+    formDataToSend.append("name", formData.name);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("price", formData.price.toString());
+    formDataToSend.append("stock", formData.stock.toString());
+
+    // Convert comma-separated strings into arrays
+    const sizesArray = formData.sizes
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean);
+    const colorsArray = formData.colors
+      .split(",")
+      .map(c => c.trim())
+      .filter(Boolean);
+
+    // Send them as JSON strings (so backend can parse)
+    formDataToSend.append("sizes", JSON.stringify(sizesArray));
+    formDataToSend.append("colors", JSON.stringify(colorsArray));
+
+    // Add new images
+    formData.newImages.forEach(image => {
+      formDataToSend.append("images", image);
+    });
+
+    // Add removed image IDs
+    formData.removedImages.forEach(id => {
+      formDataToSend.append("removedImages", id.toString());
+    });
+
+    await axios.put(`http://localhost:5000/api/products/${id}`, formDataToSend, {
+      headers: { "Content-Type": "multipart/form-data" }
+    });
+
+    toast.success("Product updated successfully");
+    window.location.href = `/admin/products/${id}`;
+  } catch (err) {
+    console.error("Error updating product:", err);
+    setError("Failed to update product");
+    toast.error("Failed to update product. Please check your inputs.");
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   if (loading) {
     return (
@@ -366,4 +378,4 @@ const EditProductPage = () => {
   );
 };
 
-export default EditProductPage;
+export default AdminProductEdit;
