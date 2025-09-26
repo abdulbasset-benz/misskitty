@@ -16,15 +16,13 @@ export default function AdminLayout() {
         <div>
           <h2 className="text-2xl font-bold mb-6">Admin</h2>
           <nav className="flex flex-col gap-3">
-            <Link to="/admin" className="hover:text-gray-300">
-              Dashboard
-            </Link>
+            
             <Link to="/admin/products" className="hover:text-gray-300">
               Products
             </Link>
-            <Link to="/admin/orders" className="hover:text-gray-300">
+            {/* <Link to="/admin/orders" className="hover:text-gray-300">
               Orders
-            </Link>
+            </Link> */}
           </nav>
         </div>
         <button
