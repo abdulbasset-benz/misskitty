@@ -209,24 +209,74 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log("Attempting to delete product with ID:", id);
 
-    // delete images from disk
-    const images = await prisma.image.findMany({
-      where: { productId: parseInt(id) },
+    // Validate that the ID is a valid number
+    if (!id || isNaN(parseInt(id))) {
+      return res.status(400).json({ 
+        message: "Invalid product ID" 
+      });
+    }
+
+    const productId = parseInt(id);
+
+    // Check if product exists first
+    const existingProduct = await prisma.product.findUnique({
+      where: { id: productId },
+      include: { images: true }
     });
-    images.forEach((img) => {
-      const filePath = path.join(uploadDir, img.filename);
-      if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+
+    if (!existingProduct) {
+      return res.status(404).json({ 
+        message: "Product not found" 
+      });
+    }
+
+    console.log("Product found, proceeding with deletion...");
+
+    // Delete images from disk first
+    if (existingProduct.images && existingProduct.images.length > 0) {
+      existingProduct.images.forEach((img) => {
+        const filePath = path.join(uploadDir, img.filename);
+        if (fs.existsSync(filePath)) {
+          console.log("Deleting image file:", filePath);
+          fs.unlinkSync(filePath);
+        }
+      });
+
+      // Delete images from database
+      await prisma.productImage.deleteMany({ 
+        where: { productId: productId } 
+      });
+      console.log("Images deleted from database");
+    }
+
+    // Delete the product
+    await prisma.product.delete({ 
+      where: { id: productId } 
     });
 
-    await prisma.image.deleteMany({ where: { productId: parseInt(id) } });
-    await prisma.product.delete({ where: { id: parseInt(id) } });
+    console.log("Product deleted successfully");
+    res.status(200).json({ 
+      success: true, 
+      message: "Product deleted successfully" 
+    });
 
-    res.json({ message: "Product deleted successfully" });
   } catch (error) {
     console.error("❌ Error deleting product:", error);
-    res
-      .status(500)
-      .json({ message: "Failed to delete product", error: error.message });
+    
+    // More specific error handling
+    if (error.code === 'P2025') {
+      // Prisma error: Record not found
+      return res.status(404).json({
+        message: "Product not found",
+        error: "The product you're trying to delete doesn't exist"
+      });
+    }
+
+    res.status(500).json({ 
+      message: "Failed to delete product", 
+      error: error.message 
+    });
   }
 };
