@@ -142,18 +142,18 @@ export const updateProduct = async (req, res) => {
     // Handle removed images first
     if (removedImages) {
       const removedIds = Array.isArray(removedImages)
-        ? removedIds
+        ? removedImages
         : [removedImages];
 
       for (const imgId of removedIds) {
-        const image = await prisma.image.findUnique({
+        const image = await prisma.productImage.findUnique({
           where: { id: parseInt(imgId) },
         });
 
         if (image) {
           const filePath = path.join(uploadDir, image.filename);
           if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
-          await prisma.image.delete({ where: { id: parseInt(imgId) } });
+          await prisma.productImage.delete({ where: { id: parseInt(imgId) } });
         }
       }
     }
@@ -178,18 +178,18 @@ export const updateProduct = async (req, res) => {
         sizes: sizesArray,
         colors: colorsArray,
         ...(processedImages.length > 0 && {
-          images: {
+          productImage: {
             create: processedImages.map((filename) => ({ filename })),
           },
         }),
       },
-      include: { images: true },
+      include: { productImage: true },
     });
 
     // Add image URLs
     const productWithUrls = {
       ...updatedProduct,
-      images: updatedProduct.images.map((image) => ({
+      productImage: updatedProduct.productImage.map((image) => ({
         ...image,
         url: `${req.protocol}://${req.get("host")}/uploads/${image.filename}`,
       })),
@@ -204,6 +204,7 @@ export const updateProduct = async (req, res) => {
     });
   }
 };
+
 
 // 🟢 DELETE product
 export const deleteProduct = async (req, res) => {
