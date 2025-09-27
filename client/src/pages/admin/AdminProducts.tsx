@@ -227,7 +227,7 @@ const ProductsPage = () => {
                 {/* Product Info */}
                 <div className="mb-4 space-y-1">
                   <p className="text-lg font-bold text-green-600">
-                    ${product.price.toFixed(2)}
+                    {product.price.toFixed(2)} DZD
                   </p>
                   <p className="text-sm text-gray-500">
                     Stock: {product.stock}
