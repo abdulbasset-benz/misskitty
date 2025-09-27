@@ -1,5 +1,5 @@
 import express from "express";
-import multer from "multer"; // Add this import for the error handler
+import multer from "multer";
 import { upload } from "../processImage.js";
 import {
   createProduct,
@@ -20,21 +20,25 @@ const handleMulterError = (error, req, res, next) => {
     switch (error.code) {
       case "LIMIT_FILE_SIZE":
         return res.status(400).json({
+          success: false,
           message: "File too large",
-          error: `Maximum file size is 50MB per file`,
+          error: "Maximum file size is 50MB per file",
         });
       case "LIMIT_FILE_COUNT":
         return res.status(400).json({
+          success: false,
           message: "Too many files",
           error: "Maximum 10 files allowed",
         });
       case "UNEXPECTED_FIELD":
         return res.status(400).json({
+          success: false,
           message: "Unexpected field",
           error: `Field name should be 'images'. Received: ${error.field}`,
         });
       default:
         return res.status(400).json({
+          success: false,
           message: "Upload error",
           error: error.message,
         });
@@ -48,9 +52,10 @@ router.get("/products", getProducts);
 router.get("/products/:id", getProductById);
 
 // 🔒 ADMIN-ONLY ROUTES (Authentication required)
+// ✅ CORRECT ORDER: Auth FIRST, then file processing
 router.post(
   "/products",
-  // Add admin authentication
+  adminAuth,              // Check authentication FIRST
   upload.array("images", 10),
   handleMulterError,
   createProduct
@@ -58,7 +63,7 @@ router.post(
 
 router.put(
   "/products/:id",
-  // Add admin authentication
+  adminAuth,              // Check authentication FIRST
   upload.array("images", 10),
   handleMulterError,
   updateProduct
@@ -66,7 +71,7 @@ router.put(
 
 router.delete(
   "/products/:id",
-  // Add admin authentication
+  adminAuth,              // Auth only (no file upload needed)
   deleteProduct
 );
 
