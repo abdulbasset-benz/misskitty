@@ -97,3 +97,12 @@ export const getCurrentAdmin = async (req, res) => {
     });
   }
 };
+
+export const validateToken = async (req, res) => {
+  // If we reach here, adminAuth middleware already validated the token
+  res.json({ 
+    success: true, 
+    message: "Token is valid",
+    admin: req.admin 
+  });
+};
