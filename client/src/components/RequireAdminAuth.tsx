@@ -1,5 +1,6 @@
-// src/components/RequireAdminAuth.tsx
 import { Navigate } from "react-router";
+import { useState, useEffect } from "react";
+import axios from "axios";
 import type { ReactNode } from "react";
 
 interface Props {
@@ -7,9 +8,59 @@ interface Props {
 }
 
 export default function RequireAdminAuth({ children }: Props) {
-  const token = localStorage.getItem("adminToken");
+  const [isValidating, setIsValidating] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  if (!token) {
+  useEffect(() => {
+    const validateToken = async () => {
+      const token = localStorage.getItem("adminToken");
+      
+      if (!token) {
+        setIsAuthenticated(false);
+        setIsValidating(false);
+        return;
+      }
+
+      try {
+        // Validate token with backend
+        const response = await axios.get('http://localhost:5000/api/admin/validate-token', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+
+        if (response.status === 200) {
+          setIsAuthenticated(true);
+        } else {
+          // Token is invalid, remove it
+          localStorage.removeItem("adminToken");
+          setIsAuthenticated(false);
+        }
+      } catch (error) {
+        console.error('Token validation failed:', error);
+        localStorage.removeItem("adminToken");
+        setIsAuthenticated(false);
+      } finally {
+        setIsValidating(false);
+      }
+    };
+
+    validateToken();
+  }, []);
+
+  // Show loading while validating
+  if (isValidating) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <span className="ml-2">Verifying authentication...</span>
+      </div>
+    );
+  }
+
+  // Redirect if not authenticated
+  if (!isAuthenticated) {
     return <Navigate to="/admin/login" replace />;
   }
 
