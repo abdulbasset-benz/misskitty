@@ -37,11 +37,20 @@ export const loginAdmin = async (req, res) => {
       { 
         id: admin.id, 
         email: admin.email,
-        type: 'admin' // Add role for extra security
+        type: 'admin'
       },
       process.env.JWT_SECRET,
-      { expiresIn: "24h" } // More explicit than "1d"
+      { expiresIn: "7d" } // Longer expiry since cookies are more secure
     );
+
+    // Set HTTP-only cookie
+    res.cookie('adminToken', token, {
+      httpOnly: true,        // Prevents XSS attacks
+      secure: process.env.NODE_ENV === 'production', // HTTPS only in production
+      sameSite: 'lax',       // CSRF protection
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+      path: '/'              // Available for all routes
+    });
 
     // Don't send password back
     const { password: _, ...adminData } = admin;
@@ -49,8 +58,8 @@ export const loginAdmin = async (req, res) => {
     res.json({ 
       success: true,
       message: "Login successful",
-      token,
       admin: adminData
+      // Note: No token in response - it's in the cookie now
     });
   } catch (error) {
     console.error("Admin login error:", error);
@@ -62,15 +71,21 @@ export const loginAdmin = async (req, res) => {
 };
 
 export const logoutAdmin = (req, res) => {
-  // Since we're using stateless JWT, logout is handled client-side
-  // But we can still provide a logout endpoint for consistency
+  // Clear the cookie
+  res.clearCookie('adminToken', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/'
+  });
+
   res.json({ 
     success: true, 
-    message: "Logout successful. Please remove token from client." 
+    message: "Logout successful" 
   });
 };
 
-// Optional: Get current admin info
+// Get current admin info
 export const getCurrentAdmin = async (req, res) => {
   try {
     const admin = await prisma.admin.findUnique({
