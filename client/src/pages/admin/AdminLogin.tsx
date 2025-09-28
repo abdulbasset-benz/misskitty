@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router';
+import { Navigate, useNavigate } from 'react-router';
 import { useAdminAuth } from '@/hooks/useAdminAuth';
 
 export default function AdminLogin() {
@@ -9,6 +9,7 @@ export default function AdminLogin() {
   const [isLoading, setIsLoading] = useState(false);
   
   const { isAuthenticated, login } = useAdminAuth();
+  const navigate = useNavigate();
 
   // Redirect if already authenticated
   if (isAuthenticated) {
@@ -22,7 +23,9 @@ export default function AdminLogin() {
 
     const result = await login(email, password);
     
-    if (!result.success) {
+    if (result.success) {
+      navigate('/admin', { replace: true });
+    } else {
       setError(result.message || 'Login failed');
     }
     
