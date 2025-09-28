@@ -13,33 +13,19 @@ export default function RequireAdminAuth({ children }: Props) {
 
   useEffect(() => {
     const validateToken = async () => {
-      const token = localStorage.getItem("adminToken");
-      
-      if (!token) {
-        setIsAuthenticated(false);
-        setIsValidating(false);
-        return;
-      }
-
       try {
-        // Validate token with backend
+        // No need to manually handle tokens - cookies are sent automatically
         const response = await axios.get('http://localhost:5000/api/admin/validate-token', {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
+          withCredentials: true, // Important: sends cookies with request
         });
 
         if (response.status === 200) {
           setIsAuthenticated(true);
         } else {
-          // Token is invalid, remove it
-          localStorage.removeItem("adminToken");
           setIsAuthenticated(false);
         }
       } catch (error) {
         console.error('Token validation failed:', error);
-        localStorage.removeItem("adminToken");
         setIsAuthenticated(false);
       } finally {
         setIsValidating(false);
