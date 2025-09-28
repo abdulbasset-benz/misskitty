@@ -1,3 +1,4 @@
+// routes/productsRoutes.js - Updated for cookie authentication
 import express from "express";
 import multer from "multer";
 import { upload } from "../processImage.js";
@@ -55,23 +56,23 @@ router.get("/products/:id", getProductById);
 // ✅ CORRECT ORDER: Auth FIRST, then file processing
 router.post(
   "/products",
-  adminAuth,              // Check authentication FIRST
-  upload.array("images", 10),
-  handleMulterError,
-  createProduct
+  adminAuth,                    // Check authentication FIRST
+  upload.array("images", 10),   // Then handle file upload
+  handleMulterError,            // Handle upload errors
+  createProduct                 // Finally create the product
 );
 
 router.put(
   "/products/:id",
-  adminAuth,              // Check authentication FIRST
-  upload.array("images", 10),
-  handleMulterError,
-  updateProduct
+  adminAuth,                    // Check authentication FIRST
+  upload.array("images", 10),   // Then handle file upload
+  handleMulterError,            // Handle upload errors
+  updateProduct                 // Finally update the product
 );
 
 router.delete(
   "/products/:id",
-  adminAuth,              // Auth only (no file upload needed)
+  adminAuth,                    // Auth only (no file upload needed)
   deleteProduct
 );
 
