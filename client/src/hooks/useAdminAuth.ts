@@ -14,6 +14,9 @@ interface UseAdminAuth {
   logout: () => void;
 }
 
+// Configure axios to always send cookies
+axios.defaults.withCredentials = true;
+
 export const useAdminAuth = (): UseAdminAuth => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [admin, setAdmin] = useState<AdminUser | null>(null);
@@ -25,33 +28,19 @@ export const useAdminAuth = (): UseAdminAuth => {
   }, []);
 
   const checkAuthStatus = async () => {
-    const token = localStorage.getItem('adminToken');
-    
-    if (!token) {
-      setLoading(false);
-      return;
-    }
-
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/me', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await axios.get('http://localhost:5000/api/admin/me');
 
       if (response.status === 200) {
         const data = response.data;
         setAdmin(data.admin);
         setIsAuthenticated(true);
       } else {
-        localStorage.removeItem('adminToken');
         setIsAuthenticated(false);
         setAdmin(null);
       }
     } catch (error) {
       console.error('Auth check failed:', error);
-      localStorage.removeItem('adminToken');
       setIsAuthenticated(false);
       setAdmin(null);
     } finally {
@@ -69,7 +58,7 @@ export const useAdminAuth = (): UseAdminAuth => {
       const data = response.data;
 
       if (data.success) {
-        localStorage.setItem('adminToken', data.token);
+        // No need to manually store token - it's in the cookie
         setAdmin(data.admin);
         setIsAuthenticated(true);
         return { success: true };
@@ -84,22 +73,13 @@ export const useAdminAuth = (): UseAdminAuth => {
   };
 
   const logout = async () => {
-    const token = localStorage.getItem('adminToken');
-    
-    if (token) {
-      try {
-        await axios.post('http://localhost:5000/api/admin/logout', {}, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
-      } catch (error) {
-        console.error('Logout request failed:', error);
-      }
+    try {
+      await axios.post('http://localhost:5000/api/admin/logout');
+    } catch (error) {
+      console.error('Logout request failed:', error);
     }
 
-    localStorage.removeItem('adminToken');
+    // Clear local state
     setIsAuthenticated(false);
     setAdmin(null);
   };
