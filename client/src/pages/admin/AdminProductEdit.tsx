@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import axios from "axios";
+import api from "@/api/axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { Eye, Plus, X } from "lucide-react";
@@ -49,7 +49,8 @@ const AdminProductEdit = () => {
   const fetchProduct = async () => {
     try {
       setLoading(true);
-      const response = await axios.get(`http://localhost:5000/api/products/${id}`);
+const response = await api.get(`/products/${id}`); // ✅ uses baseURL from api.ts
+
       const productData = response.data;
       
       setProduct(productData);
@@ -130,9 +131,9 @@ const AdminProductEdit = () => {
       formDataToSend.append("removedImages", id.toString());
     });
 
-    await axios.put(`http://localhost:5000/api/products/${id}`, formDataToSend, {
-      headers: { "Content-Type": "multipart/form-data" }
-    });
+    await api.put(`/products/${id}`, formDataToSend, { // ✅ automatically adds baseURL
+  headers: { "Content-Type": "multipart/form-data" },
+});
 
     toast.success("Product updated successfully");
     window.location.href = `/admin/products/${id}`;

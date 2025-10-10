@@ -1,6 +1,6 @@
 import { Navigate } from "react-router";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "@/api/axios";
 import type { ReactNode } from "react";
 
 interface Props {
@@ -15,7 +15,7 @@ export default function RequireAdminAuth({ children }: Props) {
     const validateToken = async () => {
       try {
         // No need to manually handle tokens - cookies are sent automatically
-        const response = await axios.get('http://localhost:5000/api/admin/validate-token', {
+        const response = await api.get('/admin/validate-token', {
           withCredentials: true, // Important: sends cookies with request
         });
 

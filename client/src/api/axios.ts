@@ -1,18 +1,9 @@
-// src/api/axios.ts
-import axios from "axios";
+import axios from 'axios';
+import { API_URL } from '../config';
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api",
-  withCredentials: false,
-});
-
-// Add token interceptor
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("adminToken");
-  if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
+  baseURL: `${API_URL}/api`, // Use backticks to create a template literal
+  withCredentials: true,
 });
 
 export default api;

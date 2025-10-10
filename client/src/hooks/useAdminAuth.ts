@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '@/api/axios'; // ✅ use your centralized API config
 
 interface AdminUser {
   id: number;
@@ -14,9 +14,6 @@ interface UseAdminAuth {
   logout: () => void;
 }
 
-// Configure axios to always send cookies
-axios.defaults.withCredentials = true;
-
 export const useAdminAuth = (): UseAdminAuth => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [admin, setAdmin] = useState<AdminUser | null>(null);
@@ -29,7 +26,7 @@ export const useAdminAuth = (): UseAdminAuth => {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/admin/me');
+      const response = await api.get('/admin/me');
 
       if (response.status === 200) {
         const data = response.data;
@@ -50,15 +47,10 @@ export const useAdminAuth = (): UseAdminAuth => {
 
   const login = async (email: string, password: string) => {
     try {
-      const response = await axios.post('http://localhost:5000/api/admin/login', {
-        email,
-        password,
-      });
-
+      const response = await api.post('/admin/login', { email, password });
       const data = response.data;
 
       if (data.success) {
-        // No need to manually store token - it's in the cookie
         setAdmin(data.admin);
         setIsAuthenticated(true);
         return { success: true };
@@ -74,12 +66,11 @@ export const useAdminAuth = (): UseAdminAuth => {
 
   const logout = async () => {
     try {
-      await axios.post('http://localhost:5000/api/admin/logout');
+      await api.post('/admin/logout');
     } catch (error) {
       console.error('Logout request failed:', error);
     }
 
-    // Clear local state
     setIsAuthenticated(false);
     setAdmin(null);
   };

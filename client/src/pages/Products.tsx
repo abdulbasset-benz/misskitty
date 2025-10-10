@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import axios from "axios";
+import api from "@/api/axios";
 import { Filter, X, SlidersHorizontal } from "lucide-react";
 
 import ProductCard from "@/components/ProductCard";
@@ -79,8 +79,7 @@ const Products = () => {
   const [sortBy, setSortBy] = useState<string>("newest");
 
   useEffect(() => {
-    axios
-      .get<Product[]>("http://localhost:5000/api/products")
+    api.get<Product[]>("products")
       .then((res) => {
         setProducts(res.data);
         // Set initial price range based on actual products

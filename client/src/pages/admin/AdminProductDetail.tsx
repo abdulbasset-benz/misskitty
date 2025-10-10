@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router";
-import axios from "axios";
+import api from "@/api/axios";
 import { ArrowLeft, Edit, Trash2, Package, Calendar, DollarSign } from "lucide-react";
 import LightboxModal from "@/components/LightboxModal";
 import { Button } from "@/components/ui/button";
@@ -38,7 +38,7 @@ const AdminProductDetail = () => {
     
     const fetchProduct = async () => {
       try {
-        const response = await axios.get<Product>(`http://localhost:5000/api/products/${id}`);
+        const response = await api.get<Product>(`/products/${id}`); // ✅ changed
         setProduct(response.data);
       } catch (err) {
         console.error("❌ Error fetching product:", err);
@@ -57,7 +57,7 @@ const AdminProductDetail = () => {
 
     try {
       setDeleteLoading(true);
-      await axios.delete(`http://localhost:5000/api/products/${product.id}`);
+      await api.delete(`/products/${product.id}`); // ✅ changed
       navigate('/admin/products');
     } catch (err) {
       console.error("Error deleting product:", err);

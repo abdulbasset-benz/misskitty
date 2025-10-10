@@ -18,10 +18,14 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // Vite default
+    origin: [
+      "https://miiskitty.cloud",  // your production frontend
+      "http://localhost:5173"     // keep this for local testing
+    ],
     credentials: true,
   })
 );
+
 
 app.use(cookieParser());
 app.use(express.json());

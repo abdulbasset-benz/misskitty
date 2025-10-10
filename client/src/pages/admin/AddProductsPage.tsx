@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "@/api/axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -102,9 +102,9 @@ const AddProductsPage: React.FC = () => {
     });
 
     try {
-      const res = await axios.post("http://localhost:5000/api/products", submitFormData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const res = await api.post("/products", submitFormData, {
+  headers: { "Content-Type": "multipart/form-data" },
+});
       
       console.log("✅ Product created:", res.data);
       

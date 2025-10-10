@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import axios from "axios";
+import api from "@/api/axios";
 import { ShoppingBag, Truck, Shield, Heart, ChevronLeft, ChevronRight } from "lucide-react";
 import LightboxModal from "@/components/LightboxModal";
 import { Button } from "@/components/ui/button";
@@ -90,8 +90,7 @@ const ProductDetails = () => {
   useEffect(() => {
     if (!id) return;
     setLoading(true);
-    axios
-      .get<Product>(`http://localhost:5000/api/products/${id}`)
+    api.get<Product>(`/products/${id}`) 
       .then((res) => {
         setProduct(res.data);
         setOrderForm((prev) => ({
@@ -110,11 +109,13 @@ const ProductDetails = () => {
   };
 
   const handleSubmitOrder = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!product) return;
+  e.preventDefault();
+  if (!product) return;
 
-    const phone = "213771836015";
-    const message = `📦 New Order!
+  setIsSubmitting(true); // 🟢 Start submitting state
+
+  const phone = "213771836015";
+  const message = `📦 New Order!
 
 Dress: ${orderForm.dressName}
 Name: ${orderForm.userName}
@@ -128,23 +129,27 @@ Color: ${orderForm.color}
 Price: ${product.price} DA
 `;
 
-    const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${phone}?text=${encodedMessage}`, "_blank");
+  const encodedMessage = encodeURIComponent(message);
+  window.open(`https://wa.me/${phone}?text=${encodedMessage}`, "_blank");
 
-    setOrderForm({
-      dressName: product.name,
-      userName: "",
-      phoneNumber: "",
-      wilaya: "",
-      commune: "",
-      address: "",
-      state: "",
-      size: availableSizes[0] || "",
-      color: availableColors[0] || "",
-    });
+  setOrderForm({
+    dressName: product.name,
+    userName: "",
+    phoneNumber: "",
+    wilaya: "",
+    commune: "",
+    address: "",
+    state: "",
+    size: availableSizes[0] || "",
+    color: availableColors[0] || "",
+  });
 
+  setTimeout(() => {
+    setIsSubmitting(false); // 🟢 End submitting state
     setIsOrderModalOpen(false);
-  };
+  }, 1500);
+};
+
 
   if (loading) {
     return (

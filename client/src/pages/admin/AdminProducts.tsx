@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import axios from "axios";
+import api from "@/api/axios";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { Trash2, Edit, Eye } from "lucide-react";
@@ -38,7 +38,7 @@ const ProductsPage = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const response = await axios.get("http://localhost:5000/api/products");
+      const response = await api.get("/products");  
       
       if (response.data[0]?.images) {
         console.log("First product images:", response.data[0].images);
@@ -66,14 +66,12 @@ const ProductsPage = () => {
 
   try {
     setDeleteLoading(productId);
-    console.log('Making DELETE request to:', `http://localhost:5000/api/products/${productId}`);
     
-    const response = await axios.delete(`http://localhost:5000/api/products/${productId}`, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      timeout: 10000, // 10 second timeout
-    });
+    const response = await api.delete(`/products/${productId}`, {
+  headers: { "Content-Type": "application/json" },
+  timeout: 10000,
+});
+
     
     console.log('Delete response:', response);
     console.log('Response status:', response.status);
