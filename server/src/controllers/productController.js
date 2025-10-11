@@ -67,7 +67,7 @@ export const createProduct = async (req, res) => {
       ...product,
       images: product.images.map((image) => ({
         ...image,
-        url: `${req.protocol}://${req.get("host")}/uploads/${image.filename}`,
+        url: `https://${req.get("host")}/uploads/${image.filename}`,
       })),
     };
 
@@ -91,7 +91,7 @@ export const getProducts = async (req, res) => {
       ...product,
       images: product.images.map((image) => ({
         ...image,
-        url: `${req.protocol}://${req.get("host")}/uploads/${image.filename}`,
+        url: `https://${req.get("host")}/uploads/${image.filename}`,
       })),
     }));
 
@@ -120,7 +120,7 @@ export const getProductById = async (req, res) => {
       ...product,
       images: product.images.map((image) => ({
         ...image,
-        url: `${req.protocol}://${req.get("host")}/uploads/${image.filename}`,
+        url: `https://${req.get("host")}/uploads/${image.filename}`,
       })),
     };
 
@@ -171,7 +171,7 @@ export const updateProduct = async (req, res) => {
     const newImages = req.files || [];
     const newImageData = newImages.map((file) => ({
       filename: file.filename || file.originalname,
-      url: `/uploads/${file.filename || file.originalname}`, // Adjust path as needed
+      url: `https://${req.get("host")}/uploads/${image.filename}`, // Adjust path as needed
     }));
 
     // Update product with transaction to handle image operations
