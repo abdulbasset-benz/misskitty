@@ -99,7 +99,7 @@ const LightboxModal = ({
               onClick={() => setIsOpen(false)}
               className="text-white hover:bg-white/20"
             >
-              <X className="w-4 h-4" />
+              <X className="w-4 h-4 text-white" />
             </Button>
           </div>
 
