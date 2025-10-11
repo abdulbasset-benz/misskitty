@@ -114,7 +114,7 @@ const ProductDetails = () => {
 
   setIsSubmitting(true); // 🟢 Start submitting state
 
-  const phone = "213771836015";
+  const phone = "213665369317";
   const message = `📦 New Order!
 
 Dress: ${orderForm.dressName}
