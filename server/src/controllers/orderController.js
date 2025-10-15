@@ -50,7 +50,7 @@ export const createOrder = async (req, res) => {
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: "commandes!A:K", // ✅ matches your sheet tab name and column count
+      range: 'commandes!A:K',
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [
