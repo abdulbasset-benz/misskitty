@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import api from "@/api/axios";
-import { ShoppingBag, Truck, Shield, Heart, ChevronLeft, ChevronRight } from "lucide-react";
+import { ShoppingBag, Truck, Shield, Heart, ChevronLeft, ChevronRight, CheckCircle, XCircle } from "lucide-react";
 import LightboxModal from "@/components/LightboxModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 type ProductImage = {
   id: number;
@@ -71,6 +72,10 @@ const ProductDetails = () => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
 
   const [orderForm, setOrderForm] = useState<OrderForm>({
     dressName: "",
@@ -108,48 +113,91 @@ const ProductDetails = () => {
     setOrderForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmitOrder = (e: React.FormEvent) => {
-  e.preventDefault();
-  if (!product) return;
+  // ✅ الدالة المحدثة - إرسال إلى Backend
+  const handleSubmitOrder = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!product) return;
 
-  setIsSubmitting(true); // 🟢 Start submitting state
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
 
-  const phone = "213665369317";
-  const message = `📦 New Order!
+    try {
+      // إرسال الطلب إلى Backend API
+      const response = await api.post('/orders', {
+        productId: product.id,
+        color: orderForm.color,
+        size: orderForm.size,
+        userName: orderForm.userName,
+        phoneNumber: orderForm.phoneNumber,
+        wilaya: orderForm.wilaya,
+        commune: orderForm.commune,
+        address: orderForm.address,
+      });
 
-Dress: ${orderForm.dressName}
-Name: ${orderForm.userName}
-Phone: ${orderForm.phoneNumber}
-Wilaya: ${orderForm.wilaya}
-Commune: ${orderForm.commune}
-Address: ${orderForm.address}
-State: ${orderForm.state}
-Size: ${orderForm.size}
-Color: ${orderForm.color}
-Price: ${product.price} DA
-`;
+      // إذا نجحت العملية
+      if (response.data.success) {
+        setSubmitStatus({
+          type: "success",
+          message: `✅ ${response.data.message} - رقم طلبك: ${response.data.data.orderId}`,
+        });
 
-  const encodedMessage = encodeURIComponent(message);
-  window.open(`https://wa.me/${phone}?text=${encodedMessage}`, "_blank");
+        // إعادة تعيين النموذج
+        setOrderForm({
+          dressName: product.name,
+          userName: "",
+          phoneNumber: "",
+          wilaya: "",
+          commune: "",
+          address: "",
+          state: "",
+          size: availableSizes[0] || "",
+          color: availableColors[0] || "",
+        });
 
-  setOrderForm({
-    dressName: product.name,
-    userName: "",
-    phoneNumber: "",
-    wilaya: "",
-    commune: "",
-    address: "",
-    state: "",
-    size: availableSizes[0] || "",
-    color: availableColors[0] || "",
-  });
-
-  setTimeout(() => {
-    setIsSubmitting(false); // 🟢 End submitting state
-    setIsOrderModalOpen(false);
-  }, 1500);
-};
-
+        // إغلاق النافذة بعد 3 ثواني
+        setTimeout(() => {
+          setIsOrderModalOpen(false);
+          setSubmitStatus({ type: null, message: "" });
+        }, 3000);
+      }
+    } catch (error: any) {
+      console.error("❌ خطأ في إرسال الطلب:", error);
+      
+      // معالجة الأخطاء المختلفة
+      if (error.response) {
+        const errorData = error.response.data;
+        
+        if (error.response.status === 400) {
+          setSubmitStatus({
+            type: "error",
+            message: errorData.message || "البيانات المدخلة غير صحيحة",
+          });
+        } else if (error.response.status === 404) {
+          setSubmitStatus({
+            type: "error",
+            message: "المنتج غير موجود",
+          });
+        } else {
+          setSubmitStatus({
+            type: "error",
+            message: errorData.message || "حدث خطأ في معالجة الطلب",
+          });
+        }
+      } else if (error.request) {
+        setSubmitStatus({
+          type: "error",
+          message: "خطأ في الاتصال. تحقق من اتصالك بالإنترنت.",
+        });
+      } else {
+        setSubmitStatus({
+          type: "error",
+          message: "حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.",
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -365,6 +413,20 @@ Price: ${product.price} DA
                   </DialogHeader>
 
                   <form onSubmit={handleSubmitOrder} className="space-y-6 sm:space-y-8 mt-4 sm:mt-6">
+                    {/* ✅ Success/Error Alert */}
+                    {submitStatus.type && (
+                      <Alert className={submitStatus.type === "success" ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}>
+                        {submitStatus.type === "success" ? (
+                          <CheckCircle className="h-4 w-4 text-green-600" />
+                        ) : (
+                          <XCircle className="h-4 w-4 text-red-600" />
+                        )}
+                        <AlertDescription className={submitStatus.type === "success" ? "text-green-800" : "text-red-800"}>
+                          {submitStatus.message}
+                        </AlertDescription>
+                      </Alert>
+                    )}
+
                     {/* Product Preview */}
                     <div className="bg-gradient-to-br from-gray-50 to-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-100">
                       <div className="flex items-center gap-4 sm:gap-6">
@@ -504,7 +566,8 @@ Price: ${product.price} DA
 
                     <Button
                       type="submit"
-                      className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black text-base sm:text-lg font-light hover:from-[#c0a46c] hover:to-[#e0b972] transition-all duration-500 shadow-lg"
+                      disabled={isSubmitting}
+                      className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black text-base sm:text-lg font-light hover:from-[#c0a46c] hover:to-[#e0b972] transition-all duration-500 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isSubmitting ? (
                         <div className="flex items-center gap-2">
@@ -512,12 +575,12 @@ Price: ${product.price} DA
                           Processing Your Order...
                         </div>
                       ) : (
-                        "Send Order via WhatsApp"
+                        "Submit Order"
                       )}
                     </Button>
 
                     <p className="text-xs text-gray-500 text-center font-light">
-                      Your details will be sent securely via WhatsApp for personalized service
+                      Your order will be processed securely
                     </p>
                   </form>
                 </DialogContent>
