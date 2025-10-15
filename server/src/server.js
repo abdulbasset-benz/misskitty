@@ -6,6 +6,7 @@ import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 import productsRoutes from "./routes/productsRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
 
 
 dotenv.config();
@@ -40,6 +41,7 @@ app.use("/uploads", express.static(uploadDir));
 
 app.use("/api", productsRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api", orderRoutes);
 
 
 app.get("/", (req, res) => {
