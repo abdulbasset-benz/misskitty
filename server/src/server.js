@@ -8,7 +8,6 @@ import productsRoutes from "./routes/productsRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import orderRoutes from "./routes/orderRoutes.js";
 
-
 dotenv.config();
 
 // __dirname equivalent

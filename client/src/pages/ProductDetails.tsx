@@ -172,12 +172,7 @@ const ProductDetails = () => {
             type: "error",
             message: errorData.message || "البيانات المدخلة غير صحيحة",
           });
-        } else if (error.response.status === 404) {
-          setSubmitStatus({
-            type: "error",
-            message: "المنتج غير موجود",
-          });
-        } else {
+        }  else {
           setSubmitStatus({
             type: "error",
             message: errorData.message || "حدث خطأ في معالجة الطلب",

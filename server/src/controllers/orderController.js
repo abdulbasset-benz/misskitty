@@ -1,24 +1,22 @@
 import { google } from "googleapis";
+import { JWT } from "google-auth-library";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const auth = new google.auth.GoogleAuth({
-  credentials: {
-    type: "service_account",
-    project_id: "misskitty-474920",
-    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-    client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-  },
+const auth = new JWT({
+  email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
+  key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
 
 const sheets = google.sheets({ version: "v4", auth });
 const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID;
 
-// create a new order
 export const createOrder = async (req, res) => {
   try {
+    console.log("📦 Received order request:", req.body);
+
     const {
       productId,
       color,
@@ -30,55 +28,77 @@ export const createOrder = async (req, res) => {
       address,
     } = req.body;
 
+    if (!productId || !color || !size || !userName || !phoneNumber || !wilaya || !commune || !address) {
+      return res.status(400).json({ success: false, message: "جميع الحقول مطلوبة" });
+    }
+
     const product = await prisma.product.findUnique({
-      where: { id: productId },
+      where: { id: parseInt(productId) },
     });
 
     if (!product) {
-      return res.status(404).json({
-        message: "product not found",
-      });
+      return res.status(404).json({ success: false, message: "المنتج غير موجود" });
+    }
+
+    if (product.stock <= 0) {
+      return res.status(400).json({ success: false, message: "المنتج غير متوفر حالياً" });
     }
 
     const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-    const timestamp = new Date().toLocaleString("en-GB", {
-      timeZone: "Africa/Algiers",
-    });
 
-    // إضافة للـ Google Sheets
+    console.log("📝 Adding to Google Sheets...");
+
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: "Sheet1!A:K", // تأكد من اسم الورقة (Sheet1 أو غيره)
+      range: "commandes!A:K", // ✅ matches your sheet tab name and column count
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [
           [
-            orderId, // ID
-            product.name, // Article
-            color, // Couleur
-            product.price, // Prix
-            size, // Taille
-            userName, // Nom acheteur
-            phoneNumber, // N° Tel
-            wilaya, // Wilaya
-            commune, // Commune
-            address, // Addresse
-            "En attente", // status
+            orderId,        // A: ID
+            product.name,   // B: Article
+            color,          // C: Couleur
+            product.price,  // D: Prix
+            size,           // E: Taille
+            userName,       // F: Nom acheteur
+            phoneNumber,    // G: N° Tel
+            wilaya,         // H: Wilaya
+            commune,        // I: Commune
+            address,        // J: Addresse
+            "En attente",   // K: etat
           ],
         ],
       },
     });
 
-    res.status(201).json({
+    console.log("✅ Order added successfully to Google Sheets");
+
+    return res.status(201).json({
       success: true,
       message: "تم استلام طلبك بنجاح",
       data: { orderId },
     });
   } catch (error) {
-    console.error("❌ خطأ:", error);
-    res.status(500).json({
+    console.error("❌ Order creation error:", error);
+
+    if (error.message?.includes("Unable to parse range")) {
+      return res.status(500).json({
+        success: false,
+        message: "تحقق من اسم ورقة Google Sheets أو نطاق الأعمدة",
+      });
+    }
+
+    if (error.message?.includes("Google")) {
+      return res.status(500).json({
+        success: false,
+        message: "خطأ في الاتصال بنظام الطلبات",
+      });
+    }
+
+    return res.status(500).json({
       success: false,
       message: "حدث خطأ في معالجة الطلب",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
