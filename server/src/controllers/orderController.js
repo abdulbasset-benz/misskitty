@@ -26,6 +26,8 @@ export const createOrder = async (req, res) => {
       wilaya,
       commune,
       address,
+      livraison, // delivery fee
+      remarques, // remarks/notes
     } = req.body;
 
     if (!productId || !color || !size || !userName || !phoneNumber || !wilaya || !commune || !address) {
@@ -45,27 +47,40 @@ export const createOrder = async (req, res) => {
     }
 
     const orderId = `ORD-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const orderDate = new Date().toLocaleString('fr-DZ', { 
+      timeZone: 'Africa/Algiers',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+    
+    const deliveryFee = livraison || 0;
+    const total = product.price + deliveryFee;
 
     console.log("📝 Adding to Google Sheets...");
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: SPREADSHEET_ID,
-      range: 'commandes!A:K',
+      range: 'commandes!A:M',
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [
           [
-            orderId,        // A: ID
-            product.name,   // B: Article
-            color,          // C: Couleur
-            product.price,  // D: Prix
-            size,           // E: Taille
-            userName,       // F: Nom acheteur
-            phoneNumber,    // G: N° Tel
-            wilaya,         // H: Wilaya
-            commune,        // I: Commune
-            address,        // J: Addresse
-            "En attente",   // K: etat
+            orderId,        // A: ID commande
+            userName,       // B: Nom complet
+            phoneNumber,    // C: Numéro de téléphone
+            orderDate,      // D: Date de commande
+            wilaya,         // E: Wilaya
+            commune,        // F: Commune
+            product.name,   // G: Nom du produit
+            size,           // H: Taille
+            color,          // I: Couleur
+            "confirmé",     // J: Statut (confirmé, envoyé, annulé, T1, T2, T3, reporté)
+            total,          // K: Total
+            deliveryFee,    // L: Livraison
+            remarques || "", // M: Remarques
           ],
         ],
       },
@@ -76,7 +91,7 @@ export const createOrder = async (req, res) => {
     return res.status(201).json({
       success: true,
       message: "تم استلام طلبك بنجاح",
-      data: { orderId },
+      data: { orderId, total },
     });
   } catch (error) {
     console.error("❌ Order creation error:", error);

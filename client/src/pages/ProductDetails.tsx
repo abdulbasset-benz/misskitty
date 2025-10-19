@@ -50,16 +50,71 @@ type OrderForm = {
   state: string;
   size: string;
   color: string;
+  livraison: string;
+  remarques: string;
 };
 
+const DELIVERY_FEE = 500; // Frais de livraison fixes
+
 const ALGERIAN_WILAYAS = [
-  "Adrar", "Chlef", "Laghouat", "Oum El Bouaghi", "Batna", "Béjaïa", "Biskra", "Béchar", 
-  "Blida", "Bouira", "Tamanrasset", "Tébessa", "Tlemcen", "Tiaret", "Tizi Ouzou", "Alger", 
-  "Djelfa", "Jijel", "Sétif", "Saïda", "Skikda", "Sidi Bel Abbès", "Annaba", "Guelma", 
-  "Constantine", "Médéa", "Mostaganem", "M'Sila", "Mascara", "Ouargla", "Oran", "El Bayadh", 
-  "Illizi", "Bordj Bou Arréridj", "Boumerdès", "El Tarf", "Tindouf", "Tissemsilt", "El Oued", 
-  "Khenchela", "Souk Ahras", "Tipaza", "Mila", "Aïn Defla", "Naâma", "Aïn Témouchent", 
-  "Ghardaïa", "Relizane",
+  "01 - Adrar",
+  "02 - Chlef",
+  "03 - Laghouat",
+  "04 - Oum El Bouaghi",
+  "05 - Batna",
+  "06 - Béjaïa",
+  "07 - Biskra",
+  "08 - Béchar",
+  "09 - Blida",
+  "10 - Bouira",
+  "11 - Tamanrasset",
+  "12 - Tébessa",
+  "13 - Tlemcen",
+  "14 - Tiaret",
+  "15 - Tizi Ouzou",
+  "16 - Alger",
+  "17 - Djelfa",
+  "18 - Jijel",
+  "19 - Sétif",
+  "20 - Saïda",
+  "21 - Skikda",
+  "22 - Sidi Bel Abbès",
+  "23 - Annaba",
+  "24 - Guelma",
+  "25 - Constantine",
+  "26 - Médéa",
+  "27 - Mostaganem",
+  "28 - M'Sila",
+  "29 - Mascara",
+  "30 - Ouargla",
+  "31 - Oran",
+  "32 - El Bayadh",
+  "33 - Illizi",
+  "34 - Bordj Bou Arréridj",
+  "35 - Boumerdès",
+  "36 - El Tarf",
+  "37 - Tindouf",
+  "38 - Tissemsilt",
+  "39 - El Oued",
+  "40 - Khenchela",
+  "41 - Souk Ahras",
+  "42 - Tipaza",
+  "43 - Mila",
+  "44 - Aïn Defla",
+  "45 - Naâma",
+  "46 - Aïn Témouchent",
+  "47 - Ghardaïa",
+  "48 - Relizane",
+  "49 - Timimoun",
+  "50 - Bordj Badji Mokhtar",
+  "51 - Ouled Djellal",
+  "52 - Béni Abbès",
+  "53 - In Salah",
+  "54 - In Guezzam",
+  "55 - Touggourt",
+  "56 - Djanet",
+  "57 - El M'Ghair",
+  "58 - El Meniaa",
 ];
 
 const DEFAULT_SIZES = ["36", "38", "40", "42", "44"];
@@ -87,10 +142,14 @@ const ProductDetails = () => {
     state: "",
     size: "",
     color: "",
+    livraison: DELIVERY_FEE.toString(),
+    remarques: "",
   });
 
   const availableSizes = product?.sizes?.length ? product.sizes : DEFAULT_SIZES;
   const availableColors = product?.colors?.length ? product.colors : DEFAULT_COLORS;
+
+  const totalPrice = product ? product.price + DELIVERY_FEE : 0;
 
   useEffect(() => {
     if (!id) return;
@@ -113,7 +172,6 @@ const ProductDetails = () => {
     setOrderForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  // ✅ الدالة المحدثة - إرسال إلى Backend
   const handleSubmitOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!product) return;
@@ -122,7 +180,6 @@ const ProductDetails = () => {
     setSubmitStatus({ type: null, message: "" });
 
     try {
-      // إرسال الطلب إلى Backend API
       const response = await api.post('/orders', {
         productId: product.id,
         color: orderForm.color,
@@ -132,16 +189,16 @@ const ProductDetails = () => {
         wilaya: orderForm.wilaya,
         commune: orderForm.commune,
         address: orderForm.address,
+        livraison: DELIVERY_FEE,
+        remarques: orderForm.remarques,
       });
 
-      // إذا نجحت العملية
       if (response.data.success) {
         setSubmitStatus({
           type: "success",
           message: `✅ ${response.data.message} - رقم طلبك: ${response.data.data.orderId}`,
         });
 
-        // إعادة تعيين النموذج
         setOrderForm({
           dressName: product.name,
           userName: "",
@@ -152,9 +209,10 @@ const ProductDetails = () => {
           state: "",
           size: availableSizes[0] || "",
           color: availableColors[0] || "",
+          livraison: DELIVERY_FEE.toString(),
+          remarques: "",
         });
 
-        // إغلاق النافذة بعد 3 ثواني
         setTimeout(() => {
           setIsOrderModalOpen(false);
           setSubmitStatus({ type: null, message: "" });
@@ -163,7 +221,6 @@ const ProductDetails = () => {
     } catch (error: any) {
       console.error("❌ خطأ في إرسال الطلب:", error);
       
-      // معالجة الأخطاء المختلفة
       if (error.response) {
         const errorData = error.response.data;
         
@@ -350,6 +407,11 @@ const ProductDetails = () => {
                   {product.stock > 0 ? `${product.stock} available` : "Out of stock"}
                 </div>
               </div>
+              {/* Delivery Fee Notice */}
+              <div className="flex items-center gap-2 text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <Truck className="w-4 h-4 text-blue-600 flex-shrink-0" />
+                <span>Delivery fee: <strong className="text-blue-700">DZD {DELIVERY_FEE.toLocaleString()}</strong> for all orders</span>
+              </div>
             </div>
 
             {/* Features - Responsive Grid */}
@@ -357,8 +419,8 @@ const ProductDetails = () => {
               <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 p-3 bg-gray-50 rounded-lg">
                 <Truck className="w-5 h-5 text-[#d4b985] flex-shrink-0" />
                 <div>
-                  <p className="text-sm font-medium text-gray-900">Complimentary Shipping</p>
-                  <p className="text-xs text-gray-500 hidden sm:block">Free delivery for orders above DZD 10,000</p>
+                  <p className="text-sm font-medium text-gray-900">Nationwide Delivery</p>
+                  <p className="text-xs text-gray-500 hidden sm:block">DZD 500 delivery to all wilayas</p>
                 </div>
               </div>
 
@@ -408,7 +470,7 @@ const ProductDetails = () => {
                   </DialogHeader>
 
                   <form onSubmit={handleSubmitOrder} className="space-y-6 sm:space-y-8 mt-4 sm:mt-6">
-                    {/* ✅ Success/Error Alert */}
+                    {/* Success/Error Alert */}
                     {submitStatus.type && (
                       <Alert className={submitStatus.type === "success" ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}>
                         {submitStatus.type === "success" ? (
@@ -422,9 +484,9 @@ const ProductDetails = () => {
                       </Alert>
                     )}
 
-                    {/* Product Preview */}
+                    {/* Product Preview with Total */}
                     <div className="bg-gradient-to-br from-gray-50 to-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-100">
-                      <div className="flex items-center gap-4 sm:gap-6">
+                      <div className="flex items-center gap-4 sm:gap-6 mb-4">
                         <img
                           src={product.images[0]?.url || "/placeholder.png"}
                           alt={product.name}
@@ -435,6 +497,22 @@ const ProductDetails = () => {
                           <p className="text-xl sm:text-2xl font-light text-gray-900 mt-1">
                             DZD {product.price.toLocaleString()}
                           </p>
+                        </div>
+                      </div>
+                      
+                      {/* Price Breakdown */}
+                      <div className="border-t border-gray-200 pt-3 space-y-2">
+                        <div className="flex justify-between text-sm text-gray-600">
+                          <span>Product Price</span>
+                          <span>DZD {product.price.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between text-sm text-gray-600">
+                          <span>Delivery Fee</span>
+                          <span>DZD {DELIVERY_FEE.toLocaleString()}</span>
+                        </div>
+                        <div className="flex justify-between text-lg font-medium text-gray-900 pt-2 border-t border-gray-200">
+                          <span>Total</span>
+                          <span className="text-[#d4b985]">DZD {totalPrice.toLocaleString()}</span>
                         </div>
                       </div>
                     </div>
@@ -483,7 +561,7 @@ const ProductDetails = () => {
                               <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
                                 <SelectValue placeholder="Select your wilaya" />
                               </SelectTrigger>
-                              <SelectContent>
+                              <SelectContent className="max-h-[300px]">
                                 {ALGERIAN_WILAYAS.map((wilaya) => (
                                   <SelectItem key={wilaya} value={wilaya} className="text-sm sm:text-base">{wilaya}</SelectItem>
                                 ))}
@@ -557,6 +635,24 @@ const ProductDetails = () => {
                           </div>
                         </div>
                       </div>
+
+                      <div>
+                        <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Additional Information (Optional)</h4>
+                        <div className="space-y-3 sm:space-y-4">
+                          <div className="space-y-2">
+                            <Label htmlFor="remarques" className="text-gray-700 font-medium text-sm sm:text-base">
+                              Remarks
+                            </Label>
+                            <Textarea
+                              id="remarques"
+                              value={orderForm.remarques}
+                              onChange={(e) => handleInputChange("remarques", e.target.value)}
+                              placeholder="Any special requests or notes"
+                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     <Button
@@ -566,7 +662,7 @@ const ProductDetails = () => {
                     >
                       {isSubmitting ? (
                         <div className="flex items-center gap-2">
-                          <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:w-5 border-b-2 border-black"></div>
+                          <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:h-5 border-b-2 border-black"></div>
                           Processing Your Order...
                         </div>
                       ) : (
@@ -575,7 +671,7 @@ const ProductDetails = () => {
                     </Button>
 
                     <p className="text-xs text-gray-500 text-center font-light">
-                      Your order will be processed securely
+                      Your order will be processed securely. Total amount: DZD {totalPrice.toLocaleString()}
                     </p>
                   </form>
                 </DialogContent>
