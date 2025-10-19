@@ -637,6 +637,7 @@ const ProductDetails = () => {
                       </div>
 
                       
+                    </div>
 
                     <Button
                       type="submit"
