@@ -636,24 +636,7 @@ const ProductDetails = () => {
                         </div>
                       </div>
 
-                      <div>
-                        <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Additional Information (Optional)</h4>
-                        <div className="space-y-3 sm:space-y-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="remarques" className="text-gray-700 font-medium text-sm sm:text-base">
-                              Remarks
-                            </Label>
-                            <Textarea
-                              id="remarques"
-                              value={orderForm.remarques}
-                              onChange={(e) => handleInputChange("remarques", e.target.value)}
-                              placeholder="Any special requests or notes"
-                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                      
 
                     <Button
                       type="submit"
@@ -662,7 +645,7 @@ const ProductDetails = () => {
                     >
                       {isSubmitting ? (
                         <div className="flex items-center gap-2">
-                          <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:h-5 border-b-2 border-black"></div>
+                          <div className="animate-spin rounded-full h-4 w-4 sm:h-5 border-b-2 border-black"></div>
                           Processing Your Order...
                         </div>
                       ) : (
