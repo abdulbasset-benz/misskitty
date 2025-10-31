@@ -3,68 +3,83 @@ import scissors from "@/assets/scissors.png";
 
 const AboutUs = () => {
   return (
-    <div className="mt-8 flex flex-col gap-16">
-      {/* Section title (centered, still inside max-width container) */}
-      <div className="w-[90%] mx-auto mb-8">
-        <h1 className="uppercase text-4xl md:text-5xl font-bold text-center">
-          About Us
+    <div className="mt-8 flex flex-col gap-24 bg-gradient-to-b from-white to-[#fefaf2] text-gray-800">
+      {/* Intro Section */}
+      <div className="flex flex-col items-center text-center px-6">
+        <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#f7ce83] to-transparent mb-6"></div>
+        <h2 className="uppercase text-xs md:text-sm tracking-[0.3em] text-gray-500 mb-4">
+          Get to know us
+        </h2>
+        <h1 className="font-serif text-5xl md:text-7xl font-light mb-6 leading-tight">
+          Where <span className="italic font-light">Comfort</span> Meets Charm
         </h1>
+        <p className="font-sans max-w-2xl text-gray-600 text-lg leading-relaxed">
+          Rooted in Algerian heritage, we craft everyday garments that blend
+          softness, confidence, and effortless grace — made for real moments and
+          timeless style.
+        </p>
       </div>
 
-      <div className="w-[80%] mx-auto flex flex-col md:flex-row items-center justify-between">
-        {/* Image */}
-        <div className="md:w-1/2 w-full aspect-[4/3] overflow-hidden">
-          <img
-            src={scissors}
-            alt="Scissors symbolizing craftsmanship"
-            className="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
-          />
+      {/* Main Sections */}
+      <section className="container mx-auto px-4 py-8 space-y-32">
+        {/* Section 1 */}
+        <div className="flex flex-col md:flex-row items-center gap-12 max-w-7xl mx-auto">
+          {/* Image Left */}
+          <div className="md:w-1/2 w-full overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 ease-in-out">
+            <img
+              src={scissors}
+              alt="Scissors symbolizing craftsmanship"
+              className="w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 ease-out"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          {/* Text Right */}
+          <div className="md:w-1/2 w-full space-y-4">
+            <h2 className="text-3xl md:text-4xl font-semibold font-serif tracking-wide">
+              The Beginning of Our Journey
+            </h2>
+            <div className="w-16 h-[2px] bg-[#f7ce83] mb-4"></div>
+            <p className="text-gray-700 leading-relaxed text-lg">
+              Our story began in the heart of Algeria — where craftsmanship is a
+              heritage and style is a way of life. Inspired by local artisans and
+              everyday beauty, we design clothing that celebrates tradition while
+              embracing modern comfort. Every stitch tells a story of pride,
+              patience, and passion.
+            </p>
+          </div>
         </div>
 
-        {/* Text */}
-        <div className="md:w-1/2 w-full p-8 md:p-16">
-          <h2 className="text-2xl font-semibold mb-3">
-            The Beginning of the Journey
-          </h2>
-          <p className=" leading-relaxed">
-            Our story began here — in the heart of Algeria, where tradition
-            meets creativity. What started as a small dream quickly became a
-            mission: to celebrate our culture through fashion, to honor the
-            craftsmanship of our land, and to design clothing that speaks to
-            both our past and our modern spirit. Each collection carries a piece
-            of our identity — woven with passion, purpose, and pride.
-          </p>
-        </div>
-      </div>
+        {/* Section 2 */}
+        <div className="flex flex-col-reverse md:flex-row items-center gap-12 max-w-7xl mx-auto">
+          {/* Text Left */}
+          <div className="md:w-1/2 w-full space-y-4">
+            <h2 className="text-3xl md:text-4xl font-semibold font-serif tracking-wide">
+              Who We Are
+            </h2>
+            <div className="w-16 h-[2px] bg-[#f7ce83] mb-4"></div>
+            <p className="text-gray-700 leading-relaxed text-lg">
+              We’re more than a fashion brand — we’re a reflection of Algeria’s
+              spirit. Our collections blend everyday ease with timeless elegance,
+              crafted for women who move with confidence and live with purpose.
+              From morning markets to evening gatherings, we dress the rhythm of
+              real life with authenticity and charm.
+            </p>
+          </div>
 
-      {/* Second section (full-width) */}
-      <div className="w-[80%] mx-auto flex flex-col md:flex-row-reverse items-center justify-between">
-        {/* Image */}
-        <div className="md:w-1/2 w-full aspect-[4/3] overflow-hidden">
-          <img
-            src={woman}
-            alt="Algerian fashion designer"
-            className="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
-          />
+          {/* Image Right */}
+          <div className="md:w-1/2 w-full overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 ease-in-out">
+            <img
+              src={woman}
+              alt="Algerian fashion designer"
+              className="w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 ease-out"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
         </div>
-
-        {/* Text */}
-        <div className="md:w-1/2 w-full p-8 md:p-16">
-          <h2 className="text-2xl font-semibold mb-3">Who Are We?</h2>
-          <p className=" leading-relaxed">
-            We are more than just a brand — we are a reflection of Algerian
-            elegance, energy, and resilience. Our designs are inspired by the
-            strength of our people, the beauty of our landscapes, and the
-            timeless charm of our heritage. Every piece we create tells a story
-            — one that connects you to who you are and where you come from,
-            while embracing the future with confidence and style.
-          </p>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };
