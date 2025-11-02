@@ -1,7 +1,7 @@
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Link } from "react-router";
 import pic1 from "@/assets/pic1.jpg";
 import pic2 from "@/assets/pic2.png";
@@ -13,9 +13,6 @@ gsap.registerPlugin(useGSAP, SplitText);
 
 const HeroSection = () => {
   const heroContainer = useRef<HTMLDivElement>(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
   useGSAP(
     () => {
@@ -78,84 +75,6 @@ const HeroSection = () => {
       ref={heroContainer}
       className="min-h-screen flex flex-col items-center justify-center bg-[#f5f3ef] text-center overflow-hidden font-sans relative"
     >
-      {/* Navigation */}
-      <nav className="absolute top-0 left-0 right-0 z-50 bg-[#f5f3ef]">
-        <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-          <a
-            href="#home"
-            className="font-semibold text-black text-xl md:text-2xl z-50"
-          >
-            Miss Kitty
-          </a>
-
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex gap-8 text-sm tracking-wide text-gray-700 uppercase">
-            {["About", "Works", "Products", "Contact"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="hover:text-black transition-all duration-300"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-
-          {/* Hamburger */}
-          <button
-            onClick={toggleMenu}
-            className="lg:hidden z-50 w-10 h-10 flex flex-col items-center justify-center gap-1.5"
-            aria-label="Toggle menu"
-          >
-            <span
-              className={`w-6 h-0.5 bg-black transition-all duration-300 ${
-                isMenuOpen ? "rotate-45 translate-y-2" : ""
-              }`}
-            ></span>
-            <span
-              className={`w-6 h-0.5 bg-black transition-all duration-300 ${
-                isMenuOpen ? "opacity-0" : ""
-              }`}
-            ></span>
-            <span
-              className={`w-6 h-0.5 bg-black transition-all duration-300 ${
-                isMenuOpen ? "-rotate-45 -translate-y-2" : ""
-              }`}
-            ></span>
-          </button>
-        </div>
-
-        {/* Mobile Menu */}
-        <div
-          className={`fixed top-0 right-0 h-screen w-full sm:w-80 bg-white shadow-2xl transform transition-transform duration-500 ease-in-out lg:hidden ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
-          style={{ backgroundColor: "white" }} // ensures white background no override
-        >
-          <div className="flex flex-col items-start gap-8 p-12 pt-24">
-            {["About", "Works", "Products", "Contact"].map((item) => (
-              <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                onClick={toggleMenu}
-                className="text-2xl font-medium text-gray-800 hover:text-black transition-all duration-300 uppercase tracking-wide"
-              >
-                {item}
-              </a>
-            ))}
-          </div>
-        </div>
-
-        {/* Overlay */}
-        {isMenuOpen && (
-          <div
-            onClick={toggleMenu}
-            className="fixed inset-0 bg-black bg-opacity-50 lg:hidden"
-            aria-hidden="true"
-          ></div>
-        )}
-      </nav>
-
       {/* Hero content */}
       <div className="flex flex-col items-center justify-center mt-24 relative w-full px-8">
         <h2 className="text-5xl md:text-9xl font-bold uppercase italic mb-4 heroTitle">
