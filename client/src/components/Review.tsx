@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import quoteSign from "@/assets/quote.svg";
+import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(SplitText, ScrollTrigger, useGSAP)
 
 const testimonials = [
   {
@@ -42,6 +48,28 @@ const testimonials = [
 ];
 
 const Review = () => {
+  useGSAP(() => {
+    document.fonts.ready.then(() => {
+      const splitHeading = SplitText.create(".testheading", {
+        type: "words",
+        wordsClass: "word",
+        mask: "words",
+      });
+
+      gsap.from(splitHeading.words, {
+        yPercent: 140,
+        duration: 1.5,
+        ease: "power4.inOut",
+        stagger: 0.08,
+        scrollTrigger: {
+          trigger: ".testheading",
+          start: "top 80%",
+          end: "bottom 50%",
+          scrub: 1,
+        }
+      });
+  })
+  });
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -67,7 +95,7 @@ const Review = () => {
         <h2 className="uppercase text-xs md:text-sm tracking-[0.3em] text-gray-500 mb-4">
           What our customers say
         </h2>
-        <h1 className="font-serif text-5xl md:text-7xl font-light mb-6 leading-tight">
+        <h1 className="font-serif text-5xl md:text-7xl font-light mb-6 leading-tight testheading">
           Honest <span className="italic font-light">Testimonials</span>
         </h1>
       </div>
