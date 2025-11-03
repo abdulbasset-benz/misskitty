@@ -84,7 +84,7 @@ const Review = () => {
           className="absolute left-4 md:left-12 z-10 p-3 rounded-full bg-white shadow-lg hover:bg-[#fefaf2] transition-all duration-300 group"
           aria-label="Previous testimonial"
         >
-          <ChevronLeft className="w-6 h-6 text-gray-600 group-hover:text-[#f7ce83] transition-colors" />
+          <ChevronLeft className="h-4 w-4 md:w-6 md:h-6 text-gray-600 group-hover:text-[#f7ce83] transition-colors" />
         </button>
 
         {/* Testimonial Card - Fixed Height */}
@@ -94,7 +94,7 @@ const Review = () => {
             className="bg-white shadow-xl rounded-2xl p-10 md:p-16 relative min-h-[280px] flex flex-col justify-center"
           >
             {/* Decorative Quote Icon */}
-            <div className="absolute top-2 left-2 opacity-70">
+            <div className="absolute -top-3 -left-4 md:top-2 md:left-2 opacity-70">
               <img className="" src={quoteSign} alt="" />
             </div>
 
@@ -118,7 +118,7 @@ const Review = () => {
           className="absolute right-4 md:right-12 z-10 p-3 rounded-full bg-white shadow-lg hover:bg-[#fefaf2] transition-all duration-300 group"
           aria-label="Next testimonial"
         >
-          <ChevronRight className="w-6 h-6 text-gray-600 group-hover:text-[#f7ce83] transition-colors" />
+          <ChevronRight className="h-4 w-4 md:w-6 md:h-6 text-gray-600 group-hover:text-[#f7ce83] transition-colors" />
         </button>
       </div>
     </div>
