@@ -145,8 +145,9 @@ const AboutUs = () => {
           </div>
 
           {/* Text Right */}
-          <div className="md:w-1/2 w-full space-y-4">
-            <h2 className="text-3xl md:text-7xl font-normal font-serif leading-tight tracking-wide title">
+          <div className="md:w-1/2 w-full space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
+
+            <h2 className="text-3xl text-center md:text-7xl font-normal font-serif leading-tight tracking-wide title">
               The Beginning of Our Journey
             </h2>
             <div className="w-16 h-[2px] bg-[#f7ce83] mb-4 "></div>
@@ -166,7 +167,8 @@ const AboutUs = () => {
           id="section"
         >
           {/* Text Left */}
-          <div className="md:w-1/2 w-full space-y-4">
+          <div className="md:w-1/2 w-full space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
+
             <h2 className="text-3xl md:text-7xl font-normal font-serif tracking-wide title">
               Who We Are
             </h2>
