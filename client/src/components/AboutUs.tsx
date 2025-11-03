@@ -53,8 +53,8 @@ const AboutUs = () => {
         });
         sections.forEach((section) => {
           const el = section as Element;
-          const title = el.querySelector(".title");
-          const subtitle = el.querySelector(".subtitle");
+          const title = el.querySelector(".abouttitle");
+          const subtitle = el.querySelector(".aboutsubtitle");
           const image = el.querySelector(".image");
 
           const titleSplit = SplitText.create(title, {
@@ -135,29 +135,34 @@ const AboutUs = () => {
           id="section"
         >
           {/* Image Left */}
-          <div className="md:w-1/2 w-full overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 ease-in-out">
-            <img
-              src={scissors}
-              alt="Scissors symbolizing craftsmanship"
-              className="w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 ease-out image"
-              loading="lazy"
-              decoding="async"
-            />
+          <div className="md:w-1/2 w-full flex justify-center">
+            <div className="relative w-[85%] md:w-[80%] lg:w-[75%] aspect-[4/5] overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 ease-in-out">
+              <img
+                src={scissors}
+                alt="Scissors symbolizing craftsmanship"
+                className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 ease-out image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           </div>
 
           {/* Text Right */}
-          <div className="md:w-1/2 w-full space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
-            <h2 className="text-3xl text-center md:text-7xl font-normal font-serif leading-tight tracking-wide title">
-              The Beginning of Our Journey
-            </h2>
-            <div className="w-16 h-[2px] bg-[#f7ce83] mb-4 "></div>
-            <p className="text-gray-700 leading-relaxed text-lg subtitle">
-              Our story began in the heart of Algeria — where craftsmanship is a
-              heritage and style is a way of life. Inspired by local artisans
-              and everyday beauty, we design clothing that celebrates tradition
-              while embracing modern comfort. Every stitch tells a story of
-              pride, patience, and passion.
-            </p>
+          {/* Text Right */}
+          <div className="md:w-1/2 w-full flex justify-start">
+            <div className="space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
+              <h2 className="text-3xl md:text-7xl font-normal font-serif leading-tight tracking-wide abouttitle">
+                The Beginning of Our Journey
+              </h2>
+              <div className="w-16 h-[2px] bg-[#f7ce83] mb-4"></div>
+              <p className="text-gray-700 leading-relaxed text-lg aboutsubtitle">
+                Our story began in the heart of Algeria — where craftsmanship is
+                a heritage and style is a way of life. Inspired by local
+                artisans and everyday beauty, we design clothing that celebrates
+                tradition while embracing modern comfort. Every stitch tells a
+                story of pride, patience, and passion.
+              </p>
+            </div>
           </div>
         </div>
 
@@ -167,29 +172,34 @@ const AboutUs = () => {
           id="section"
         >
           {/* Text Left */}
-          <div className="md:w-1/2 w-full space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
-            <h2 className="text-3xl md:text-7xl font-normal font-serif tracking-wide title">
-              Who We Are
-            </h2>
-            <div className="w-16 h-[2px] bg-[#f7ce83] mb-4"></div>
-            <p className="text-gray-700 leading-relaxed text-lg subtitle">
-              We’re more than a fashion brand — we’re a reflection of Algeria’s
-              spirit. Our collections blend everyday ease with timeless
-              elegance, crafted for women who move with confidence and live with
-              purpose. From morning markets to evening gatherings, we dress the
-              rhythm of real life with authenticity and charm.
-            </p>
+          <div className="md:w-1/2 w-full flex justify-start">
+            <div className="space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
+              <h2 className="text-3xl md:text-7xl font-normal font-serif tracking-wide abouttitle">
+                Who We Are
+              </h2>
+              <div className="w-16 h-[2px] bg-[#f7ce83] mb-4"></div>
+              <p className="text-gray-700 leading-relaxed text-lg aboutsubtitle">
+                We’re more than a fashion brand — we’re a reflection of
+                Algeria’s spirit. Our collections blend everyday ease with
+                timeless elegance, crafted for women who move with confidence
+                and live with purpose. From morning markets to evening
+                gatherings, we dress the rhythm of real life with authenticity
+                and charm.
+              </p>
+            </div>
           </div>
 
           {/* Image Right */}
-          <div className="md:w-1/2 w-full overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 ease-in-out">
-            <img
-              src={woman}
-              alt="Algerian fashion designer"
-              className="w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 ease-out image"
-              loading="lazy"
-              decoding="async"
-            />
+          <div className="md:w-1/2 w-full flex justify-center">
+            <div className="relative w-[85%] md:w-[80%] lg:w-[75%] aspect-[4/5] overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all duration-500 ease-in-out">
+              <img
+                src={woman}
+                alt="Scissors symbolizing craftsmanship"
+                className="absolute inset-0 w-full h-full object-cover scale-100 hover:scale-105 transition-transform duration-700 ease-out image"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
           </div>
         </div>
       </section>
