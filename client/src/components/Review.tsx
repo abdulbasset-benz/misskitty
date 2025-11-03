@@ -5,37 +5,37 @@ import quoteSign from "@/assets/quote.svg";
 const testimonials = [
   {
     id: 1,
-    name: "John Doe",
+    name: "Rania",
     quote:
       "Thank you for the excellent product, I'm very satisfied, and wish you all the best!",
   },
   {
     id: 2,
-    name: "Jane Smith",
+    name: "Souna",
     quote:
       "Mashallah, everything is exactly as described. Perfect! The price does not reflect the quality. May Allah bless you!",
   },
   {
     id: 3,
-    name: "Alice Johnson",
+    name: "Cheri Fa",
     quote:
       "I am extremely happy with my purchase — the quality exceeded my expectations. Highly recommend to everyone!",
   },
   {
     id: 4,
-    name: "Michael Brown",
+    name: "Meriem B.",
     quote:
       "I have received my order, and I love it! Great quality. All the best to come!",
   },
   {
     id: 5,
-    name: "Emily Davis",
+    name: "Manar_Manar",
     quote:
       "CouCou! I have just received my order and I am very satisfied. The quality is top-notch — thank you!",
   },
   {
     id: 6,
-    name: "David Wilson",
+    name: "Meriem M.",
     quote:
       "I'm telling the truth when I say that the product exceeds its price. May Allah reward you for your honesty and integrity.",
   },
