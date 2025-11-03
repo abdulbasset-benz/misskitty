@@ -14,41 +14,46 @@ gsap.registerPlugin(SplitText, ScrollTrigger, useGSAP);
 
 const Collection = () => {
   const container = useRef<HTMLDivElement>(null);
-  useGSAP(() => {
-    const headingSplit = SplitText.create(".heading", {
-      type: "words",
-      mask: "words",
-    });
-    const subHeadingSplit = SplitText.create(".subheading", {
-      type: "words",
-      mask: "words",
-    });
+  useGSAP(
+    () => {
+      document.fonts.ready.then(() => {
+        const headingSplit = SplitText.create(".heading", {
+          type: "words",
+          mask: "words",
+        });
+        const subHeadingSplit = SplitText.create(".subheading", {
+          type: "words",
+          mask: "words",
+        });
 
-    gsap.from(subHeadingSplit.words, {
-      yPercent: 120,
-      duration: 1,
-      ease: "power4.out",
-      stagger: 0.08,
-      scrollTrigger: {
-        trigger: ".subheading",
-        start: "top 80%",
-        end: "bottom 50%",
-        scrub: 1,
-      },
-    });
-    gsap.from(headingSplit.words, {
-      yPercent: 120,
-      duration: 1,
-      ease: "power4.out",
-      stagger: 0.08,
-      scrollTrigger: {
-        trigger: ".heading",
-        start: "top 80%",
-        end: "bottom 50%",
-        scrub: 1,
-      },
-    });
-  }, {scope: container});
+        gsap.from(subHeadingSplit.words, {
+          yPercent: 120,
+          duration: 1,
+          ease: "power4.out",
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: ".subheading",
+            start: "top 80%",
+            end: "bottom 50%",
+            scrub: 1,
+          },
+        });
+        gsap.from(headingSplit.words, {
+          yPercent: 120,
+          duration: 1,
+          ease: "power4.out",
+          stagger: 0.08,
+          scrollTrigger: {
+            trigger: ".heading",
+            start: "top 80%",
+            end: "bottom 50%",
+            scrub: 1,
+          },
+        });
+      });
+    },
+    { scope: container }
+  );
   const featuredImages = [
     { src: dress1, alt: "Elegant Evening Gown", category: "Evenwear" },
     { src: dress2, alt: "Classic Cocktail Dress", category: "Cocktail" },

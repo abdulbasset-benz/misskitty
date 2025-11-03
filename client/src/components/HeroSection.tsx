@@ -17,39 +17,40 @@ const HeroSection = () => {
   useGSAP(
     () => {
       // Split main hero title into words
-      const titleSplit = SplitText.create(".heroTitle", {
-        type: "words",
-        wordsClass: "word",
-        mask: "words",
-      });
-
-      // Animate hero title words upward
-      gsap.from(titleSplit.words, {
-        yPercent: 140,
-        duration: 1.5,
-        ease: "power4.inOut",
-        stagger: 0.05,
-      });
-
-      const sideTitles = gsap.utils.toArray<HTMLElement>(".sidetitle");
-
-      const splits = sideTitles.map((el) =>
-        // create a SplitText for each element
-        SplitText.create(el, {
+      document.fonts.ready.then(() => {
+        const titleSplit = SplitText.create(".heroTitle", {
           type: "words",
           wordsClass: "word",
           mask: "words",
-        })
-      );
+        });
 
-      splits.forEach((split) => {
-        gsap.from(split.words, {
-          yPercent: 120,
+        // Animate hero title words upward
+        gsap.from(titleSplit.words, {
+          yPercent: 140,
           duration: 1.5,
           ease: "power4.inOut",
+          stagger: 0.05,
+        });
+
+        const sideTitles = gsap.utils.toArray<HTMLElement>(".sidetitle");
+
+        const splits = sideTitles.map((el) =>
+          // create a SplitText for each element
+          SplitText.create(el, {
+            type: "words",
+            wordsClass: "word",
+            mask: "words",
+          })
+        );
+
+        splits.forEach((split) => {
+          gsap.from(split.words, {
+            yPercent: 120,
+            duration: 1.5,
+            ease: "power4.inOut",
+          });
         });
       });
-
       const images = gsap.utils.toArray<HTMLElement>(".image");
       gsap.set(images, { yPercent: 250, autoAlpha: 0 });
 

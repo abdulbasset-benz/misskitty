@@ -17,89 +17,90 @@ const AboutUs = () => {
       gsap.set(".image", {
         clipPath: "inset(0 100% 0 0)",
       });
-
-      const headingSplit = SplitText.create(".heading", {
-        type: "words",
-        mask: "words",
-      });
-      const subHeadingSplit = SplitText.create(".subheading", {
-        type: "words",
-        mask: "words",
-      });
-
-      gsap.from(subHeadingSplit.words, {
-        yPercent: 120,
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.08,
-        scrollTrigger: {
-          trigger: ".subheading",
-          start: "top 80%",
-          end: "bottom 50%",
-          scrub: 1,
-        },
-      });
-      gsap.from(headingSplit.words, {
-        yPercent: 120,
-        duration: 1,
-        ease: "power4.out",
-        stagger: 0.08,
-        scrollTrigger: {
-          trigger: ".heading",
-          start: "top 80%",
-          end: "bottom 50%",
-          scrub: 1,
-        },
-      });
-      sections.forEach((section) => {
-        const el = section as Element;
-        const title = el.querySelector(".title");
-        const subtitle = el.querySelector(".subtitle");
-        const image = el.querySelector(".image");
-
-        const titleSplit = SplitText.create(title, {
-          type: "lines",
-          mask: "lines",
+      document.fonts.ready.then(() => {
+        const headingSplit = SplitText.create(".heading", {
+          type: "words",
+          mask: "words",
+        });
+        const subHeadingSplit = SplitText.create(".subheading", {
+          type: "words",
+          mask: "words",
         });
 
-        const subtitleSplit = SplitText.create(subtitle, {
-          type: "lines",
-          mask: "lines",
-        });
-
-        gsap.to(image, {
-          clipPath: "inset(0 0% 0 0)",
-          duration: 1,
-          ease: "power4.inOut",
-          scrollTrigger: {
-            trigger: image,
-            start: "top 80%",
-            end: "bottom 50%",
-          },
-        });
-
-        gsap.from(titleSplit.lines, {
+        gsap.from(subHeadingSplit.words, {
           yPercent: 120,
           duration: 1,
           ease: "power4.out",
+          stagger: 0.08,
           scrollTrigger: {
-            trigger: title,
+            trigger: ".subheading",
             start: "top 80%",
             end: "bottom 50%",
             scrub: 1,
           },
         });
-
-        gsap.from(subtitleSplit.lines, {
+        gsap.from(headingSplit.words, {
           yPercent: 120,
           duration: 1,
           ease: "power4.out",
+          stagger: 0.08,
           scrollTrigger: {
-            trigger: subtitle,
+            trigger: ".heading",
             start: "top 80%",
             end: "bottom 50%",
             scrub: 1,
           },
+        });
+        sections.forEach((section) => {
+          const el = section as Element;
+          const title = el.querySelector(".title");
+          const subtitle = el.querySelector(".subtitle");
+          const image = el.querySelector(".image");
+
+          const titleSplit = SplitText.create(title, {
+            type: "lines",
+            mask: "lines",
+          });
+
+          const subtitleSplit = SplitText.create(subtitle, {
+            type: "lines",
+            mask: "lines",
+          });
+
+          gsap.to(image, {
+            clipPath: "inset(0 0% 0 0)",
+            duration: 1,
+            ease: "power4.inOut",
+            scrollTrigger: {
+              trigger: image,
+              start: "top 80%",
+              end: "bottom 50%",
+            },
+          });
+
+          gsap.from(titleSplit.lines, {
+            yPercent: 120,
+            duration: 1,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: title,
+              start: "top 80%",
+              end: "bottom 50%",
+              scrub: 1,
+            },
+          });
+
+          gsap.from(subtitleSplit.lines, {
+            yPercent: 120,
+            duration: 1,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: subtitle,
+              start: "top 80%",
+              end: "bottom 50%",
+              scrub: 1,
+            },
+          });
         });
       });
     },
@@ -146,7 +147,6 @@ const AboutUs = () => {
 
           {/* Text Right */}
           <div className="md:w-1/2 w-full space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
-
             <h2 className="text-3xl text-center md:text-7xl font-normal font-serif leading-tight tracking-wide title">
               The Beginning of Our Journey
             </h2>
@@ -168,7 +168,6 @@ const AboutUs = () => {
         >
           {/* Text Left */}
           <div className="md:w-1/2 w-full space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
-
             <h2 className="text-3xl md:text-7xl font-normal font-serif tracking-wide title">
               Who We Are
             </h2>
