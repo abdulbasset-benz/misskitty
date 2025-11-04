@@ -40,12 +40,12 @@ const Navbar = () => {
 
         {/* Center Logo */}
         <div className="flex-1 flex justify-center">
-          <a
-            href="#home"
+          <Link
+            to="/"
             className="font-semibold text-black text-xl md:text-2xl tracking-tight"
           >
             Miss Kitty
-          </a>
+          </Link>
         </div>
 
         {/* Right Links */}

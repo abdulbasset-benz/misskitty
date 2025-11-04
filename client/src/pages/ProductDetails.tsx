@@ -14,13 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
 type ProductImage = {
@@ -54,7 +47,7 @@ type OrderForm = {
   remarques: string;
 };
 
-const DELIVERY_FEE = 500; // Frais de livraison fixes
+const DELIVERY_FEE = 500;
 
 const ALGERIAN_WILAYAS = [
   "01 - Adrar",
@@ -125,7 +118,6 @@ const ProductDetails = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
     type: "success" | "error" | null;
@@ -187,8 +179,8 @@ const ProductDetails = () => {
         userName: orderForm.userName,
         phoneNumber: orderForm.phoneNumber,
         wilaya: orderForm.wilaya,
-        commune: orderForm.commune,
-        address: orderForm.address,
+        commune: orderForm.commune || "",
+        address: orderForm.address || "",
         livraison: DELIVERY_FEE,
         remarques: orderForm.remarques,
       });
@@ -213,10 +205,7 @@ const ProductDetails = () => {
           remarques: "",
         });
 
-        setTimeout(() => {
-          setIsOrderModalOpen(false);
-          setSubmitStatus({ type: null, message: "" });
-        }, 3000);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } catch (error: any) {
       console.error("❌ خطأ في إرسال الطلب:", error);
@@ -229,7 +218,7 @@ const ProductDetails = () => {
             type: "error",
             message: errorData.message || "البيانات المدخلة غير صحيحة",
           });
-        }  else {
+        } else {
           setSubmitStatus({
             type: "error",
             message: errorData.message || "حدث خطأ في معالجة الطلب",
@@ -289,7 +278,7 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-[#fefaf2]">
-      {/* Enhanced Breadcrumb - Mobile Responsive */}
+      {/* Breadcrumb */}
       <div className="bg-white/80 backdrop-blur-sm border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <nav className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-500 font-light flex-wrap">
@@ -306,7 +295,7 @@ const ProductDetails = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-12">
-          {/* Enhanced Images Section - Mobile Responsive */}
+          {/* Images Section */}
           <div className="space-y-4 sm:space-y-6">
             <div className="relative aspect-square bg-white rounded-xl sm:rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
               {lightboxImages.length > 0 ? (
@@ -332,7 +321,6 @@ const ProductDetails = () => {
                 />
               )}
               
-              {/* Navigation Arrows - Mobile Responsive */}
               {product.images.length > 1 && (
                 <>
                   <button
@@ -351,7 +339,6 @@ const ProductDetails = () => {
               )}
             </div>
 
-            {/* Enhanced Thumbnail Gallery - Mobile Responsive */}
             {product.images.length > 1 && (
               <div className="flex gap-2 sm:gap-4 overflow-x-auto pb-2 sm:pb-4">
                 {product.images.map((img, index) => (
@@ -375,7 +362,7 @@ const ProductDetails = () => {
             )}
           </div>
 
-          {/* Enhanced Product Info Section - Mobile Responsive */}
+          {/* Product Info Section */}
           <div className="space-y-4 sm:space-y-6">
             {/* Header */}
             <div className="space-y-3 sm:space-y-4">
@@ -407,14 +394,13 @@ const ProductDetails = () => {
                   {product.stock > 0 ? `${product.stock} available` : "Out of stock"}
                 </div>
               </div>
-              {/* Delivery Fee Notice */}
               <div className="flex items-center gap-2 text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg p-3">
                 <Truck className="w-4 h-4 text-blue-600 flex-shrink-0" />
                 <span>Delivery fee: <strong className="text-blue-700">DZD {DELIVERY_FEE.toLocaleString()}</strong> for all orders</span>
               </div>
             </div>
 
-            {/* Features - Responsive Grid */}
+            {/* Features */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 py-4 border-y border-gray-100">
               <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 p-3 bg-gray-50 rounded-lg">
                 <Truck className="w-5 h-5 text-[#d4b985] flex-shrink-0" />
@@ -441,237 +427,16 @@ const ProductDetails = () => {
               </div>
             </div>
 
-            {/* Order Button - Mobile Responsive */}
-            <div className="pt-2 sm:pt-4">
-              <Dialog open={isOrderModalOpen} onOpenChange={setIsOrderModalOpen}>
-                <DialogTrigger asChild>
-                  <Button
-                    disabled={product.stock <= 0}
-                    className={`w-full py-4 sm:py-6 text-base sm:text-lg font-light tracking-wide transition-all duration-500 ${
-                      product.stock > 0
-                        ? "bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black hover:from-[#c0a46c] hover:to-[#e0b972] shadow-lg hover:shadow-xl"
-                        : "bg-gray-200 text-gray-500 cursor-not-allowed"
-                    }`}
-                  >
-                    <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
-                    {product.stock > 0 ? "Order Now" : "Out of Stock"}
-                  </Button>
-                </DialogTrigger>
-
-                <DialogContent className="max-w-[95vw] sm:max-w-2xl max-h-[90vh] overflow-y-auto bg-white/95 backdrop-blur-sm border-0 shadow-2xl mx-2 sm:mx-auto">
-                  <DialogHeader className="text-center">
-                    <div className="w-16 h-1 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] mx-auto mb-4"></div>
-                    <DialogTitle className="text-2xl sm:text-3xl font-serif font-light">
-                      Complete Your Order
-                    </DialogTitle>
-                    <p className="text-gray-600 font-light mt-2 text-sm sm:text-base">
-                      Provide your details to secure this exquisite piece
-                    </p>
-                  </DialogHeader>
-
-                  <form onSubmit={handleSubmitOrder} className="space-y-6 sm:space-y-8 mt-4 sm:mt-6">
-                    {/* Success/Error Alert */}
-                    {submitStatus.type && (
-                      <Alert className={submitStatus.type === "success" ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}>
-                        {submitStatus.type === "success" ? (
-                          <CheckCircle className="h-4 w-4 text-green-600" />
-                        ) : (
-                          <XCircle className="h-4 w-4 text-red-600" />
-                        )}
-                        <AlertDescription className={submitStatus.type === "success" ? "text-green-800" : "text-red-800"}>
-                          {submitStatus.message}
-                        </AlertDescription>
-                      </Alert>
-                    )}
-
-                    {/* Product Preview with Total */}
-                    <div className="bg-gradient-to-br from-gray-50 to-white p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-100">
-                      <div className="flex items-center gap-4 sm:gap-6 mb-4">
-                        <img
-                          src={product.images[0]?.url || "/placeholder.png"}
-                          alt={product.name}
-                          className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg sm:rounded-xl shadow-md"
-                        />
-                        <div className="flex-1">
-                          <h3 className="font-serif text-lg sm:text-xl text-gray-900">{product.name}</h3>
-                          <p className="text-xl sm:text-2xl font-light text-gray-900 mt-1">
-                            DZD {product.price.toLocaleString()}
-                          </p>
-                        </div>
-                      </div>
-                      
-                      {/* Price Breakdown */}
-                      <div className="border-t border-gray-200 pt-3 space-y-2">
-                        <div className="flex justify-between text-sm text-gray-600">
-                          <span>Product Price</span>
-                          <span>DZD {product.price.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between text-sm text-gray-600">
-                          <span>Delivery Fee</span>
-                          <span>DZD {DELIVERY_FEE.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between text-lg font-medium text-gray-900 pt-2 border-t border-gray-200">
-                          <span>Total</span>
-                          <span className="text-[#d4b985]">DZD {totalPrice.toLocaleString()}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Form Sections */}
-                    <div className="space-y-4 sm:space-y-6">
-                      <div>
-                        <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Personal Information</h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="userName" className="text-gray-700 font-medium text-sm sm:text-base">Full Name *</Label>
-                            <Input
-                              id="userName"
-                              value={orderForm.userName}
-                              onChange={(e) => handleInputChange("userName", e.target.value)}
-                              placeholder="Enter your full name"
-                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base"
-                              required
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label htmlFor="phoneNumber" className="text-gray-700 font-medium text-sm sm:text-base">Phone Number *</Label>
-                            <Input
-                              id="phoneNumber"
-                              value={orderForm.phoneNumber}
-                              onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
-                              placeholder="0555 123 456"
-                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base"
-                              required
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Delivery Details</h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="wilaya" className="text-gray-700 font-medium text-sm sm:text-base">Wilaya *</Label>
-                            <Select
-                              value={orderForm.wilaya}
-                              onValueChange={(value) => handleInputChange("wilaya", value)}
-                              required
-                            >
-                              <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
-                                <SelectValue placeholder="Select your wilaya" />
-                              </SelectTrigger>
-                              <SelectContent className="max-h-[300px]">
-                                {ALGERIAN_WILAYAS.map((wilaya) => (
-                                  <SelectItem key={wilaya} value={wilaya} className="text-sm sm:text-base">{wilaya}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          
-                          <div className="space-y-2">
-                            <Label htmlFor="commune" className="text-gray-700 font-medium text-sm sm:text-base">Commune *</Label>
-                            <Input
-                              id="commune"
-                              value={orderForm.commune}
-                              onChange={(e) => handleInputChange("commune", e.target.value)}
-                              placeholder="Enter your commune"
-                              className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base"
-                              required
-                            />
-                          </div>
-                        </div>
-
-                        <div className="space-y-2 mt-3 sm:mt-4">
-                          <Label htmlFor="address" className="text-gray-700 font-medium text-sm sm:text-base">Full Address *</Label>
-                          <Textarea
-                            id="address"
-                            value={orderForm.address}
-                            onChange={(e) => handleInputChange("address", e.target.value)}
-                            placeholder="Enter your complete delivery address"
-                            className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
-                            required
-                          />
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Dress Specifications</h4>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-                          <div className="space-y-2">
-                            <Label htmlFor="size" className="text-gray-700 font-medium text-sm sm:text-base">Size *</Label>
-                            <Select
-                              value={orderForm.size}
-                              onValueChange={(value) => handleInputChange("size", value)}
-                              required
-                            >
-                              <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
-                                <SelectValue placeholder="Select size" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {availableSizes.map((size) => (
-                                  <SelectItem key={size} value={size} className="text-sm sm:text-base">{size}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label htmlFor="color" className="text-gray-700 font-medium text-sm sm:text-base">Color *</Label>
-                            <Select
-                              value={orderForm.color}
-                              onValueChange={(value) => handleInputChange("color", value)}
-                              required
-                            >
-                              <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
-                                <SelectValue placeholder="Select color" />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {availableColors.map((color) => (
-                                  <SelectItem key={color} value={color} className="text-sm sm:text-base">{color}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                        </div>
-                      </div>
-
-                      
-                    </div>
-
-                    <Button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black text-base sm:text-lg font-light hover:from-[#c0a46c] hover:to-[#e0b972] transition-all duration-500 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                      {isSubmitting ? (
-                        <div className="flex items-center gap-2">
-                          <div className="animate-spin rounded-full h-4 w-4 sm:h-5 border-b-2 border-black"></div>
-                          Processing Your Order...
-                        </div>
-                      ) : (
-                        "Submit Order"
-                      )}
-                    </Button>
-
-                    <p className="text-xs text-gray-500 text-center font-light">
-                      Your order will be processed securely. Total amount: DZD {totalPrice.toLocaleString()}
-                    </p>
-                  </form>
-                </DialogContent>
-              </Dialog>
-            </div>
-
-            {/* Description - Mobile Responsive */}
-            <div className="space-y-3 sm:space-y-4 pt-4 sm:pt-6">
+            {/* Description */}
+            <div className="space-y-3 sm:space-y-4">
               <h3 className="text-lg font-serif text-gray-900">Description</h3>
               <p className="text-gray-600 leading-relaxed font-light text-sm sm:text-base">
                 {product.description}
               </p>
             </div>
 
-            {/* Available Options - Mobile Responsive */}
-            <div className="space-y-4 sm:space-y-6 pt-4 sm:pt-6">
+            {/* Available Options */}
+            <div className="space-y-4 sm:space-y-6">
               {availableSizes.length > 0 && (
                 <div>
                   <h3 className="text-lg font-serif text-gray-900 mb-2 sm:mb-3">Available Sizes</h3>
@@ -703,6 +468,228 @@ const ProductDetails = () => {
                   </div>
                 </div>
               )}
+            </div>
+          </div>
+        </div>
+
+        {/* Order Form Section - Below Product Details */}
+        <div className="mt-12 sm:mt-16 max-w-4xl mx-auto">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            {/* Form Header */}
+            <div className="bg-gradient-to-r from-[#d4b985] to-[#f7ce83] p-6 sm:p-8 text-center">
+              <div className="w-16 h-1 bg-white/50 mx-auto mb-4"></div>
+              <h2 className="text-2xl sm:text-3xl font-serif font-light text-gray-900 mb-2">
+                Order This Dress
+              </h2>
+              <p className="text-gray-700 font-light text-sm sm:text-base">
+                Fill in your details below to complete your order
+              </p>
+            </div>
+
+            {/* Form Content */}
+            <div className="p-6 sm:p-8">
+              <form onSubmit={handleSubmitOrder} className="space-y-6 sm:space-y-8">
+                {/* Success/Error Alert */}
+                {submitStatus.type && (
+                  <Alert className={submitStatus.type === "success" ? "bg-green-50 border-green-200" : "bg-red-50 border-red-200"}>
+                    {submitStatus.type === "success" ? (
+                      <CheckCircle className="h-4 w-4 text-green-600" />
+                    ) : (
+                      <XCircle className="h-4 w-4 text-red-600" />
+                    )}
+                    <AlertDescription className={submitStatus.type === "success" ? "text-green-800" : "text-red-800"}>
+                      {submitStatus.message}
+                    </AlertDescription>
+                  </Alert>
+                )}
+
+                {/* Product Summary */}
+                <div className="bg-gradient-to-br from-gray-50 to-white p-4 sm:p-6 rounded-xl border border-gray-100">
+                  <div className="flex items-center gap-4 sm:gap-6 mb-4">
+                    <img
+                      src={product.images[0]?.url || "/placeholder.png"}
+                      alt={product.name}
+                      className="w-16 h-16 sm:w-20 sm:h-20 object-cover rounded-lg shadow-md"
+                    />
+                    <div className="flex-1">
+                      <h3 className="font-serif text-lg sm:text-xl text-gray-900">{product.name}</h3>
+                      <p className="text-xl sm:text-2xl font-light text-gray-900 mt-1">
+                        DZD {product.price.toLocaleString()}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="border-t border-gray-200 pt-3 space-y-2">
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Product Price</span>
+                      <span>DZD {product.price.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-sm text-gray-600">
+                      <span>Delivery Fee</span>
+                      <span>DZD {DELIVERY_FEE.toLocaleString()}</span>
+                    </div>
+                    <div className="flex justify-between text-lg font-medium text-gray-900 pt-2 border-t border-gray-200">
+                      <span>Total</span>
+                      <span className="text-[#d4b985]">DZD {totalPrice.toLocaleString()}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Personal Information */}
+                <div>
+                  <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Personal Information</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="userName" className="text-gray-700 font-medium text-sm sm:text-base">Full Name *</Label>
+                      <Input
+                        id="userName"
+                        value={orderForm.userName}
+                        onChange={(e) => handleInputChange("userName", e.target.value)}
+                        placeholder="Enter your full name"
+                        className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="phoneNumber" className="text-gray-700 font-medium text-sm sm:text-base">Phone Number *</Label>
+                      <Input
+                        id="phoneNumber"
+                        value={orderForm.phoneNumber}
+                        onChange={(e) => handleInputChange("phoneNumber", e.target.value)}
+                        placeholder="0555 123 456"
+                        className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Delivery Details */}
+                <div>
+                  <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Delivery Details</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="wilaya" className="text-gray-700 font-medium text-sm sm:text-base">Wilaya *</Label>
+                      <Select
+                        value={orderForm.wilaya}
+                        onValueChange={(value) => handleInputChange("wilaya", value)}
+                        required
+                      >
+                        <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
+                          <SelectValue placeholder="Select your wilaya" />
+                        </SelectTrigger>
+                        <SelectContent className="max-h-[300px]">
+                          {ALGERIAN_WILAYAS.map((wilaya) => (
+                            <SelectItem key={wilaya} value={wilaya} className="text-sm sm:text-base">{wilaya}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="commune" className="text-gray-700 font-medium text-sm sm:text-base">Commune</Label>
+                      <Input
+                        id="commune"
+                        value={orderForm.commune}
+                        onChange={(e) => handleInputChange("commune", e.target.value)}
+                        placeholder="Enter your commune (optional)"
+                        className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 mt-3 sm:mt-4">
+                    <Label htmlFor="address" className="text-gray-700 font-medium text-sm sm:text-base">Full Address</Label>
+                    <Textarea
+                      id="address"
+                      value={orderForm.address}
+                      onChange={(e) => handleInputChange("address", e.target.value)}
+                      placeholder="Enter your complete delivery address (optional)"
+                      className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 min-h-[80px] sm:min-h-[100px] text-sm sm:text-base"
+                    />
+                  </div>
+                </div>
+
+                {/* Dress Specifications */}
+                <div>
+                  <h4 className="font-serif text-base sm:text-lg text-gray-900 mb-3 sm:mb-4">Dress Specifications</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="size" className="text-gray-700 font-medium text-sm sm:text-base">Size *</Label>
+                      <Select
+                        value={orderForm.size}
+                        onValueChange={(value) => handleInputChange("size", value)}
+                        required
+                      >
+                        <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
+                          <SelectValue placeholder="Select size" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {availableSizes.map((size) => (
+                            <SelectItem key={size} value={size} className="text-sm sm:text-base">{size}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="color" className="text-gray-700 font-medium text-sm sm:text-base">Color *</Label>
+                      <Select
+                        value={orderForm.color}
+                        onValueChange={(value) => handleInputChange("color", value)}
+                        required
+                      >
+                        <SelectTrigger className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 text-sm sm:text-base">
+                          <SelectValue placeholder="Select color" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {availableColors.map((color) => (
+                            <SelectItem key={color} value={color} className="text-sm sm:text-base">{color}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Additional Notes */}
+                <div className="space-y-2">
+                  <Label htmlFor="remarques" className="text-gray-700 font-medium text-sm sm:text-base">Additional Notes</Label>
+                  <Textarea
+                    id="remarques"
+                    value={orderForm.remarques}
+                    onChange={(e) => handleInputChange("remarques", e.target.value)}
+                    placeholder="Any special requests or notes (optional)"
+                    className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 min-h-[80px] text-sm sm:text-base"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <Button
+                  type="submit"
+                  disabled={isSubmitting || product.stock <= 0}
+                  className="w-full py-4 sm:py-5 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black text-base sm:text-lg font-light hover:from-[#c0a46c] hover:to-[#e0b972] transition-all duration-500 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black"></div>
+                      Processing Your Order...
+                    </div>
+                  ) : product.stock <= 0 ? (
+                    "Out of Stock"
+                  ) : (
+                    <>
+                      <ShoppingBag className="w-5 h-5 mr-2" />
+                      Submit Order - DZD {totalPrice.toLocaleString()}
+                    </>
+                  )}
+                </Button>
+
+                <p className="text-xs text-gray-500 text-center font-light">
+                  By submitting this order, you agree to pay DZD {totalPrice.toLocaleString()} upon delivery
+                </p>
+              </form>
             </div>
           </div>
         </div>
