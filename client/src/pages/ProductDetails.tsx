@@ -44,7 +44,6 @@ type OrderForm = {
   size: string;
   color: string;
   livraison: string;
-  remarques: string;
 };
 
 const DELIVERY_FEE = 500;
@@ -135,7 +134,6 @@ const ProductDetails = () => {
     size: "",
     color: "",
     livraison: DELIVERY_FEE.toString(),
-    remarques: "",
   });
 
   const availableSizes = product?.sizes?.length ? product.sizes : DEFAULT_SIZES;
@@ -182,7 +180,6 @@ const ProductDetails = () => {
         commune: orderForm.commune || "",
         address: orderForm.address || "",
         livraison: DELIVERY_FEE,
-        remarques: orderForm.remarques,
       });
 
       if (response.data.success) {
@@ -202,7 +199,6 @@ const ProductDetails = () => {
           size: availableSizes[0] || "",
           color: availableColors[0] || "",
           livraison: DELIVERY_FEE.toString(),
-          remarques: "",
         });
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -654,16 +650,7 @@ const ProductDetails = () => {
                 </div>
 
                 {/* Additional Notes */}
-                <div className="space-y-2">
-                  <Label htmlFor="remarques" className="text-gray-700 font-medium text-sm sm:text-base">Additional Notes</Label>
-                  <Textarea
-                    id="remarques"
-                    value={orderForm.remarques}
-                    onChange={(e) => handleInputChange("remarques", e.target.value)}
-                    placeholder="Any special requests or notes (optional)"
-                    className="border-gray-300 focus:border-[#d4b985] transition-colors duration-300 min-h-[80px] text-sm sm:text-base"
-                  />
-                </div>
+                
 
                 {/* Submit Button */}
                 <Button
