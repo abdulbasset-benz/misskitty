@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router";
 import api from "@/api/axios";
 import { ShoppingBag, Truck, Shield, Heart, ChevronLeft, ChevronRight, CheckCircle, XCircle } from "lucide-react";
@@ -123,6 +123,8 @@ const ProductDetails = () => {
     message: string;
   }>({ type: null, message: "" });
 
+  const orderFormRef = useRef<HTMLDivElement>(null);
+
   const [orderForm, setOrderForm] = useState<OrderForm>({
     dressName: "",
     userName: "",
@@ -160,6 +162,10 @@ const ProductDetails = () => {
 
   const handleInputChange = (field: keyof OrderForm, value: string) => {
     setOrderForm((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const scrollToOrderForm = () => {
+    orderFormRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   const handleSubmitOrder = async (e: React.FormEvent) => {
@@ -396,6 +402,22 @@ const ProductDetails = () => {
               </div>
             </div>
 
+            {/* Order Button */}
+            <div className="pt-2 sm:pt-4">
+              <Button
+                onClick={scrollToOrderForm}
+                disabled={product.stock <= 0}
+                className={`w-full py-4 sm:py-6 text-base sm:text-lg font-light tracking-wide transition-all duration-500 ${
+                  product.stock > 0
+                    ? "bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black hover:from-[#c0a46c] hover:to-[#e0b972] shadow-lg hover:shadow-xl"
+                    : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                }`}
+              >
+                <ShoppingBag className="w-4 h-4 sm:w-5 sm:h-5 mr-2 sm:mr-3" />
+                {product.stock > 0 ? "Order Now" : "Out of Stock"}
+              </Button>
+            </div>
+
             {/* Features */}
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-2 py-4 border-y border-gray-100">
               <div className="flex flex-col sm:flex-row items-center text-center sm:text-left gap-2 p-3 bg-gray-50 rounded-lg">
@@ -469,7 +491,7 @@ const ProductDetails = () => {
         </div>
 
         {/* Order Form Section - Below Product Details */}
-        <div className="mt-12 sm:mt-16 max-w-4xl mx-auto">
+        <div ref={orderFormRef} className="mt-12 sm:mt-16 max-w-4xl mx-auto scroll-mt-4">
           <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
             {/* Form Header */}
             <div className="bg-gradient-to-r from-[#d4b985] to-[#f7ce83] p-6 sm:p-8 text-center">
@@ -648,9 +670,6 @@ const ProductDetails = () => {
                     </div>
                   </div>
                 </div>
-
-                {/* Additional Notes */}
-                
 
                 {/* Submit Button */}
                 <Button
