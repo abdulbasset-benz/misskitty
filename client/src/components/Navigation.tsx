@@ -1,25 +1,44 @@
 import { useState } from "react";
 import { Link } from "react-router";
-import { Globe } from "lucide-react"; // optional icon
+import { Globe } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
+  const { t, i18n } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
 
   const toggleMenu = () => setIsMenuOpen((prev) => !prev);
   const toggleLang = () => setIsLangOpen((prev) => !prev);
 
-  const navLinksLeft = [
-    { name: "About", href: "#about" },
-    { name: "Testimonials", href: "#testimonials" },
-  ];
-
-  const navLinksRight = [{ name: "Products", href: "/products" }];
-
   const languages = [
     { code: "en", label: "English" },
     { code: "fr", label: "Français" },
     { code: "ar", label: "العربية" },
+  ];
+
+  // Language change handler
+  const changeLanguage = (langCode: string) => {
+    i18n.changeLanguage(langCode);
+    setIsLangOpen(false);
+    setIsMenuOpen(false);
+    
+    // Set HTML dir attribute for RTL support (for Arabic)
+    document.documentElement.dir = langCode === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = langCode;
+  };
+
+  // Get current language
+  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+
+  // Dynamic nav links using translations
+  const navLinksLeft = [
+    { name: t('nav.aboutUs'), href: "#about" },
+    { name: t('nav.testimonials'), href: "#testimonials" },
+  ];
+
+  const navLinksRight = [
+    { name: t('nav.products'), href: "/products" }
   ];
 
   return (
@@ -77,23 +96,28 @@ const Navbar = () => {
               className="flex items-center gap-1 hover:text-black transition-colors duration-300"
             >
               <Globe className="w-4 h-4" />
-              <span className="uppercase text-sm">Languages</span>
+              <span className="uppercase text-sm">{t('nav.languages')}</span>
             </button>
             {isLangOpen && (
-              <div className="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg overflow-hidden">
-                {languages.map((lang) => (
-                  <button
-                    key={lang.code}
-                    onClick={() => {
-                      setIsLangOpen(false);
-                      // handle language switch here
-                    }}
-                    className="block w-full text-left px-4 py-2 hover:bg-gray-100 text-sm"
-                  >
-                    {lang.label}
-                  </button>
-                ))}
-              </div>
+              <>
+                <div 
+                  className="fixed inset-0 z-10" 
+                  onClick={() => setIsLangOpen(false)}
+                />
+                <div className="absolute right-0 mt-2 w-36 bg-white border rounded-lg shadow-lg overflow-hidden z-20">
+                  {languages.map((lang) => (
+                    <button
+                      key={lang.code}
+                      onClick={() => changeLanguage(lang.code)}
+                      className={`block w-full text-left px-4 py-2 hover:bg-gray-100 text-sm transition-colors ${
+                        currentLanguage.code === lang.code ? 'bg-gray-50 font-medium' : ''
+                      }`}
+                    >
+                      {lang.label}
+                    </button>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         </div>
@@ -153,16 +177,15 @@ const Navbar = () => {
 
           {/* Languages inside Mobile */}
           <div className="mt-4">
-            <p className="text-lg font-medium mb-2 text-gray-700">Languages</p>
+            <p className="text-lg font-medium mb-2 text-gray-700">{t('nav.languages')}</p>
             <div className="flex flex-col gap-2">
               {languages.map((lang) => (
                 <button
                   key={lang.code}
-                  onClick={() => {
-                    setIsMenuOpen(false);
-                    // handle language switch
-                  }}
-                  className="text-xl text-gray-700 hover:text-black transition-colors duration-300"
+                  onClick={() => changeLanguage(lang.code)}
+                  className={`text-xl text-gray-700 hover:text-black transition-colors duration-300 text-left ${
+                    currentLanguage.code === lang.code ? 'font-bold' : ''
+                  }`}
                 >
                   {lang.label}
                 </button>
