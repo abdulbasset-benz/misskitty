@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "aboutUs": "À propos",
+    "testimonials": "Avis clients",
+    "products": "Nos produits",
+    "languages": "Langues"
+  },
+  "hero": {
+    "grace": "Grâce",
+    "inEvery": "dans chaque",
+    "detail": "détail",
+    "shopNow": "Acheter maintenant",
+    "escape": "Votre refuge pour le confort et l’élégance"
+  },
+  "aboutus": {
+    "getToKnowUs": "Faites notre connaissance",
+    "title": "Quand l’élégance rencontre le confort",
+    "subtitle": "Nous créons des vêtements du quotidien qui allient douceur, confiance et élégance naturelle — faits pour les moments réels et un style qui dure.",
+    "journeyTitle": "Le début de notre voyage",
+    "journeyDescription": "Notre histoire a commencé au cœur de l’Algérie — où l’artisanat est un héritage et le style, une façon de vivre. Inspirés par les artisans locaux et la beauté du quotidien, nous créons des vêtements qui célèbrent la tradition tout en embrassant le confort moderne. Chaque couture raconte une histoire de fierté, de patience et de passion.",
+    "journeyTitleTwo": "Qui nous sommes",
+    "journeyDescriptionTwo": "Nous sommes bien plus qu’une marque de mode — nous sommes le reflet de l’esprit algérien. Nos créations allient la simplicité du quotidien à une élégance intemporelle, conçues pour les femmes confiantes et pleines de sens. Du matin jusqu’au soir, nous vivons le rythme de la vraie vie avec authenticité et charme."
+  },
+  "selection": {
+    "CuratedSelection": "Sélection soignée",
+    "title": "Élégance incomparable",
+    "subtitle": "Chaque pièce de notre collection raconte une histoire de savoir-faire et de raffinement, conçue pour vous faire sentir belle sans effort.",
+    "FindYourDress": "Prête à trouver votre robe parfaite ?",
+    "FullCollection": "Collection complète",
+    "explore": "Explorer la collection"
+  },
+  "testimonials": {
+    "customerReviews": "Avis clients",
+    "honestTestimonials": "Témoignages sincères de nos clientes",
+    "list": [
+      {
+        "name": "Rania",
+        "quote": "Merci pour ce produit magnifique, je suis très satisfaite et je vous souhaite plein de succès !"
+      },
+      {
+        "name": "Soune",
+        "quote": "Mashallah, tout est exactement comme décrit. Incroyable ! Le prix ne reflète pas la qualité. Que Dieu vous bénisse !"
+      },
+      {
+        "name": "Chéri F.",
+        "quote": "Je suis très heureuse de mon achat — la qualité a dépassé mes attentes. Je recommande vivement !"
+      },
+      {
+        "name": "Meriem B.",
+        "quote": "J’ai reçu ma commande et je l’adore ! Excellente qualité. Plein de réussite à vous !"
+      },
+      {
+        "name": "Manar_Manar",
+        "quote": "Coucou ! J’ai reçu ma commande et j’en suis ravie. La qualité est exceptionnelle — merci !"
+      },
+      {
+        "name": "Meriem M.",
+        "quote": "Honnêtement, le produit vaut plus que son prix. Merci pour votre honnêteté et votre qualité."
+      }
+    ]
+  },
+  "banner": {
+    "title": "L’élégance vous attend, belle dame",
+    "shopNow": "Acheter maintenant"
+  },
+  "footer": {
+    "title": "Découvrez l’élégance avec Miss Kitty — votre destination pour la mode quotidienne alliant confort et raffinement. Des pièces simples aux designs modernes, nous sélectionnons avec soin des vêtements qui expriment votre style unique et vous offrent une élégance naturelle chaque jour.",
+    "getInTouch": "Contactez-nous",
+    "location": "Alger, Algérie",
+    "bottomFooter": "Fabriqué avec amour en Algérie © 2024 Miss Kitty. Tous droits réservés."
+  },
+  "products": {
+    "ourCollection": "Notre collection",
+    "subTitle": "Découvrez notre sélection de robes élégantes, chaque pièce soigneusement conçue pour mettre en valeur votre style unique et votre grâce naturelle.",
+    "feat1": "Qualité premium",
+    "feat2": "Livraison rapide",
+    "feat3": "Fait main",
+    "filters": "Paramètres de filtrage",
+    "priceRange": "Plage de prix",
+    "priceFrom": "0 DZD",
+    "priceTo": "50 000 DZD",
+    "size": "Taille",
+    "sizes": ["36", "38", "40", "42", "44"],
+    "color": "Couleur",
+    "availability": "Disponibilité",
+    "noProducts": "0 produits",
+    "newest": "Les plus récents",
+    "noResults": "Aucun produit trouvé",
+    "tryAdjusting": "Essayez d’ajuster vos filtres ou vos critères de recherche.",
+    "clearFilters": "Effacer tous les filtres"
+  }
+}

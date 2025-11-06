@@ -1,0 +1,92 @@
+{
+  "nav": {
+    "aboutUs": "About Us",
+    "testimonials": "Testimonials",
+    "products": "Our Products",
+    "languages": "Languages"
+  },
+  "hero": {
+    "grace": "Grace",
+    "inEvery": "in Every",
+    "detail": "Detail",
+    "shopNow": "Shop Now",
+    "escape": "Your haven for comfort and elegance"
+  },
+  "aboutus": {
+    "getToKnowUs": "Get to Know Us",
+    "title": "Where Elegance Meets Comfort",
+    "subtitle": "We design everyday clothing that blends softness, confidence, and effortless elegance — made for real moments and lasting style.",
+    "journeyTitle": "Our Journey Begins",
+    "journeyDescription": "Our story began in the heart of Algeria — where craftsmanship is heritage and style is a way of life. Inspired by local artisans and the beauty of everyday life, we design clothing that honors tradition while embracing modern comfort. Every stitch tells a story of pride, patience, and passion.",
+    "journeyTitleTwo": "Who We Are",
+    "journeyDescriptionTwo": "We’re more than just a fashion brand — we’re a reflection of Algeria’s spirit. Our designs blend everyday simplicity with timeless elegance, made for women who move with confidence and live with purpose. From morning moments to evening gatherings, we live the rhythm of real life with authenticity and charm."
+  },
+  "selection": {
+    "CuratedSelection": "Curated Selection",
+    "title": "Unmatched Elegance",
+    "subtitle": "Each piece in our collection tells a story of craftsmanship and sophistication, designed to make you feel effortlessly beautiful.",
+    "FindYourDress": "Ready to find your perfect dress?",
+    "FullCollection": "Full Collection",
+    "explore": "Explore Collection"
+  },
+  "testimonials": {
+    "customerReviews": "Customer Reviews",
+    "honestTestimonials": "Honest Testimonials from Real Customers",
+    "list": [
+      {
+        "name": "Rania",
+        "quote": "Thank you for the wonderful product, I’m very satisfied and wish you all the best!"
+      },
+      {
+        "name": "Soune",
+        "quote": "Mashallah, everything is exactly as described. Amazing! The price doesn’t reflect the high quality. God bless you!"
+      },
+      {
+        "name": "Chéri F.",
+        "quote": "I’m so happy with my purchase — the quality exceeded my expectations. Highly recommended!"
+      },
+      {
+        "name": "Meriem B.",
+        "quote": "I received my order and absolutely loved it! Excellent quality. Wishing you continued success!"
+      },
+      {
+        "name": "Manar_Manar",
+        "quote": "Coucou! I received my order and I’m so happy with it. The quality is top-notch — thank you!"
+      },
+      {
+        "name": "Meriem M.",
+        "quote": "Honestly, the product is better than its price suggests. Thank you for your honesty and quality."
+      }
+    ]
+  },
+  "banner": {
+    "title": "Elegance Awaits You, Beautiful Lady",
+    "shopNow": "Shop Now"
+  },
+  "footer": {
+    "title": "Discover elegance with Miss Kitty — your destination for everyday fashion that combines comfort and sophistication. From simple pieces to modern designs, we carefully select clothing that expresses your unique style and brings natural elegance to every day.",
+    "getInTouch": "Get in Touch",
+    "location": "Algiers, Algeria",
+    "bottomFooter": "Lovingly made in Algeria © 2024 Miss Kitty. All rights reserved."
+  },
+  "products": {
+    "ourCollection": "Our Collection",
+    "subTitle": "Explore our curated selection of elegant dresses, each piece carefully designed to highlight your unique style and natural grace.",
+    "feat1": "Premium Quality",
+    "feat2": "Fast Delivery",
+    "feat3": "Handcrafted",
+    "filters": "Filter Settings",
+    "priceRange": "Price Range",
+    "priceFrom": "DZD 0",
+    "priceTo": "DZD 50,000",
+    "size": "Size",
+    "sizes": ["36", "38", "40", "42", "44"],
+    "color": "Color",
+    "availability": "Availability",
+    "noProducts": "0 Products",
+    "newest": "Newest",
+    "noResults": "No products found",
+    "tryAdjusting": "Try adjusting your filters or search criteria.",
+    "clearFilters": "Clear All Filters"
+  }
+}
