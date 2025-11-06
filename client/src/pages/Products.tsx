@@ -403,52 +403,7 @@ const Products = () => {
                   </AccordionContent>
                 </AccordionItem>
 
-                {/* Availability */}
-                <AccordionItem value="availability" className="border-gray-100">
-                  <AccordionTrigger className="text-gray-900 font-medium">
-                    Availability
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4">
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3">
-                        <Checkbox
-                          id="in-stock"
-                          checked={filters.inStock}
-                          onCheckedChange={(checked) =>
-                            setFilters((prev) => ({
-                              ...prev,
-                              inStock: !!checked,
-                            }))
-                          }
-                        />
-                        <Label
-                          htmlFor="in-stock"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          In Stock
-                        </Label>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <Checkbox
-                          id="out-stock"
-                          checked={filters.outOfStock}
-                          onCheckedChange={(checked) =>
-                            setFilters((prev) => ({
-                              ...prev,
-                              outOfStock: !!checked,
-                            }))
-                          }
-                        />
-                        <Label
-                          htmlFor="out-stock"
-                          className="text-sm font-medium text-gray-700"
-                        >
-                          Out of Stock
-                        </Label>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
+                
               </Accordion>
             </div>
           </aside>

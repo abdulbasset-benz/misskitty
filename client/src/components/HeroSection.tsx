@@ -8,10 +8,12 @@ import pic2 from "@/assets/pic2.png";
 import pic3 from "@/assets/pic3.png";
 import pic4 from "@/assets/pic4.jpg";
 import pic5 from "@/assets/pic5.jpg";
+import { useTranslation } from "react-i18next";
 
 gsap.registerPlugin(useGSAP, SplitText);
 
 const HeroSection = () => {
+  const { t } = useTranslation();
   const heroContainer = useRef<HTMLDivElement>(null);
 
   useGSAP(

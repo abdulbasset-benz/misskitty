@@ -135,9 +135,7 @@ const Collection = () => {
             </Link>
           </Button>
 
-          <p className="text-sm text-gray-500 mt-6 font-light">
-            Limited pieces available • Complimentary styling consultation
-          </p>
+        
         </div>
       </div>
     </div>

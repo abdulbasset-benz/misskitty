@@ -72,28 +72,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="lg:col-span-3 lg:col-start-7">
-            <h4 className="text-xl font-serif font-light mb-6 pb-2 border-b border-gray-700 inline-block">
-              Navigation
-            </h4>
-            <ul className="space-y-3">
-              {[
-                { name: "Home", href: "/" },
-                { name: "Collection", href: "/products" },
-                
-              ].map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    className="text-gray-300 hover:text-[#f7ce83] transition-all duration-300 flex items-center group font-light"
-                  >
-                    <span className="w-2 h-2 bg-[#f7ce83] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 mr-3"></span>
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          
 
           {/* Contact Info */}
           <div className="lg:col-span-4 lg:col-start-9">
@@ -112,7 +91,6 @@ const Footer = () => {
                     />
                   ),
                   text: "Algiers, Algeria",
-                  description: "Our main boutique location",
                 },
                 {
                   icon: (
@@ -124,7 +102,6 @@ const Footer = () => {
                     />
                   ),
                   text: "+213 665 36 93 17",
-                  description: "Available 9AM - 6PM",
                 },
                 {
                   icon: (
@@ -136,7 +113,6 @@ const Footer = () => {
                     />
                   ),
                   text: "faitdodokids@gmail.com",
-                  description: "We respond within 24 hours",
                 },
               ].map((contact, index) => (
                 <div key={index} className="flex items-start space-x-4 group">
@@ -154,9 +130,7 @@ const Footer = () => {
                     <p className="text-gray-100 font-medium group-hover:text-[#f7ce83] transition-colors duration-300">
                       {contact.text}
                     </p>
-                    <p className="text-gray-400 text-sm font-light">
-                      {contact.description}
-                    </p>
+                    
                   </div>
                 </div>
               ))}
@@ -170,30 +144,11 @@ const Footer = () => {
       {/* Bottom Footer */}
       <div className="border-t border-gray-800 relative z-10">
         <div className="container mx-auto px-6 py-6">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-3 md:space-y-0">
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-3 md:space-y-0">
             <p className="text-gray-400 text-sm font-light">
               © 2024 Miss Kitty. Crafted with elegance in Algeria.
             </p>
-            <div className="flex items-center space-x-6 text-sm text-gray-400 font-light">
-              <a
-                href="/privacy"
-                className="hover:text-[#f7ce83] transition-colors duration-300"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="/terms"
-                className="hover:text-[#f7ce83] transition-colors duration-300"
-              >
-                Terms of Service
-              </a>
-              <a
-                href="/shipping"
-                className="hover:text-[#f7ce83] transition-colors duration-300"
-              >
-                Shipping Info
-              </a>
-            </div>
+            
           </div>
         </div>
       </div>
