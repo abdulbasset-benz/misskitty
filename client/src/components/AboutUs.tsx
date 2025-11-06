@@ -6,10 +6,12 @@ import { SplitText } from "gsap/SplitText";
 
 import woman from "@/assets/woman.png";
 import scissors from "@/assets/scissors.png";
+import { useTranslation } from "react-i18next";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
 
 const AboutUs = () => {
+  const {t} = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   useGSAP(
     () => {
