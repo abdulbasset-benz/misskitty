@@ -3,17 +3,17 @@ import { useGSAP } from "@gsap/react";
 import { SplitText } from "gsap/SplitText";
 import { useRef } from "react";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next"; // Add this import
 import pic1 from "@/assets/pic1.jpg";
 import pic2 from "@/assets/pic2.png";
 import pic3 from "@/assets/pic3.png";
 import pic4 from "@/assets/pic4.jpg";
 import pic5 from "@/assets/pic5.jpg";
-import { useTranslation } from "react-i18next";
 
 gsap.registerPlugin(useGSAP, SplitText);
 
 const HeroSection = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation(); // Add this hook
   const heroContainer = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -81,12 +81,12 @@ const HeroSection = () => {
       {/* Hero content */}
       <div className="flex flex-col items-center justify-center mt-24 relative w-full px-8">
         <h2 className="text-8xl md:text-9xl font-bold uppercase italic mb-4 heroTitle">
-          Grace
+          {t('hero.grace')}
         </h2>
 
         <div className="flex items-center justify-center gap-3 md:gap-12 leading-none mt-4">
           <h1 className="text-3xl md:text-6xl font-semibold uppercase tracking-tight sidetitle">
-            In every
+            {t('hero.inEvery')}
           </h1>
 
           <div className="relative w-[240px] md:w-[340px] h-[320px] md:h-[420px] flex-shrink-0 mx-2">
@@ -112,7 +112,7 @@ const HeroSection = () => {
           </div>
 
           <h1 className="text-3xl md:text-6xl font-semibold uppercase tracking-tight sidetitle">
-            detail
+            {t('hero.detail')}
           </h1>
         </div>
       </div>
@@ -120,11 +120,10 @@ const HeroSection = () => {
       {/* CTA */}
       <div className="mt-14 flex flex-col items-center gap-4">
         <button className="bg-black text-white px-10 py-3 text-sm tracking-wider hover:bg-gray-800 transition-all">
-          <Link to="/products">SHOP NOW →</Link>
+          <Link to="/products">{t('hero.shopNow')} →</Link>
         </button>
         <p className="text-gray-600 text-sm md:text-base">
-          Find your perfect escape on{" "}
-          <span className="font-medium text-black">Elegance</span>
+          {t('hero.escape')}
         </p>
       </div>
     </section>
