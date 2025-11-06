@@ -24,9 +24,20 @@ export const LanguageSwitcher: React.FC = () => {
     i18n.changeLanguage(langCode);
     setIsOpen(false);
     
+    const rootElement = document.documentElement;
+    
     // Set HTML dir attribute for RTL support
-    document.documentElement.dir = langCode === 'ar' ? 'rtl' : 'ltr';
-    document.documentElement.lang = langCode;
+    rootElement.dir = langCode === 'ar' ? 'rtl' : 'ltr';
+    rootElement.lang = langCode;
+    
+    // Set font based on language (both CSS variable and direct style)
+    if (langCode === 'ar') {
+      rootElement.style.setProperty('--active-font', '"El Messiri", sans-serif');
+      document.body.style.fontFamily = '"El Messiri", sans-serif';
+    } else {
+      rootElement.style.setProperty('--active-font', '"Poppins", sans-serif');
+      document.body.style.fontFamily = '"Poppins", sans-serif';
+    }
   };
 
   return (
