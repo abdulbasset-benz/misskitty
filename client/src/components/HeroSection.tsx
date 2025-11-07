@@ -80,12 +80,12 @@ const HeroSection = () => {
     >
       {/* Hero content */}
       <div className="flex flex-col items-center justify-center mt-24 relative w-full px-8">
-        <h2 className="text-8xl md:text-9xl font-bold uppercase italic mb-4 heroTitle">
+        <h2 className="text-8xl md:text-9xl font-bold uppercase leading-tight text-center mb-4 heroTitle">
           {t('hero.grace')}
         </h2>
 
-        <div className="flex items-center justify-center gap-3 md:gap-12 leading-none mt-4">
-          <h1 className="text-3xl md:text-6xl font-semibold uppercase tracking-tight sidetitle">
+        <div className="flex items-center justify-center gap-3 md:gap-12 mt-4">
+          <h1 className="text-3xl md:text-6xl font-semibold uppercase sidetitle leading-20">
             {t('hero.inEvery')}
           </h1>
 
@@ -111,7 +111,7 @@ const HeroSection = () => {
             ))}
           </div>
 
-          <h1 className="text-3xl md:text-6xl font-semibold uppercase tracking-tight sidetitle">
+          <h1 className="text-3xl md:text-6xl font-semibold uppercase leading-tight sidetitle">
             {t('hero.detail')}
           </h1>
         </div>
