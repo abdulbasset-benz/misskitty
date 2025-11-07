@@ -5,8 +5,9 @@ import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useTranslation } from "react-i18next";
 
-gsap.registerPlugin(SplitText, ScrollTrigger, useGSAP)
+gsap.registerPlugin(SplitText, ScrollTrigger, useGSAP);
 
 const testimonials = [
   {
@@ -48,6 +49,12 @@ const testimonials = [
 ];
 
 const Review = () => {
+  const { t } = useTranslation();
+  const testimonials = t('testimonials.list', { returnObjects: true }) as {
+    id: number;
+    name: string;
+    quote: string;
+  }[];
   useGSAP(() => {
     document.fonts.ready.then(() => {
       const splitHeading = SplitText.create(".testheading", {
@@ -66,9 +73,9 @@ const Review = () => {
           start: "top 80%",
           end: "bottom 50%",
           scrub: 1,
-        }
+        },
       });
-  })
+    });
   });
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -78,7 +85,9 @@ const Review = () => {
   };
 
   const goToPrev = () => {
-    setCurrent((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setCurrent(
+      (prev) => (prev - 1 + testimonials.length) % testimonials.length
+    );
   };
 
   useEffect(() => {
@@ -93,15 +102,16 @@ const Review = () => {
       <div className="flex flex-col items-center text-center px-6">
         <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#f7ce83] to-transparent mb-6"></div>
         <h2 className="uppercase text-xs md:text-sm tracking-[0.3em] text-gray-500 mb-4">
-          What our customers say
+          {t("testimonials.customerReviews")}
         </h2>
         <h1 className="font-serif text-5xl md:text-7xl font-light mb-6 leading-tight testheading">
-          Honest <span className="italic font-light">Testimonials</span>
+          {t("testimonials.honestTestimonials")}
+
         </h1>
       </div>
 
       {/* Carousel Container */}
-      <div 
+      <div
         className="relative flex items-center justify-center w-full px-6 md:px-24"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
@@ -117,7 +127,7 @@ const Review = () => {
 
         {/* Testimonial Card - Fixed Height */}
         <div className="max-w-4xl w-full">
-          <div 
+          <div
             key={current}
             className="bg-white shadow-xl rounded-2xl p-10 md:p-16 relative min-h-[280px] flex flex-col justify-center"
           >

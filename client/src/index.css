@@ -142,6 +142,7 @@
   :root[lang="ar"] body,
   :root[lang="ar"] * {
     font-family: "El Messiri", sans-serif !important;
+    text-align: right;
   }
   
   :root[lang="en"],
