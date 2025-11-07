@@ -9,10 +9,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 import { gsap } from "gsap";
+import { useTranslation } from "react-i18next";
 
 gsap.registerPlugin(SplitText, ScrollTrigger, useGSAP); // <-- DON'T register useGSAP here
 
 const Collection = () => {
+  const { t } = useTranslation();
   const container = useRef<HTMLDivElement>(null);
 
   useGSAP(
@@ -83,14 +85,13 @@ const Collection = () => {
         <div className="flex flex-col items-center mb-16">
           <div className="w-20 h-px bg-gradient-to-r from-transparent via-[#f7ce83] to-transparent mb-6"></div>
           <h2 className="uppercase text-sm tracking-[0.3em] text-gray-600 mb-4 font-light">
-            Curated Selection
+            {t("selection.CuratedSelection")}
           </h2>
           <h1 className="font-serif text-5xl md:text-7xl font-light text-center mb-6 leading-tight colheading">
-            Timeless <span className="italic font-light">Elegance</span>
+            {t("selection.title")}
           </h1>
           <p className="font-sans max-w-2xl text-gray-600 text-lg text-center leading-relaxed mb-8 colsubheading">
-            Each piece in our collection tells a story of craftsmanship and
-            sophistication, designed to make you feel effortlessly beautiful.
+            {t("selection.subtitle")}
           </p>
         </div>
 
@@ -118,10 +119,10 @@ const Collection = () => {
         <div className="text-center">
           <div className="mb-8">
             <p className="text-gray-600 text-lg mb-4">
-              Ready to find your perfect dress?
+              {t("selection.FindYourDress")}
             </p>
             <h3 className="text-2xl font-serif italic text-gray-800 mb-2">
-              Discover the full collection
+              {t("selection.FullCollection")}
             </h3>
           </div>
 
@@ -130,12 +131,10 @@ const Collection = () => {
             className="relative bg-transparent border border-[#d4b985] text-[#724f0e] px-12 py-6 rounded-none font-light tracking-widest hover:bg-[#f7ce83] hover:text-black transition-all duration-500 group overflow-hidden"
           >
             <Link to="/products">
-              <span className="relative z-10">EXPLORE COLLECTION</span>
+              <span className="relative z-10"> {t("selection.explore")}</span>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent transform -skew-x-12 transition-all duration-700 group-hover:translate-x-full opacity-0 group-hover:opacity-20"></div>
             </Link>
           </Button>
-
-        
         </div>
       </div>
     </div>
