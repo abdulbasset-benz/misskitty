@@ -117,15 +117,13 @@ const AboutUs = () => {
       <div className="flex flex-col items-center text-center px-6">
         <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#f7ce83] to-transparent mb-6"></div>
         <h2 className="uppercase text-xs md:text-sm tracking-[0.3em] text-gray-500 mb-4">
-          Get to know us
+          {t('aboutus.getToKnowUs')}
         </h2>
         <h1 className="font-serif text-5xl md:text-7xl font-light mb-6 leading-tight heading">
-          Where <span className="italic font-light">Comfort</span> Meets Charm
+      {t('aboutus.title')}
         </h1>
         <p className="font-sans max-w-2xl text-gray-600 text-lg leading-relaxed subheading">
-          Rooted in Algerian heritage, we craft everyday garments that blend
-          softness, confidence, and effortless grace — made for real moments and
-          timeless style.
+          {t('aboutus.subtitle')}
         </p>
       </div>
 
@@ -154,15 +152,12 @@ const AboutUs = () => {
           <div className="md:w-1/2 w-full flex justify-start">
             <div className="space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
               <h2 className="text-3xl md:text-7xl font-normal font-serif leading-tight tracking-wide abouttitle">
-                The Beginning of Our Journey
+                {t('aboutus.journeyTitle')}
               </h2>
               <div className="w-16 h-[2px] bg-[#f7ce83] mb-4"></div>
               <p className="text-gray-700 leading-relaxed text-lg aboutsubtitle">
-                Our story began in the heart of Algeria — where craftsmanship is
-                a heritage and style is a way of life. Inspired by local
-                artisans and everyday beauty, we design clothing that celebrates
-                tradition while embracing modern comfort. Every stitch tells a
-                story of pride, patience, and passion.
+                                {t('aboutus.journeyDescription')}
+
               </p>
             </div>
           </div>
@@ -177,16 +172,11 @@ const AboutUs = () => {
           <div className="md:w-1/2 w-full flex justify-start">
             <div className="space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
               <h2 className="text-3xl md:text-7xl font-normal font-serif tracking-wide abouttitle">
-                Who We Are
+                                {t('aboutus.journeyTitleTwo')}
               </h2>
               <div className="w-16 h-[2px] bg-[#f7ce83] mb-4"></div>
               <p className="text-gray-700 leading-relaxed text-lg aboutsubtitle">
-                We’re more than a fashion brand — we’re a reflection of
-                Algeria’s spirit. Our collections blend everyday ease with
-                timeless elegance, crafted for women who move with confidence
-                and live with purpose. From morning markets to evening
-                gatherings, we dress the rhythm of real life with authenticity
-                and charm.
+                                {t('aboutus.journeyDescriptionTwo')}
               </p>
             </div>
           </div>
