@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-gradient-to-br from-gray-900 to-black text-white relative overflow-hidden">
       {/* Background Pattern */}
@@ -21,10 +24,7 @@ const Footer = () => {
                 Miss <span className="text-[#f7ce83]">Kitty</span>
               </h3>
               <p className="text-gray-300 leading-relaxed text-lg max-w-md font-light">
-                Discover elegance with Miss Kitty - your premier destination for
-                exquisite dresses. From stunning evening gowns to chic cocktail
-                dresses, we curate timeless pieces that celebrate your unique
-                style and grace.
+                {t("footer.title")}
               </p>
 
               {/* Social Links */}
@@ -72,12 +72,11 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          
 
           {/* Contact Info */}
           <div className="lg:col-span-4 lg:col-start-9">
             <h4 className="text-xl font-serif font-light mb-6 pb-2 border-b border-gray-700 inline-block">
-              Get In Touch
+              {t("footer.getInTouch")}{" "}
             </h4>
             <div className="space-y-4">
               {[
@@ -130,15 +129,12 @@ const Footer = () => {
                     <p className="text-gray-100 font-medium group-hover:text-[#f7ce83] transition-colors duration-300">
                       {contact.text}
                     </p>
-                    
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-
-        
       </div>
 
       {/* Bottom Footer */}
@@ -146,9 +142,7 @@ const Footer = () => {
         <div className="container mx-auto px-6 py-6">
           <div className="flex flex-col md:flex-row justify-center items-center space-y-3 md:space-y-0">
             <p className="text-gray-400 text-sm font-light">
-              © 2024 Miss Kitty. Crafted with elegance in Algeria.
-            </p>
-            
+{t('footer.bottomFooter')}            </p>
           </div>
         </div>
       </div>
