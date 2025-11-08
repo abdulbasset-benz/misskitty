@@ -123,25 +123,25 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Hamburger Button (Mobile) */}
+        {/* Hamburger Button (Mobile) - Now with relative positioning */}
         <button
           onClick={toggleMenu}
-          className="md:hidden z-[60] w-10 h-10 flex flex-col items-center justify-center gap-1.5"
+          className="md:hidden relative z-[80] w-10 h-10 flex flex-col items-center justify-center gap-1.5"
           aria-label="Toggle menu"
         >
           <span
             className={`w-6 h-0.5 transition-all duration-300 ${
-              isMenuOpen ? "bg-white rotate-45 translate-y-2" : "bg-black"
+              isMenuOpen ? "bg-gray-800 rotate-45 translate-y-2" : "bg-gray-800"
             }`}
           ></span>
           <span
             className={`w-6 h-0.5 transition-all duration-300 ${
-              isMenuOpen ? "opacity-0 bg-white" : "bg-black"
+              isMenuOpen ? "opacity-0 bg-gray-800" : "bg-gray-800"
             }`}
           ></span>
           <span
             className={`w-6 h-0.5 transition-all duration-300 ${
-              isMenuOpen ? "bg-white -rotate-45 -translate-y-2" : "bg-black"
+              isMenuOpen ? "bg-gray-800 -rotate-45 -translate-y-2" : "bg-gray-800"
             }`}
           ></span>
         </button>
@@ -149,7 +149,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`fixed top-0 right-0 h-screen w-4/5 max-w-sm bg-white shadow-2xl transform transition-transform duration-500 ease-in-out md:hidden z-[55] ${
+        className={`fixed top-0 right-0 h-screen w-4/5 max-w-sm bg-white shadow-2xl transform transition-transform duration-500 ease-in-out md:hidden z-[60] ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
