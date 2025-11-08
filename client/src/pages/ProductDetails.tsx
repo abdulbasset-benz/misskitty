@@ -303,191 +303,180 @@ const ProductDetails = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-[#fefaf2] flex flex-col lg:flex-row">
-      {/* Left Column - Images Gallery */}
-      <div className="flex-1 flex flex-col items-center justify-center p-4 lg:p-8 bg-white">
-        <div className="w-full max-w-md relative">
-          {/* Main Image Container */}
-          <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
-            {lightboxImages.length > 0 ? (
-              <LightboxModal
-                images={lightboxImages}
-                initialIndex={selectedImageIndex}
-                trigger={
-                  <button className="w-full h-full group/cursor">
-                    <img
-                      src={
-                        product.images[selectedImageIndex]?.url ||
-                        "/placeholder.png"
-                      }
-                      alt={product.name}
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover/cursor:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/0 group-hover/cursor:bg-black/5 transition-all duration-300" />
-                  </button>
-                }
-              />
-            ) : (
-              <img
-                src="/placeholder.png"
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-            )}
+    <div className="min-h-screen bg-gradient-to-br from-white to-[#fefaf2]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          {/* Left - Images */}
+          <div className="space-y-4 lg:sticky lg:top-6">
+            {/* Main Image */}
+            <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
+              {lightboxImages.length > 0 ? (
+                <LightboxModal
+                  images={lightboxImages}
+                  initialIndex={selectedImageIndex}
+                  trigger={
+                    <button className="w-full h-full">
+                      <img
+                        src={
+                          product.images[selectedImageIndex]?.url ||
+                          "/placeholder.png"
+                        }
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                    </button>
+                  }
+                />
+              ) : (
+                <img
+                  src="/placeholder.png"
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+              )}
 
-            {product.images.length > 1 && (
-              <>
-                <button
-                  onClick={prevImage}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white z-10"
-                >
-                  <ChevronLeft className="w-5 h-5 text-gray-700" />
-                </button>
-                <button
-                  onClick={nextImage}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white z-10"
-                >
-                  <ChevronRight className="w-5 h-5 text-gray-700" />
-                </button>
-              </>
-            )}
-          </div>
-
-          {/* Thumbnail Gallery */}
-          {product.images.length > 1 && (
-            <div className="flex gap-3 overflow-x-auto py-4">
-              {product.images.map((img, index) => (
-                <button
-                  key={img.id}
-                  onClick={() => setSelectedImageIndex(index)}
-                  className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
-                    index === selectedImageIndex
-                      ? "border-[#d4b985] shadow-md"
-                      : "border-gray-200 hover:border-gray-300"
-                  }`}
-                >
-                  <img
-                    src={img.url}
-                    alt={`${product.name} ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Features Grid - Moved below images */}
-        <div className="grid grid-cols-3 gap-4 mt-8 max-w-md w-full">
-          <div className="text-center">
-            <Truck className="w-6 h-6 text-[#d4b985] mx-auto mb-2" />
-            <p className="text-xs font-medium text-gray-900">Delivery</p>
-          </div>
-          <div className="text-center">
-            <Shield className="w-6 h-6 text-[#d4b985] mx-auto mb-2" />
-            <p className="text-xs font-medium text-gray-900">Secure</p>
-          </div>
-          <div className="text-center">
-            <Heart className="w-6 h-6 text-[#d4b985] mx-auto mb-2" />
-            <p className="text-xs font-medium text-gray-900">Quality</p>
-          </div>
-        </div>
-      </div>
-
-      {/* Right Column - Product Info & Order Form */}
-      <div className="flex-1 flex flex-col p-4 lg:p-8 bg-gradient-to-br from-white to-[#fefaf2] overflow-y-auto">
-        <div className="max-w-md w-full mx-auto flex flex-col h-full">
-          {/* Product Name */}
-          <h1 className="text-2xl sm:text-3xl font-serif font-light text-gray-900 mb-6 text-center lg:text-left">
-            {product.name}
-          </h1>
-
-          {/* Order Form Container */}
-          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 flex-1 flex flex-col overflow-hidden mb-6">
-            <div className="bg-gradient-to-r from-[#d4b985] to-[#f7ce83] p-6">
-              <h2 className="text-xl font-serif font-light text-gray-900 text-center">
-                Order This Dress
-              </h2>
-              <p className="text-gray-700 font-light text-sm text-center mt-1">
-                Fill in your details to complete your order
-              </p>
-            </div>
-
-            <div className="p-6 flex-1 flex flex-col overflow-y-auto">
-              <form onSubmit={handleSubmitOrder} className="space-y-5 flex-1 flex flex-col">
-                {/* Success/Error Alert */}
-                {submitStatus.type && (
-                  <Alert
-                    className={
-                      submitStatus.type === "success"
-                        ? "bg-green-50 border-green-200 mb-4"
-                        : "bg-red-50 border-red-200 mb-4"
-                    }
+              {product.images.length > 1 && (
+                <>
+                  <button
+                    onClick={prevImage}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:bg-white"
                   >
-                    {submitStatus.type === "success" ? (
-                      <CheckCircle className="h-4 w-4 text-green-600" />
-                    ) : (
-                      <XCircle className="h-4 w-4 text-red-600" />
-                    )}
-                    <AlertDescription
+                    <ChevronLeft className="w-5 h-5 text-gray-700" />
+                  </button>
+                  <button
+                    onClick={nextImage}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:bg-white"
+                  >
+                    <ChevronRight className="w-5 h-5 text-gray-700" />
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Thumbnails */}
+            {product.images.length > 1 && (
+              <div className="flex gap-3 overflow-x-auto pb-2">
+                {product.images.map((img, index) => (
+                  <button
+                    key={img.id}
+                    onClick={() => setSelectedImageIndex(index)}
+                    className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-all ${
+                      index === selectedImageIndex
+                        ? "border-[#d4b985] shadow-md"
+                        : "border-gray-200 hover:border-gray-300"
+                    }`}
+                  >
+                    <img
+                      src={img.url}
+                      alt={`${product.name} ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Features */}
+            <div className="grid grid-cols-3 gap-3 pt-4">
+              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
+                <Truck className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
+                <p className="text-xs font-medium text-gray-900">Delivery</p>
+              </div>
+              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
+                <Shield className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
+                <p className="text-xs font-medium text-gray-900">Secure</p>
+              </div>
+              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
+                <Heart className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
+                <p className="text-xs font-medium text-gray-900">Quality</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Right - Order Form */}
+          <div>
+            <h1 className="text-3xl font-serif font-light text-gray-900 mb-6">
+              {product.name}
+            </h1>
+
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-[#d4b985] to-[#f7ce83] p-5">
+                <h2 className="text-lg font-serif text-gray-900 text-center">
+                  Order This Dress
+                </h2>
+                <p className="text-gray-700 text-sm text-center mt-1">
+                  Fill in your details to complete your order
+                </p>
+              </div>
+
+              <div className="p-5">
+                <form onSubmit={handleSubmitOrder} className="space-y-4">
+                  {/* Alert */}
+                  {submitStatus.type && (
+                    <Alert
                       className={
                         submitStatus.type === "success"
-                          ? "text-green-800 text-sm"
-                          : "text-red-800 text-sm"
+                          ? "bg-green-50 border-green-200"
+                          : "bg-red-50 border-red-200"
                       }
                     >
-                      {submitStatus.message}
-                    </AlertDescription>
-                  </Alert>
-                )}
-
-                {/* Product Summary */}
-                <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-xl border border-gray-100 mb-5">
-                  <div className="flex items-center gap-4 mb-3">
-                    <img
-                      src={product.images[0]?.url || "/placeholder.png"}
-                      alt={product.name}
-                      className="w-16 h-16 object-cover rounded-lg shadow-md"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-serif text-base text-gray-900 truncate">
-                        {product.name}
-                      </h3>
-                      <p className="text-xl font-light text-gray-900">
-                        DZD {product.price.toLocaleString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="border-t border-gray-200 pt-3 space-y-2 text-sm">
-                    <div className="flex justify-between text-gray-600">
-                      <span>Product Price</span>
-                      <span>DZD {product.price.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between text-gray-600">
-                      <span>Delivery Fee</span>
-                      <span>DZD {DELIVERY_FEE.toLocaleString()}</span>
-                    </div>
-                    <div className="flex justify-between text-base font-medium text-gray-900 pt-2 border-t border-gray-200">
-                      <span>Total</span>
-                      <span className="text-[#d4b985]">
-                        DZD {totalPrice.toLocaleString()}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Personal Information - Two columns */}
-                <div>
-                  <h4 className="font-serif text-sm text-gray-900 mb-3">
-                    Personal Information
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <Label
-                        htmlFor="userName"
-                        className="text-gray-700 font-medium text-sm"
+                      {submitStatus.type === "success" ? (
+                        <CheckCircle className="h-4 w-4 text-green-600" />
+                      ) : (
+                        <XCircle className="h-4 w-4 text-red-600" />
+                      )}
+                      <AlertDescription
+                        className={
+                          submitStatus.type === "success"
+                            ? "text-green-800 text-sm"
+                            : "text-red-800 text-sm"
+                        }
                       >
+                        {submitStatus.message}
+                      </AlertDescription>
+                    </Alert>
+                  )}
+
+                  {/* Summary */}
+                  <div className="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                    <div className="flex items-center gap-3 mb-3">
+                      <img
+                        src={product.images[0]?.url || "/placeholder.png"}
+                        alt={product.name}
+                        className="w-14 h-14 object-cover rounded-lg"
+                      />
+                      <div>
+                        <h3 className="font-medium text-sm text-gray-900">
+                          {product.name}
+                        </h3>
+                        <p className="text-lg font-light text-gray-900">
+                          DZD {product.price.toLocaleString()}
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="border-t border-gray-200 pt-2 space-y-1.5 text-sm">
+                      <div className="flex justify-between text-gray-600">
+                        <span>Product Price</span>
+                        <span>DZD {product.price.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between text-gray-600">
+                        <span>Delivery Fee</span>
+                        <span>DZD {DELIVERY_FEE.toLocaleString()}</span>
+                      </div>
+                      <div className="flex justify-between font-medium text-gray-900 pt-1.5 border-t border-gray-200">
+                        <span>Total</span>
+                        <span className="text-[#d4b985]">
+                          DZD {totalPrice.toLocaleString()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Personal Info */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <Label htmlFor="userName" className="text-sm mb-1.5 block">
                         Full Name *
                       </Label>
                       <Input
@@ -496,18 +485,15 @@ const ProductDetails = () => {
                         onChange={(e) =>
                           handleInputChange("userName", e.target.value)
                         }
-                        placeholder="Enter your full name"
-                        className="border-gray-300 focus:border-[#d4b985] text-sm h-11"
+                        placeholder="Your name"
+                        className="h-10 text-sm"
                         required
                       />
                     </div>
 
-                    <div className="space-y-1.5">
-                      <Label
-                        htmlFor="phoneNumber"
-                        className="text-gray-700 font-medium text-sm"
-                      >
-                        Phone Number *
+                    <div>
+                      <Label htmlFor="phoneNumber" className="text-sm mb-1.5 block">
+                        Phone *
                       </Label>
                       <Input
                         id="phoneNumber"
@@ -516,24 +502,16 @@ const ProductDetails = () => {
                           handleInputChange("phoneNumber", e.target.value)
                         }
                         placeholder="0555 123 456"
-                        className="border-gray-300 focus:border-[#d4b985] text-sm h-11"
+                        className="h-10 text-sm"
                         required
                       />
                     </div>
                   </div>
-                </div>
 
-                {/* Delivery Details - Two columns */}
-                <div>
-                  <h4 className="font-serif text-sm text-gray-900 mb-3">
-                    Delivery Details
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <Label
-                        htmlFor="wilaya"
-                        className="text-gray-700 font-medium text-sm"
-                      >
+                  {/* Delivery */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <Label htmlFor="wilaya" className="text-sm mb-1.5 block">
                         Wilaya *
                       </Label>
                       <Select
@@ -543,16 +521,12 @@ const ProductDetails = () => {
                         }
                         required
                       >
-                        <SelectTrigger className="border-gray-300 focus:border-[#d4b985] text-sm h-11">
-                          <SelectValue placeholder="Select your wilaya" />
+                        <SelectTrigger className="h-10 text-sm">
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent className="max-h-[200px]">
                           {ALGERIAN_WILAYAS.map((wilaya) => (
-                            <SelectItem
-                              key={wilaya}
-                              value={wilaya}
-                              className="text-sm"
-                            >
+                            <SelectItem key={wilaya} value={wilaya} className="text-sm">
                               {wilaya}
                             </SelectItem>
                           ))}
@@ -560,11 +534,8 @@ const ProductDetails = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-1.5">
-                      <Label
-                        htmlFor="commune"
-                        className="text-gray-700 font-medium text-sm"
-                      >
+                    <div>
+                      <Label htmlFor="commune" className="text-sm mb-1.5 block">
                         Commune
                       </Label>
                       <Input
@@ -573,18 +544,15 @@ const ProductDetails = () => {
                         onChange={(e) =>
                           handleInputChange("commune", e.target.value)
                         }
-                        placeholder="Enter your commune"
-                        className="border-gray-300 focus:border-[#d4b985] text-sm h-11"
+                        placeholder="Optional"
+                        className="h-10 text-sm"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-1.5 mt-4">
-                    <Label
-                      htmlFor="address"
-                      className="text-gray-700 font-medium text-sm"
-                    >
-                      Full Address *
+                  <div>
+                    <Label htmlFor="address" className="text-sm mb-1.5 block">
+                      Address *
                     </Label>
                     <Textarea
                       id="address"
@@ -592,24 +560,16 @@ const ProductDetails = () => {
                       onChange={(e) =>
                         handleInputChange("address", e.target.value)
                       }
-                      placeholder="Enter your complete delivery address"
-                      className="border-gray-300 focus:border-[#d4b985] min-h-[80px] text-sm resize-none"
+                      placeholder="Your delivery address"
+                      className="min-h-[70px] text-sm resize-none"
                       required
                     />
                   </div>
-                </div>
 
-                {/* Dress Specifications */}
-                <div>
-                  <h4 className="font-serif text-sm text-gray-900 mb-3">
-                    Dress Specifications
-                  </h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div className="space-y-1.5">
-                      <Label
-                        htmlFor="size"
-                        className="text-gray-700 font-medium text-sm"
-                      >
+                  {/* Specs */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <Label htmlFor="size" className="text-sm mb-1.5 block">
                         Size *
                       </Label>
                       <Select
@@ -619,16 +579,12 @@ const ProductDetails = () => {
                         }
                         required
                       >
-                        <SelectTrigger className="border-gray-300 focus:border-[#d4b985] text-sm h-11">
-                          <SelectValue placeholder="Select size" />
+                        <SelectTrigger className="h-10 text-sm">
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                           {availableSizes.map((size) => (
-                            <SelectItem
-                              key={size}
-                              value={size}
-                              className="text-sm"
-                            >
+                            <SelectItem key={size} value={size} className="text-sm">
                               {size}
                             </SelectItem>
                           ))}
@@ -636,11 +592,8 @@ const ProductDetails = () => {
                       </Select>
                     </div>
 
-                    <div className="space-y-1.5">
-                      <Label
-                        htmlFor="color"
-                        className="text-gray-700 font-medium text-sm"
-                      >
+                    <div>
+                      <Label htmlFor="color" className="text-sm mb-1.5 block">
                         Color *
                       </Label>
                       <Select
@@ -650,16 +603,12 @@ const ProductDetails = () => {
                         }
                         required
                       >
-                        <SelectTrigger className="border-gray-300 focus:border-[#d4b985] text-sm h-11">
-                          <SelectValue placeholder="Select color" />
+                        <SelectTrigger className="h-10 text-sm">
+                          <SelectValue placeholder="Select" />
                         </SelectTrigger>
                         <SelectContent>
                           {availableColors.map((color) => (
-                            <SelectItem
-                              key={color}
-                              value={color}
-                              className="text-sm"
-                            >
+                            <SelectItem key={color} value={color} className="text-sm">
                               {color}
                             </SelectItem>
                           ))}
@@ -667,18 +616,16 @@ const ProductDetails = () => {
                       </Select>
                     </div>
                   </div>
-                </div>
 
-                {/* Submit Button - Fixed at bottom on mobile */}
-                <div className="mt-auto pt-4">
+                  {/* Submit */}
                   <Button
                     type="submit"
                     disabled={isSubmitting || product.stock <= 0}
-                    className="w-full py-4 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black text-base font-light hover:from-[#c0a46c] hover:to-[#e0b972] transition-all duration-500 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full h-12 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black font-medium hover:from-[#c0a46c] hover:to-[#e0b972] transition-all shadow-lg disabled:opacity-50"
                   >
                     {isSubmitting ? (
-                      <div className="flex items-center gap-2 justify-center">
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black"></div>
+                      <div className="flex items-center gap-2">
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black"></div>
                         Processing...
                       </div>
                     ) : product.stock <= 0 ? (
@@ -686,17 +633,16 @@ const ProductDetails = () => {
                     ) : (
                       <>
                         <ShoppingBag className="w-5 h-5 mr-2" />
-                        Submit Order - DZD {totalPrice.toLocaleString()}
+                        Order Now - DZD {totalPrice.toLocaleString()}
                       </>
                     )}
                   </Button>
 
-                  <p className="text-xs text-gray-500 text-center font-light mt-2">
-                    By submitting this order, you agree to pay DZD{" "}
-                    {totalPrice.toLocaleString()} upon delivery
+                  <p className="text-xs text-gray-500 text-center">
+                    Pay DZD {totalPrice.toLocaleString()} upon delivery
                   </p>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
           </div>
         </div>
