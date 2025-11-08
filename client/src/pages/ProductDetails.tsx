@@ -306,48 +306,51 @@ const ProductDetails = () => {
           {/* Left - Images */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group pt-25">
-              {lightboxImages.length > 0 ? (
-                <LightboxModal
-                  images={lightboxImages}
-                  initialIndex={selectedImageIndex}
-                  trigger={
-                    <button className="w-full h-full">
-                      <img
-                        src={
-                          product.images[selectedImageIndex]?.url ||
-                          "/placeholder.png"
-                        }
-                        alt={product.name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
+            <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group w-full sm:w-[500px] lg:w-[600px]">
+              <div className="relative w-full aspect-[4/3]">
+                {" "}
+                {/* Use desired aspect ratio */}
+                {lightboxImages.length > 0 ? (
+                  <LightboxModal
+                    images={lightboxImages}
+                    initialIndex={selectedImageIndex}
+                    trigger={
+                      <button className="w-full h-full">
+                        <img
+                          src={
+                            product.images[selectedImageIndex]?.url ||
+                            "/placeholder.png"
+                          }
+                          alt={product.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </button>
+                    }
+                  />
+                ) : (
+                  <img
+                    src="/placeholder.png"
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                )}
+                {product.images.length > 1 && (
+                  <>
+                    <button
+                      onClick={prevImage}
+                      className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:bg-white"
+                    >
+                      <ChevronLeft className="w-5 h-5 text-gray-700" />
                     </button>
-                  }
-                />
-              ) : (
-                <img
-                  src="/placeholder.png"
-                  alt={product.name}
-                  className="w-full h-full object-cover"
-                />
-              )}
-
-              {product.images.length > 1 && (
-                <>
-                  <button
-                    onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:bg-white"
-                  >
-                    <ChevronLeft className="w-5 h-5 text-gray-700" />
-                  </button>
-                  <button
-                    onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:bg-white"
-                  >
-                    <ChevronRight className="w-5 h-5 text-gray-700" />
-                  </button>
-                </>
-              )}
+                    <button
+                      onClick={nextImage}
+                      className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-lg hover:bg-white"
+                    >
+                      <ChevronRight className="w-5 h-5 text-gray-700" />
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
 
             {/* Thumbnails */}
@@ -374,7 +377,6 @@ const ProductDetails = () => {
             )}
 
             {/* Features */}
-            
           </div>
 
           {/* Right - Order Form */}
@@ -460,7 +462,10 @@ const ProductDetails = () => {
                   {/* Personal Info */}
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <Label htmlFor="userName" className="text-sm mb-1.5 block">
+                      <Label
+                        htmlFor="userName"
+                        className="text-sm mb-1.5 block"
+                      >
                         Full Name *
                       </Label>
                       <Input
@@ -476,7 +481,10 @@ const ProductDetails = () => {
                     </div>
 
                     <div>
-                      <Label htmlFor="phoneNumber" className="text-sm mb-1.5 block">
+                      <Label
+                        htmlFor="phoneNumber"
+                        className="text-sm mb-1.5 block"
+                      >
                         Phone *
                       </Label>
                       <Input
@@ -510,7 +518,11 @@ const ProductDetails = () => {
                         </SelectTrigger>
                         <SelectContent className="max-h-[200px]">
                           {ALGERIAN_WILAYAS.map((wilaya) => (
-                            <SelectItem key={wilaya} value={wilaya} className="text-sm">
+                            <SelectItem
+                              key={wilaya}
+                              value={wilaya}
+                              className="text-sm"
+                            >
                               {wilaya}
                             </SelectItem>
                           ))}
@@ -568,7 +580,11 @@ const ProductDetails = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {availableSizes.map((size) => (
-                            <SelectItem key={size} value={size} className="text-sm">
+                            <SelectItem
+                              key={size}
+                              value={size}
+                              className="text-sm"
+                            >
                               {size}
                             </SelectItem>
                           ))}
@@ -592,7 +608,11 @@ const ProductDetails = () => {
                         </SelectTrigger>
                         <SelectContent>
                           {availableColors.map((color) => (
-                            <SelectItem key={color} value={color} className="text-sm">
+                            <SelectItem
+                              key={color}
+                              value={color}
+                              className="text-sm"
+                            >
                               {color}
                             </SelectItem>
                           ))}
