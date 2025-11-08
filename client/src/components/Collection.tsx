@@ -116,7 +116,7 @@ const Collection = () => {
         </div>
 
         {/* CTA */}
-        <div className="text-center">
+        <div className="text-center collection-cta">
           <div className="mb-8">
             <p className="text-gray-600 text-lg mb-4">
               {t("selection.FindYourDress")}

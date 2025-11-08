@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);
 
 const AboutUs = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const containerRef = useRef<HTMLDivElement>(null);
   useGSAP(
     () => {
@@ -117,13 +117,13 @@ const AboutUs = () => {
       <div className="flex flex-col items-center text-center px-6">
         <div className="w-24 h-[2px] bg-gradient-to-r from-transparent via-[#f7ce83] to-transparent mb-6"></div>
         <h2 className="uppercase text-xs md:text-sm tracking-[0.3em] text-gray-500 mb-4">
-          {t('aboutus.getToKnowUs')}
+          {t("aboutus.getToKnowUs")}
         </h2>
-        <h1 className="font-serif text-5xl md:text-7xl font-light mb-6 leading-tight heading">
-      {t('aboutus.title')}
+        <h1 className="font-serif text-center text-5xl md:text-7xl font-light mb-6 leading-tight heading">
+          {t("aboutus.title")}
         </h1>
         <p className="font-sans max-w-2xl text-gray-600 text-lg leading-relaxed subheading">
-          {t('aboutus.subtitle')}
+          {t("aboutus.subtitle")}
         </p>
       </div>
 
@@ -152,12 +152,11 @@ const AboutUs = () => {
           <div className="md:w-1/2 w-full flex justify-start">
             <div className="space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
               <h2 className="text-3xl md:text-7xl font-normal font-serif leading-tight tracking-wide abouttitle">
-                {t('aboutus.journeyTitle')}
+                {t("aboutus.journeyTitle")}
               </h2>
               <div className="w-16 h-[2px] bg-[#f7ce83] mb-4"></div>
-              <p className="text-gray-700 leading-relaxed text-lg aboutsubtitle">
-                                {t('aboutus.journeyDescription')}
-
+              <p className="text-gray-700 leading-relaxed text-lg text-center md:text-right aboutsubtitle">
+                {t("aboutus.journeyDescription")}
               </p>
             </div>
           </div>
@@ -172,11 +171,11 @@ const AboutUs = () => {
           <div className="md:w-1/2 w-full flex justify-start">
             <div className="space-y-4 flex flex-col items-center md:items-start text-center md:text-left">
               <h2 className="text-3xl md:text-7xl font-normal font-serif tracking-wide abouttitle">
-                                {t('aboutus.journeyTitleTwo')}
+                {t("aboutus.journeyTitleTwo")}
               </h2>
               <div className="w-16 h-[2px] bg-[#f7ce83] mb-4"></div>
-              <p className="text-gray-700 leading-relaxed text-lg aboutsubtitle">
-                                {t('aboutus.journeyDescriptionTwo')}
+              <p className="text-gray-700 leading-relaxed text-lg text-center md:text-right aboutsubtitle">
+                {t("aboutus.journeyDescriptionTwo")}
               </p>
             </div>
           </div>

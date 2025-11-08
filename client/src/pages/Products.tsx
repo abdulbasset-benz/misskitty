@@ -215,8 +215,8 @@ const Products = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-[#F0ECE6] via-[#F7F3ED] to-[#FAF7F0] relative overflow-hidden">
-        <div className="relative flex flex-col items-center justify-center w-full px-6 py-16 md:py-24">
-          <h1 className="font-aboreto font-bold text-4xl md:text-7xl text-gray-900 mb-6 text-center">
+        <div className="relative flex flex-col items-center justify-center w-full px-6 py-24 md:py-24">
+          <h1 className="font-aboreto font-bold text-5xl md:text-7xl text-gray-900 mb-6 text-center">
             {t("products.ourCollection")}
           </h1>
           <p className="text-center font-poppins text-gray-600 max-w-2xl text-lg leading-relaxed">
@@ -423,7 +423,7 @@ const Products = () => {
           </aside>
 
           {/* Products Grid */}
-          <section className="md:col-span-3">
+          <section className="md:col-span-3 products-section">
             {/* Sort and Results Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
               <div className="flex items-center gap-4">

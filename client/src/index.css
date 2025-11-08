@@ -142,8 +142,26 @@
   :root[lang="ar"] body,
   :root[lang="ar"] * {
     font-family: "El Messiri", sans-serif !important;
-    text-align: right;
   }
+
+:root[lang="ar"] .collection-cta {
+  direction: ltr !important;
+  text-align: center !important;
+}
+
+:root[lang="ar"] .collection-cta > div,
+:root[lang="ar"] .collection-cta * {
+  text-align: center !important;
+}
+
+:root[lang="ar"] section.products-section {
+  direction: ltr !important;
+  text-align: center !important;
+}
+:root[lang="ar"] section.products-section * {
+  text-align: center !important;
+}
+
   
   :root[lang="en"],
   :root[lang="en"] body,
