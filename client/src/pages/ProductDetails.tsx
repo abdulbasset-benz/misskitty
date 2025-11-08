@@ -21,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useTranslation } from "react-i18next";
 
 type ProductImage = {
   id: number;
@@ -129,6 +130,7 @@ const DEFAULT_COLORS = [
 ];
 
 const ProductDetails = () => {
+  const { t } = useTranslation();
   const { id } = useParams<{ id: string }>();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -388,10 +390,10 @@ const ProductDetails = () => {
             <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
               <div className="bg-gradient-to-r from-[#d4b985] to-[#f7ce83] p-5">
                 <h2 className="text-lg font-serif text-gray-900 text-center">
-                  Order This Dress
+                  {t("productDetails.order")}
                 </h2>
                 <p className="text-gray-700 text-sm text-center mt-1">
-                  Fill in your details to complete your order
+                  {t("productDetails.orderDetails")}
                 </p>
               </div>
 
@@ -443,15 +445,15 @@ const ProductDetails = () => {
 
                     <div className="border-t border-gray-200 pt-2 space-y-1.5 text-sm">
                       <div className="flex justify-between text-gray-600">
-                        <span>Product Price</span>
+                        <span>{t("productDetails.productPrice")}</span>
                         <span>DZD {product.price.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between text-gray-600">
-                        <span>Delivery Fee</span>
+                        <span>{t("productDetails.deliveryFee")}</span>
                         <span>DZD {DELIVERY_FEE.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between font-medium text-gray-900 pt-1.5 border-t border-gray-200">
-                        <span>Total</span>
+                        <span>{t("productDetails.totalAmount")}</span>
                         <span className="text-[#d4b985]">
                           DZD {totalPrice.toLocaleString()}
                         </span>
@@ -466,7 +468,7 @@ const ProductDetails = () => {
                         htmlFor="userName"
                         className="text-sm mb-1.5 block"
                       >
-                        Full Name *
+                        {t("productDetails.name")}
                       </Label>
                       <Input
                         id="userName"
@@ -485,7 +487,7 @@ const ProductDetails = () => {
                         htmlFor="phoneNumber"
                         className="text-sm mb-1.5 block"
                       >
-                        Phone *
+                        {t("productDetails.phone")}
                       </Label>
                       <Input
                         id="phoneNumber"
@@ -504,7 +506,7 @@ const ProductDetails = () => {
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <Label htmlFor="wilaya" className="text-sm mb-1.5 block">
-                        Wilaya *
+                        {t("productDetails.wilaya")}
                       </Label>
                       <Select
                         value={orderForm.wilaya}
@@ -532,7 +534,7 @@ const ProductDetails = () => {
 
                     <div>
                       <Label htmlFor="commune" className="text-sm mb-1.5 block">
-                        Commune
+                        {t("productDetails.commune")}
                       </Label>
                       <Input
                         id="commune"
@@ -548,7 +550,7 @@ const ProductDetails = () => {
 
                   <div>
                     <Label htmlFor="address" className="text-sm mb-1.5 block">
-                      Address *
+                      {t("productDetails.address")}
                     </Label>
                     <Textarea
                       id="address"
@@ -566,7 +568,7 @@ const ProductDetails = () => {
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <Label htmlFor="size" className="text-sm mb-1.5 block">
-                        Size *
+                        {t("productDetails.size")}{" "}
                       </Label>
                       <Select
                         value={orderForm.size}
@@ -594,7 +596,7 @@ const ProductDetails = () => {
 
                     <div>
                       <Label htmlFor="color" className="text-sm mb-1.5 block">
-                        Color *
+                        {t("productDetails.color")}{" "}
                       </Label>
                       <Select
                         value={orderForm.color}
@@ -630,21 +632,18 @@ const ProductDetails = () => {
                     {isSubmitting ? (
                       <div className="flex items-center gap-2">
                         <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black"></div>
-                        Processing...
+                        {t("productDetails.processing")}
                       </div>
                     ) : product.stock <= 0 ? (
                       "Out of Stock"
                     ) : (
                       <>
                         <ShoppingBag className="w-5 h-5 mr-2" />
-                        Order Now - DZD {totalPrice.toLocaleString()}
+                        {t("productDetails.orderNow")} - DZD{" "}
+                        {totalPrice.toLocaleString()}
                       </>
                     )}
                   </Button>
-
-                  <p className="text-xs text-gray-500 text-center">
-                    Pay DZD {totalPrice.toLocaleString()} upon delivery
-                  </p>
                 </form>
               </div>
             </div>
