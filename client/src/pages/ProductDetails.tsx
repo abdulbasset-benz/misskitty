@@ -3,7 +3,9 @@ import { useParams } from "react-router";
 import api from "@/api/axios";
 import {
   ShoppingBag,
-  
+  Truck,
+  Shield,
+  Heart,
   ChevronLeft,
   ChevronRight,
   CheckCircle,
@@ -303,9 +305,9 @@ const ProductDetails = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-[#fefaf2]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
           {/* Left - Images */}
-          <div className="space-y-4 lg:sticky lg:top-6">
+          <div className="space-y-4">
             {/* Main Image */}
             <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
               {lightboxImages.length > 0 ? (
@@ -374,7 +376,21 @@ const ProductDetails = () => {
               </div>
             )}
 
-            
+            {/* Features */}
+            <div className="grid grid-cols-3 gap-3 pt-4">
+              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
+                <Truck className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
+                <p className="text-xs font-medium text-gray-900">Delivery</p>
+              </div>
+              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
+                <Shield className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
+                <p className="text-xs font-medium text-gray-900">Secure</p>
+              </div>
+              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
+                <Heart className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
+                <p className="text-xs font-medium text-gray-900">Quality</p>
+              </div>
+            </div>
           </div>
 
           {/* Right - Order Form */}
