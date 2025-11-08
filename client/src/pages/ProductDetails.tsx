@@ -3,9 +3,7 @@ import { useParams } from "react-router";
 import api from "@/api/axios";
 import {
   ShoppingBag,
-  Truck,
-  Shield,
-  Heart,
+  
   ChevronLeft,
   ChevronRight,
   CheckCircle,
