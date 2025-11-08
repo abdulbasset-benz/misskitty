@@ -307,7 +307,7 @@ const ProductDetails = () => {
           <div className="space-y-4  pt-24">
             {/* Main Image */}
             <div className="relative bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group w-full sm:w-[400px] lg:w-[500px]">
-              <div className="relative w-full sm:h-[500px] lg:h-[600px] flex items-center justify-center overflow-hidden">
+              <div className="relative w-full sm:h-[400px] lg:h-[600px] flex items-center justify-center overflow-hidden">
                 {" "}
                 {/* Use desired aspect ratio */}
                 {lightboxImages.length > 0 ? (
