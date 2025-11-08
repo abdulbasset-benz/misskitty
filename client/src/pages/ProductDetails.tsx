@@ -306,7 +306,7 @@ const ProductDetails = () => {
           {/* Left - Images */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group pt-24">
+            <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group pt-25">
               {lightboxImages.length > 0 ? (
                 <LightboxModal
                   images={lightboxImages}
