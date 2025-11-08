@@ -3,9 +3,6 @@ import { useParams } from "react-router";
 import api from "@/api/axios";
 import {
   ShoppingBag,
-  Truck,
-  Shield,
-  Heart,
   ChevronLeft,
   ChevronRight,
   CheckCircle,
@@ -309,7 +306,7 @@ const ProductDetails = () => {
           {/* Left - Images */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
+            <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group pt-24">
               {lightboxImages.length > 0 ? (
                 <LightboxModal
                   images={lightboxImages}
@@ -377,20 +374,7 @@ const ProductDetails = () => {
             )}
 
             {/* Features */}
-            <div className="grid grid-cols-3 gap-3 pt-4">
-              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
-                <Truck className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
-                <p className="text-xs font-medium text-gray-900">Delivery</p>
-              </div>
-              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
-                <Shield className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
-                <p className="text-xs font-medium text-gray-900">Secure</p>
-              </div>
-              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
-                <Heart className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
-                <p className="text-xs font-medium text-gray-900">Quality</p>
-              </div>
-            </div>
+            
           </div>
 
           {/* Right - Order Form */}
