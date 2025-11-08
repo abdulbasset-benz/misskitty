@@ -75,21 +75,21 @@ const HeroSection = () => {
       className="min-h-screen flex flex-col items-center justify-center bg-[#f5f3ef] text-center overflow-hidden font-sans relative"
     >
       {/* Hero content */}
-      <div className="flex flex-col items-center justify-center mt-24 relative w-full px-8">
+      <div className="flex flex-col items-center justify-center mt-16 md:mt-24 relative w-full px-8">
         {/* Main title */}
-        <h2 className="text-6xl sm:text-8xl md:text-9xl font-bold uppercase leading-tight text-center mb-4 heroTitle">
+        <h2 className="text-4xl sm:text-8xl md:text-9xl font-bold uppercase leading-tight text-center mb-1 md:mb-4 heroTitle">
           {t("hero.grace")}
         </h2>
 
         {/* Side titles + images */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-12 mt-4">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-12">
           {/* Left title */}
-          <h1 className="text-3xl md:text-6xl font-semibold uppercase sidetitle leading-20 order-1 md:order-1">
+          <h1 className="text-2xl md:text-6xl font-semibold uppercase sidetitle leading-tight order-1 md:order-1">
             {t("hero.inEvery")}
           </h1>
 
           {/* Images */}
-          <div className="relative w-[240px] md:w-[340px] h-[320px] md:h-[420px] flex-shrink-0 mx-2 order-3 md:order-2">
+          <div className="relative w-[200px] md:w-[340px] h-[250px] md:h-[420px] flex-shrink-0 mx-2 order-3 md:order-2 my-2 md:my-0">
             {[pic1, pic2, pic3, pic4, pic5].map((pic, index) => (
               <img
                 key={index}
@@ -112,14 +112,14 @@ const HeroSection = () => {
           </div>
 
           {/* Right title */}
-          <h1 className="text-3xl md:text-6xl font-semibold uppercase leading-tight sidetitle order-2 md:order-3">
+          <h1 className="text-2xl md:text-6xl font-semibold uppercase leading-tight sidetitle order-2 md:order-3">
             {t("hero.detail")}
           </h1>
         </div>
 
-        {/* CTA section — order changed only on mobile */}
-        <div className="mt-10 flex flex-col items-center gap-4 order-3 md:order-none">
-          <button className="bg-black text-white px-10 py-3 text-sm tracking-wider hover:bg-gray-800 transition-all">
+        {/* CTA section */}
+        <div className="mt-8 md:mt-10 flex flex-col items-center gap-3 md:gap-4 order-4 pb-8 md:pb-0">
+          <button className="bg-black text-white px-6 py-3 text-sm tracking-wider hover:bg-gray-800 transition-all">
             <Link to="/products">{t("hero.shopNow")} →</Link>
           </button>
           <p className="text-gray-600 text-sm md:text-base">

@@ -42,7 +42,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-[70] bg-[#f5f3ef]/90 backdrop-blur-md shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 py-3 md:py-5 flex items-center justify-between">
         {/* Left Links */}
         <div className="hidden md:flex gap-8 text-sm tracking-wide text-gray-700 uppercase flex-1 justify-start">
           {navLinksLeft.map((item) => (
