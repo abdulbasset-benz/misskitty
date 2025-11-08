@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import LightboxModal from "@/components/LightboxModal";
+import { useTranslation } from "react-i18next";
 
 type ProductImage = {
   id: number;
@@ -30,6 +31,7 @@ const ProductCard = ({
   sizes = [],
   colors = [],
 }: ProductCardProps) => {
+  const { t } = useTranslation();
   // Transform images for lightbox
   const lightboxImages = images.map((img) => ({
     id: img.id,
@@ -103,7 +105,7 @@ const ProductCard = ({
         {/* Sizes */}
         {sizes.length > 0 && (
           <div className="flex flex-wrap gap-2 text-xs">
-            <span className="font-medium text-gray-700">Sizes:</span>
+            <span className="font-medium text-gray-700">{t('products.size')}:</span>
             {sizes.map((size, idx) => (
               <span
                 key={idx}
@@ -118,7 +120,7 @@ const ProductCard = ({
         {/* Colors */}
         {colors.length > 0 && (
           <div className="flex items-center gap-2">
-            <span className="font-medium text-gray-700 text-xs">Colors:</span>
+            <span className="font-medium text-gray-700 text-xs">{t('products.color')}:</span>
             <div className="flex gap-2">
               {colors.map((color, idx) => (
                 <span
@@ -149,7 +151,7 @@ const ProductCard = ({
               : "bg-gray-300 text-gray-500 cursor-not-allowed"
           }`}
         >
-          {inStock ? "Order Now" : "Unavailable"}
+          {inStock ? t('productDetails.order') : "Unavailable"}
         </Link>
       </div>
     </div>
