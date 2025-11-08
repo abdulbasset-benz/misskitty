@@ -376,21 +376,7 @@ const ProductDetails = () => {
               </div>
             )}
 
-            {/* Features */}
-            <div className="grid grid-cols-3 gap-3 pt-4">
-              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
-                <Truck className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
-                <p className="text-xs font-medium text-gray-900">Delivery</p>
-              </div>
-              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
-                <Shield className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
-                <p className="text-xs font-medium text-gray-900">Secure</p>
-              </div>
-              <div className="text-center p-3 bg-white rounded-lg border border-gray-100">
-                <Heart className="w-5 h-5 text-[#d4b985] mx-auto mb-1" />
-                <p className="text-xs font-medium text-gray-900">Quality</p>
-              </div>
-            </div>
+            
           </div>
 
           {/* Right - Order Form */}
