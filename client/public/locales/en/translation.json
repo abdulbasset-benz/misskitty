@@ -85,8 +85,26 @@
     "availability": "Availability",
     "noProducts": "0 Products",
     "newest": "Newest",
+    "lowTohigh": "Price: Low to High",
+    "highToLow": "Price: High to Low",
+    "alphabet": "Alphabetical Order",
     "noResults": "No products found",
     "tryAdjusting": "Try adjusting your filters or search criteria.",
-    "clearFilters": "Clear All Filters"
+    "clearFilters": "Clear All Filters",
+    "products": "Products",
+    "colors": {
+      "Black": "Black",
+      "White": "White",
+      "Red": "Red",
+      "Blue": "Blue",
+      "Green": "Green",
+      "Pink": "Pink",
+      "Purple": "Purple",
+      "Gold": "Gold",
+      "Silver": "Silver",
+      "Beige": "Beige",
+      "Navy": "Navy",
+      "Brown": "Brown"
+    }
   }
 }

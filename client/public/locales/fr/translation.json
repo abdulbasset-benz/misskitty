@@ -85,8 +85,29 @@
     "availability": "Disponibilité",
     "noProducts": "0 produits",
     "newest": "Les plus récents",
+    "lowTohigh": "Prix croissant",
+    "highToLow": "Prix décroissant",
+    "alphabet": "Ordre alphabétique",
     "noResults": "Aucun produit trouvé",
     "tryAdjusting": "Essayez d’ajuster vos filtres ou vos critères de recherche.",
-    "clearFilters": "Effacer tous les filtres"
+    "clearFilters": "Effacer tous les filtres",
+    "products": "Produits",
+    "colors": {
+      "Black": "Noir",
+      "White": "Blanc",
+      "Red": "Rouge",
+      "Blue": "Bleu",
+      "Green": "Vert",
+      "Pink": "Rose",
+      "Purple": "Violet",
+      "Gold": "Or",
+      "Silver": "Argent",
+      "Beige": "Beige",
+      "Navy": "Bleu marine",
+      "Brown": "Marron"
+    }
+  },
+  "productDetail" : {
+    
   }
 }
