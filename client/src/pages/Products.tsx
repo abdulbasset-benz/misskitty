@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 type ProductImage = {
   id: number;
@@ -64,6 +65,7 @@ const AVAILABLE_COLORS = [
 ];
 
 const Products = () => {
+  const { t } = useTranslation();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
@@ -79,7 +81,8 @@ const Products = () => {
   const [sortBy, setSortBy] = useState<string>("newest");
 
   useEffect(() => {
-    api.get<Product[]>("products")
+    api
+      .get<Product[]>("products")
       .then((res) => {
         setProducts(res.data);
         // Set initial price range based on actual products
@@ -214,24 +217,29 @@ const Products = () => {
       <div className="bg-gradient-to-br from-[#F0ECE6] via-[#F7F3ED] to-[#FAF7F0] relative overflow-hidden">
         <div className="relative flex flex-col items-center justify-center w-full px-6 py-16 md:py-24">
           <h1 className="font-aboreto font-bold text-4xl md:text-7xl text-gray-900 mb-6 text-center">
-            Our Collection
+            {t("products.ourCollection")}
           </h1>
           <p className="text-center font-poppins text-gray-600 max-w-2xl text-lg leading-relaxed">
-            Explore our curated selection of luxury gowns and dresses, each
-            piece meticulously crafted to celebrate your unique style and grace.
+            {t("products.subTitle")}
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-sm text-gray-700">Premium Quality</span>
+              <span className="text-sm text-gray-700">
+                {t("products.feat1")}
+              </span>
             </div>
             <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="text-sm text-gray-700">Fast Delivery</span>
+              <span className="text-sm text-gray-700">
+                {t("products.feat2")}
+              </span>
             </div>
             <div className="flex items-center gap-2 bg-white/70 backdrop-blur-sm rounded-full px-4 py-2">
               <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-              <span className="text-sm text-gray-700">Handcrafted</span>
+              <span className="text-sm text-gray-700">
+                {t("products.feat3")}
+              </span>
             </div>
           </div>
         </div>
@@ -246,7 +254,7 @@ const Products = () => {
             className="w-full flex items-center justify-center gap-2"
           >
             <SlidersHorizontal className="w-4 h-4" />
-            Filters
+            {t("products.filters")}
             {activeFiltersCount > 0 && (
               <Badge variant="secondary" className="ml-2">
                 {activeFiltersCount}
@@ -266,7 +274,7 @@ const Products = () => {
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-semibold text-xl text-gray-900 flex items-center gap-2">
                   <Filter className="w-5 h-5" />
-                  Filters
+                  {t("products.filters")}
                 </h2>
                 {activeFiltersCount > 0 && (
                   <Button
@@ -275,7 +283,7 @@ const Products = () => {
                     size="sm"
                     className="text-gray-500 hover:text-gray-700"
                   >
-                    Clear all
+                    {t("products.clearFilters")}
                   </Button>
                 )}
               </div>
@@ -287,7 +295,7 @@ const Products = () => {
                 {/* Price Range */}
                 <AccordionItem value="price" className="border-gray-100">
                   <AccordionTrigger className="text-gray-900 font-medium">
-                    Price Range
+                    {t("products.priceRange")}
                   </AccordionTrigger>
                   <AccordionContent className="pt-4">
                     <div className="space-y-4">
@@ -314,7 +322,8 @@ const Products = () => {
                 {/* Size Filter */}
                 <AccordionItem value="size" className="border-gray-100">
                   <AccordionTrigger className="text-gray-900 font-medium">
-                    Size
+                    {t("products.size")}
+
                     {filters.sizes.length > 0 && (
                       <Badge variant="secondary" className="ml-2">
                         {filters.sizes.length}
@@ -341,9 +350,10 @@ const Products = () => {
                 </AccordionItem>
 
                 {/* Color Filter */}
+                {/* Color Filter */}
                 <AccordionItem value="color" className="border-gray-100">
                   <AccordionTrigger className="text-gray-900 font-medium">
-                    Color
+                    {t("products.color")}
                     {filters.colors.length > 0 && (
                       <Badge variant="secondary" className="ml-2">
                         {filters.colors.length}
@@ -352,58 +362,62 @@ const Products = () => {
                   </AccordionTrigger>
                   <AccordionContent className="pt-4">
                     <div className="space-y-3">
-                      {AVAILABLE_COLORS.map((color) => (
-                        <div
-                          key={color}
-                          className="flex items-center space-x-3"
-                        >
-                          <Checkbox
-                            id={`color-${color}`}
-                            checked={filters.colors.includes(color)}
-                            onCheckedChange={() => handleColorToggle(color)}
-                          />
-                          <Label
-                            htmlFor={`color-${color}`}
-                            className="text-sm font-medium text-gray-700 cursor-pointer flex items-center gap-2"
+                      {AVAILABLE_COLORS.map((color) => {
+                        const translatedColor = t(
+                          `products.colors.${color}`,
+                          color
+                        ); // ✅ fallback to English if missing
+                        return (
+                          <div
+                            key={color}
+                            className="flex items-center space-x-3"
                           >
-                            <div
-                              className={`w-4 h-4 rounded-full border border-gray-300 ${
-                                color === "Black"
-                                  ? "bg-black"
-                                  : color === "White"
-                                  ? "bg-white"
-                                  : color === "Red"
-                                  ? "bg-red-500"
-                                  : color === "Blue"
-                                  ? "bg-blue-500"
-                                  : color === "Green"
-                                  ? "bg-green-500"
-                                  : color === "Pink"
-                                  ? "bg-pink-500"
-                                  : color === "Purple"
-                                  ? "bg-purple-500"
-                                  : color === "Gold"
-                                  ? "bg-yellow-400"
-                                  : color === "Silver"
-                                  ? "bg-gray-400"
-                                  : color === "Beige"
-                                  ? "bg-orange-100"
-                                  : color === "Navy"
-                                  ? "bg-blue-900"
-                                  : color === "Brown"
-                                  ? "bg-amber-800"
-                                  : "bg-gray-300"
-                              }`}
-                            ></div>
-                            {color}
-                          </Label>
-                        </div>
-                      ))}
+                            <Checkbox
+                              id={`color-${color}`}
+                              checked={filters.colors.includes(color)}
+                              onCheckedChange={() => handleColorToggle(color)}
+                            />
+                            <Label
+                              htmlFor={`color-${color}`}
+                              className="text-sm font-medium text-gray-700 cursor-pointer flex items-center gap-2"
+                            >
+                              <div
+                                className={`w-4 h-4 rounded-full border border-gray-300 ${
+                                  color === "Black"
+                                    ? "bg-black"
+                                    : color === "White"
+                                    ? "bg-white"
+                                    : color === "Red"
+                                    ? "bg-red-500"
+                                    : color === "Blue"
+                                    ? "bg-blue-500"
+                                    : color === "Green"
+                                    ? "bg-green-500"
+                                    : color === "Pink"
+                                    ? "bg-pink-500"
+                                    : color === "Purple"
+                                    ? "bg-purple-500"
+                                    : color === "Gold"
+                                    ? "bg-yellow-400"
+                                    : color === "Silver"
+                                    ? "bg-gray-400"
+                                    : color === "Beige"
+                                    ? "bg-orange-100"
+                                    : color === "Navy"
+                                    ? "bg-blue-900"
+                                    : color === "Brown"
+                                    ? "bg-amber-800"
+                                    : "bg-gray-300"
+                                }`}
+                              ></div>
+                              {translatedColor}
+                            </Label>
+                          </div>
+                        );
+                      })}
                     </div>
                   </AccordionContent>
                 </AccordionItem>
-
-                
               </Accordion>
             </div>
           </aside>
@@ -414,7 +428,7 @@ const Products = () => {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
               <div className="flex items-center gap-4">
                 <h2 className="text-lg font-medium text-gray-900">
-                  {filteredAndSortedProducts.length} Products
+                  {filteredAndSortedProducts.length} {t("products.products")}
                 </h2>
 
                 {/* Active Filters */}
@@ -460,10 +474,17 @@ const Products = () => {
                   <SelectValue placeholder="Sort by" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="newest">Newest</SelectItem>
-                  <SelectItem value="price-low">Price: Low to High</SelectItem>
-                  <SelectItem value="price-high">Price: High to Low</SelectItem>
-                  <SelectItem value="name">Name A-Z</SelectItem>
+                  <SelectItem value="newest">{t("products.newest")}</SelectItem>
+                  <SelectItem value="price-low">
+                    {t("products.lowTohigh")}
+                  </SelectItem>
+                  <SelectItem value="price-high">
+                    {t("products.highToLow")}
+                  </SelectItem>
+                  <SelectItem value="name">
+                    {" "}
+                    {t("products.alphabet")}
+                  </SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -491,13 +512,13 @@ const Products = () => {
                   <Filter className="w-8 h-8 text-gray-400" />
                 </div>
                 <h3 className="text-xl font-medium text-gray-900 mb-2">
-                  No products found
+                  {t("products.noProducts")}
                 </h3>
                 <p className="text-gray-600 mb-6">
-                  Try adjusting your filters or search criteria
+                  {t("products.tryAdjusting")}
                 </p>
                 <Button onClick={clearAllFilters} variant="outline">
-                  Clear all filters
+                  {t("products.clearFilters")}
                 </Button>
               </div>
             ) : (
