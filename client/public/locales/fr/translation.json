@@ -107,7 +107,20 @@
       "Brown": "Marron"
     }
   },
-  "productDetail" : {
-    
+  "productDetails": {
+    "order": "Commander maintenant",
+    "orderDetails": "Remplissez les détails de la commande",
+    "productPrice": "Prix du produit",
+    "deliveryFee": "Frais de livraison",
+    "totalAmount": "Montant total",
+    "name": "Nom complet",
+    "phone": "Numéro de téléphone",
+    "wilaya": "Wilaya",
+    "commune": "Commune",
+    "address": "(Facultatif) Adresse complète",
+    "size": "Taille",
+    "color": "Couleur",
+    "orderNow": "Commander maintenant",
+    "processing": "En cours de traitement"
   }
 }

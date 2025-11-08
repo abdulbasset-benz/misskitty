@@ -106,5 +106,22 @@
       "Navy": "Navy",
       "Brown": "Brown"
     }
-  }
+  },
+  "productDetails": {
+    "order": "Order Now",
+    "orderDetails": "Fill in order details",
+    "productPrice": "Product Price",
+    "deliveryFee": "Delivery Fee",
+    "totalAmount": "Total Amount",
+    "name": "Full Name",
+    "phone": "Phone Number",
+    "wilaya": "Province",
+    "commune": "Municipality",
+    "address": "(Optional) Full Address",
+    "size": "Size",
+    "color": "Color",
+    "orderNow": "Order Now",
+    "processing": "Processing"
+}
+
 }

@@ -109,5 +109,21 @@
       "Navy": "كحلي",
       "Brown": "بني"
     }
+  },
+  "productDetails": {
+    "order": "اطلبي الآن",
+    "orderDetails": "املئي تفاصيل الطلب",
+    "productPrice": "سعر المنتج",
+    "deliveryFee": "رسوم التوصيل",
+    "totalAmount": "المبلغ الإجمالي",
+    "name": "الاسم الكامل",
+    "phone": "رقم الهاتف",
+    "wilaya": "الولاية",
+    "commune": "البلدية",
+    "address": "(اختياري) العنوان الكامل",
+    "size": "المقاس",
+    "color": "اللون",
+    "orderNow": "اطلبي الآن",
+    "processing": "جاري المعالجة"
   }
 }
