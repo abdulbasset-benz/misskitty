@@ -124,6 +124,10 @@
     "size": "المقاس",
     "color": "اللون",
     "orderNow": "اطلبي الآن",
-    "processing": "جاري المعالجة"
+    "processing": "جاري المعالجة",
+    "placeholderName": "اسمك الكامل",
+    "select": "اختر",
+    "communePlaceholder": "البلدية (اختياري)",
+    "placeholderAdress": "العنوان الكامل (اختياري)"
   }
 }

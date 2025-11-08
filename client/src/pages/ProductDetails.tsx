@@ -476,7 +476,7 @@ const ProductDetails = () => {
                         onChange={(e) =>
                           handleInputChange("userName", e.target.value)
                         }
-                        placeholder="Your name"
+                        placeholder={t("productDetails.placeholderName")}
                         className="h-10 text-sm"
                         required
                       />
@@ -495,8 +495,8 @@ const ProductDetails = () => {
                         onChange={(e) =>
                           handleInputChange("phoneNumber", e.target.value)
                         }
-                        placeholder="0555 123 456"
-                        className="h-10 text-sm"
+                        placeholder="0777 77 77 77"
+                        className="h-10 text-sm ltr:text-left rtl:text-left [direction:ltr]"
                         required
                       />
                     </div>
@@ -516,7 +516,7 @@ const ProductDetails = () => {
                         required
                       >
                         <SelectTrigger className="h-10 text-sm">
-                          <SelectValue placeholder="Select" />
+                          <SelectValue placeholder={t("productDetails.select")} />
                         </SelectTrigger>
                         <SelectContent className="max-h-[200px]">
                           {ALGERIAN_WILAYAS.map((wilaya) => (
@@ -542,7 +542,7 @@ const ProductDetails = () => {
                         onChange={(e) =>
                           handleInputChange("commune", e.target.value)
                         }
-                        placeholder="Optional"
+                        placeholder={t("productDetails.communePlaceholder")}
                         className="h-10 text-sm"
                       />
                     </div>
@@ -558,7 +558,7 @@ const ProductDetails = () => {
                       onChange={(e) =>
                         handleInputChange("address", e.target.value)
                       }
-                      placeholder="Your delivery address"
+                      placeholder={t("productDetails.placeholderAdress")}
                       className="min-h-[70px] text-sm resize-none"
                       required
                     />
@@ -615,7 +615,7 @@ const ProductDetails = () => {
                               value={color}
                               className="text-sm"
                             >
-                              {color}
+                              {t(`products.colors.${color}`)}
                             </SelectItem>
                           ))}
                         </SelectContent>

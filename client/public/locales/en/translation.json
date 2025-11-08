@@ -121,7 +121,10 @@
     "size": "Size",
     "color": "Color",
     "orderNow": "Order Now",
-    "processing": "Processing"
-}
-
+    "processing": "Processing",
+    "placeholderName": "Your full name",
+    "select": "Select",
+    "communePlaceholder": "Municipality (Optional)",
+    "placeholderAdress": "Full address (Optional)"
+  }
 }

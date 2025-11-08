@@ -121,6 +121,10 @@
     "size": "Taille",
     "color": "Couleur",
     "orderNow": "Commander maintenant",
-    "processing": "En cours de traitement"
+    "processing": "En cours de traitement",
+    "placeholderName": "Votre nom complet",
+    "select": "Choisir",
+    "communePlaceholder": "Commune (facultatif)",
+    "placeholderAdress": "Adresse complète (facultatif)"
   }
 }
