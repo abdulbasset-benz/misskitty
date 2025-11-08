@@ -3,7 +3,6 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import Layout from "@/layouts/Layout";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
-import OrderPage from "./pages/OrderPage";
 import ScrollToTop from "./components/ScrollToTop";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
@@ -25,7 +24,6 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
           <Route path="products" element={<Products />} />
-          <Route path="orders" element={<OrderPage />} />
           <Route path="products/:id" element={<ProductDetails />} />
         </Route>
 
