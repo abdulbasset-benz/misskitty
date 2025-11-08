@@ -304,32 +304,13 @@ const ProductDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-[#fefaf2]">
-      {/* Breadcrumb */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
-          <nav className="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm text-gray-500 font-light flex-wrap">
-            <span className="hover:text-gray-700 transition-colors py-1">
-              Home
-            </span>
-            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
-            <span className="hover:text-gray-700 transition-colors py-1">
-              Collection
-            </span>
-            <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
-            <span className="text-[#d4b985] font-medium py-1 truncate max-w-[150px] sm:max-w-none">
-              {product.name}
-            </span>
-          </nav>
-        </div>
-      </div>
-
-      {/* Main Content - Full Height Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[calc(100vh-80px)] flex items-center py-4">
-        <div className="grid lg:grid-cols-2 gap-6 lg:gap-8 w-full h-full lg:h-auto">
+      {/* Main Content - Side by Side Layout */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {/* Left Side - Images Gallery */}
-          <div className="flex flex-col space-y-3 lg:space-y-4 h-full lg:sticky lg:top-4">
+          <div className="space-y-4">
             {/* Main Image */}
-            <div className="relative aspect-square lg:aspect-[4/5] bg-white rounded-xl overflow-hidden shadow-lg border border-gray-100 group flex-shrink-0">
+            <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 group">
               {lightboxImages.length > 0 ? (
                 <LightboxModal
                   images={lightboxImages}
@@ -360,15 +341,15 @@ const ProductDetails = () => {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-70 lg:opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white"
                   >
-                    <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+                    <ChevronLeft className="w-5 h-5 text-gray-700" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-70 lg:opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:bg-white"
                   >
-                    <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700" />
+                    <ChevronRight className="w-5 h-5 text-gray-700" />
                   </button>
                 </>
               )}
@@ -376,12 +357,12 @@ const ProductDetails = () => {
 
             {/* Thumbnail Gallery */}
             {product.images.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin">
+              <div className="flex gap-3 overflow-x-auto pb-2">
                 {product.images.map((img, index) => (
                   <button
                     key={img.id}
                     onClick={() => setSelectedImageIndex(index)}
-                    className={`flex-shrink-0 w-16 h-16 lg:w-20 lg:h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                    className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden border-2 transition-all duration-300 ${
                       index === selectedImageIndex
                         ? "border-[#d4b985] shadow-md"
                         : "border-gray-200 hover:border-gray-300"
@@ -399,91 +380,43 @@ const ProductDetails = () => {
           </div>
 
           {/* Right Side - Product Info & Order Form */}
-          <div className="overflow-y-auto lg:pr-2 scrollbar-thin space-y-6">
-            {/* Product Header */}
-            <div className="bg-white rounded-xl p-4 sm:p-6 shadow-lg border border-gray-100">
-              <div className="flex items-start justify-between mb-3">
-                <h1 className="text-xl sm:text-2xl lg:text-3xl font-serif font-light text-gray-900 leading-tight pr-2">
-                  {product.name}
-                </h1>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="text-gray-400 hover:text-red-500 hover:bg-red-50 transition-all duration-300 flex-shrink-0"
-                >
-                  <Heart className="w-5 h-5" />
-                </Button>
-              </div>
-
-              <div className="space-y-3">
-                <div className="flex flex-col sm:flex-row sm:items-baseline gap-2">
-                  <p className="text-2xl sm:text-3xl font-light text-gray-900">
-                    DZD {product.price.toLocaleString()}
-                  </p>
-                  <div
-                    className={`px-3 py-1 rounded-full text-xs font-medium w-fit ${
-                      product.stock > 0
-                        ? "bg-green-50 text-green-700 border border-green-200"
-                        : "bg-red-50 text-red-700 border border-red-200"
-                    }`}
-                  >
-                    {product.stock > 0
-                      ? `${product.stock} available`
-                      : "Out of stock"}
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 bg-blue-50 border border-blue-200 rounded-lg p-2 sm:p-3">
-                  <Truck className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                  <span>
-                    Delivery fee:{" "}
-                    <strong className="text-blue-700">
-                      DZD {DELIVERY_FEE.toLocaleString()}
-                    </strong>
-                  </span>
-                </div>
-              </div>
-
-              {/* Description */}
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <h3 className="text-sm font-serif text-gray-900 mb-2">
-                  Description
-                </h3>
-                <p className="text-gray-600 leading-relaxed font-light text-xs sm:text-sm">
-                  {product.description}
-                </p>
-              </div>
-
+          <div className="space-y-6">
+            {/* Product Name and Features */}
+            <div className="text-center lg:text-left">
+              <h1 className="text-2xl sm:text-3xl font-serif font-light text-gray-900 mb-4">
+                {product.name}
+              </h1>
+              
               {/* Features Grid */}
-              <div className="grid grid-cols-3 gap-2 mt-4 pt-4 border-t border-gray-100">
-                <div className="text-center p-2 bg-gray-50 rounded-lg">
-                  <Truck className="w-4 h-4 text-[#d4b985] mx-auto mb-1" />
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="text-center">
+                  <Truck className="w-6 h-6 text-[#d4b985] mx-auto mb-2" />
                   <p className="text-xs font-medium text-gray-900">Delivery</p>
                 </div>
-                <div className="text-center p-2 bg-gray-50 rounded-lg">
-                  <Shield className="w-4 h-4 text-[#d4b985] mx-auto mb-1" />
+                <div className="text-center">
+                  <Shield className="w-6 h-6 text-[#d4b985] mx-auto mb-2" />
                   <p className="text-xs font-medium text-gray-900">Secure</p>
                 </div>
-                <div className="text-center p-2 bg-gray-50 rounded-lg">
-                  <Heart className="w-4 h-4 text-[#d4b985] mx-auto mb-1" />
+                <div className="text-center">
+                  <Heart className="w-6 h-6 text-[#d4b985] mx-auto mb-2" />
                   <p className="text-xs font-medium text-gray-900">Quality</p>
                 </div>
               </div>
             </div>
 
             {/* Order Form */}
-            <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden">
-              <div className="bg-gradient-to-r from-[#d4b985] to-[#f7ce83] p-4 sm:p-6">
-                <h2 className="text-lg sm:text-xl font-serif font-light text-gray-900 text-center">
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-[#d4b985] to-[#f7ce83] p-6">
+                <h2 className="text-xl font-serif font-light text-gray-900 text-center">
                   Order This Dress
                 </h2>
-                <p className="text-gray-700 font-light text-xs sm:text-sm text-center mt-1">
+                <p className="text-gray-700 font-light text-sm text-center mt-1">
                   Fill in your details to complete your order
                 </p>
               </div>
 
-              <div className="p-4 sm:p-6">
-                <form onSubmit={handleSubmitOrder} className="space-y-4">
+              <div className="p-6">
+                <form onSubmit={handleSubmitOrder} className="space-y-5">
                   {/* Success/Error Alert */}
                   {submitStatus.type && (
                     <Alert
@@ -511,24 +444,24 @@ const ProductDetails = () => {
                   )}
 
                   {/* Product Summary */}
-                  <div className="bg-gradient-to-br from-gray-50 to-white p-3 sm:p-4 rounded-lg border border-gray-100">
-                    <div className="flex items-center gap-3 mb-3">
+                  <div className="bg-gradient-to-br from-gray-50 to-white p-4 rounded-xl border border-gray-100">
+                    <div className="flex items-center gap-4 mb-3">
                       <img
                         src={product.images[0]?.url || "/placeholder.png"}
                         alt={product.name}
-                        className="w-12 h-12 sm:w-16 sm:h-16 object-cover rounded-lg shadow-md"
+                        className="w-16 h-16 object-cover rounded-lg shadow-md"
                       />
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-serif text-sm sm:text-base text-gray-900 truncate">
+                        <h3 className="font-serif text-base text-gray-900 truncate">
                           {product.name}
                         </h3>
-                        <p className="text-lg sm:text-xl font-light text-gray-900">
+                        <p className="text-xl font-light text-gray-900">
                           DZD {product.price.toLocaleString()}
                         </p>
                       </div>
                     </div>
 
-                    <div className="border-t border-gray-200 pt-2 space-y-1 text-xs sm:text-sm">
+                    <div className="border-t border-gray-200 pt-3 space-y-2 text-sm">
                       <div className="flex justify-between text-gray-600">
                         <span>Product Price</span>
                         <span>DZD {product.price.toLocaleString()}</span>
@@ -537,7 +470,7 @@ const ProductDetails = () => {
                         <span>Delivery Fee</span>
                         <span>DZD {DELIVERY_FEE.toLocaleString()}</span>
                       </div>
-                      <div className="flex justify-between text-sm sm:text-base font-medium text-gray-900 pt-2 border-t border-gray-200">
+                      <div className="flex justify-between text-base font-medium text-gray-900 pt-2 border-t border-gray-200">
                         <span>Total</span>
                         <span className="text-[#d4b985]">
                           DZD {totalPrice.toLocaleString()}
@@ -548,14 +481,14 @@ const ProductDetails = () => {
 
                   {/* Personal Information */}
                   <div>
-                    <h4 className="font-serif text-sm text-gray-900 mb-2">
+                    <h4 className="font-serif text-sm text-gray-900 mb-3">
                       Personal Information
                     </h4>
                     <div className="space-y-3">
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         <Label
                           htmlFor="userName"
-                          className="text-gray-700 font-medium text-xs sm:text-sm"
+                          className="text-gray-700 font-medium text-sm"
                         >
                           Full Name *
                         </Label>
@@ -566,15 +499,15 @@ const ProductDetails = () => {
                             handleInputChange("userName", e.target.value)
                           }
                           placeholder="Enter your full name"
-                          className="border-gray-300 focus:border-[#d4b985] text-sm"
+                          className="border-gray-300 focus:border-[#d4b985] text-sm h-11"
                           required
                         />
                       </div>
 
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         <Label
                           htmlFor="phoneNumber"
-                          className="text-gray-700 font-medium text-xs sm:text-sm"
+                          className="text-gray-700 font-medium text-sm"
                         >
                           Phone Number *
                         </Label>
@@ -585,7 +518,7 @@ const ProductDetails = () => {
                             handleInputChange("phoneNumber", e.target.value)
                           }
                           placeholder="0555 123 456"
-                          className="border-gray-300 focus:border-[#d4b985] text-sm"
+                          className="border-gray-300 focus:border-[#d4b985] text-sm h-11"
                           required
                         />
                       </div>
@@ -594,14 +527,14 @@ const ProductDetails = () => {
 
                   {/* Delivery Details */}
                   <div>
-                    <h4 className="font-serif text-sm text-gray-900 mb-2">
+                    <h4 className="font-serif text-sm text-gray-900 mb-3">
                       Delivery Details
                     </h4>
                     <div className="space-y-3">
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         <Label
                           htmlFor="wilaya"
-                          className="text-gray-700 font-medium text-xs sm:text-sm"
+                          className="text-gray-700 font-medium text-sm"
                         >
                           Wilaya *
                         </Label>
@@ -612,7 +545,7 @@ const ProductDetails = () => {
                           }
                           required
                         >
-                          <SelectTrigger className="border-gray-300 focus:border-[#d4b985] text-sm">
+                          <SelectTrigger className="border-gray-300 focus:border-[#d4b985] text-sm h-11">
                             <SelectValue placeholder="Select your wilaya" />
                           </SelectTrigger>
                           <SelectContent className="max-h-[200px]">
@@ -629,10 +562,10 @@ const ProductDetails = () => {
                         </Select>
                       </div>
 
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         <Label
                           htmlFor="commune"
-                          className="text-gray-700 font-medium text-xs sm:text-sm"
+                          className="text-gray-700 font-medium text-sm"
                         >
                           Commune
                         </Label>
@@ -643,14 +576,14 @@ const ProductDetails = () => {
                             handleInputChange("commune", e.target.value)
                           }
                           placeholder="Enter your commune (optional)"
-                          className="border-gray-300 focus:border-[#d4b985] text-sm"
+                          className="border-gray-300 focus:border-[#d4b985] text-sm h-11"
                         />
                       </div>
 
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         <Label
                           htmlFor="address"
-                          className="text-gray-700 font-medium text-xs sm:text-sm"
+                          className="text-gray-700 font-medium text-sm"
                         >
                           Full Address
                         </Label>
@@ -661,7 +594,7 @@ const ProductDetails = () => {
                             handleInputChange("address", e.target.value)
                           }
                           placeholder="Enter your complete delivery address (optional)"
-                          className="border-gray-300 focus:border-[#d4b985] min-h-[60px] text-sm"
+                          className="border-gray-300 focus:border-[#d4b985] min-h-[80px] text-sm resize-none"
                         />
                       </div>
                     </div>
@@ -669,14 +602,14 @@ const ProductDetails = () => {
 
                   {/* Dress Specifications */}
                   <div>
-                    <h4 className="font-serif text-sm text-gray-900 mb-2">
+                    <h4 className="font-serif text-sm text-gray-900 mb-3">
                       Dress Specifications
                     </h4>
                     <div className="grid grid-cols-2 gap-3">
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         <Label
                           htmlFor="size"
-                          className="text-gray-700 font-medium text-xs sm:text-sm"
+                          className="text-gray-700 font-medium text-sm"
                         >
                           Size *
                         </Label>
@@ -687,7 +620,7 @@ const ProductDetails = () => {
                           }
                           required
                         >
-                          <SelectTrigger className="border-gray-300 focus:border-[#d4b985] text-sm">
+                          <SelectTrigger className="border-gray-300 focus:border-[#d4b985] text-sm h-11">
                             <SelectValue placeholder="Select size" />
                           </SelectTrigger>
                           <SelectContent>
@@ -704,10 +637,10 @@ const ProductDetails = () => {
                         </Select>
                       </div>
 
-                      <div className="space-y-1">
+                      <div className="space-y-1.5">
                         <Label
                           htmlFor="color"
-                          className="text-gray-700 font-medium text-xs sm:text-sm"
+                          className="text-gray-700 font-medium text-sm"
                         >
                           Color *
                         </Label>
@@ -718,7 +651,7 @@ const ProductDetails = () => {
                           }
                           required
                         >
-                          <SelectTrigger className="border-gray-300 focus:border-[#d4b985] text-sm">
+                          <SelectTrigger className="border-gray-300 focus:border-[#d4b985] text-sm h-11">
                             <SelectValue placeholder="Select color" />
                           </SelectTrigger>
                           <SelectContent>
@@ -741,18 +674,18 @@ const ProductDetails = () => {
                   <Button
                     type="submit"
                     disabled={isSubmitting || product.stock <= 0}
-                    className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black text-sm sm:text-base font-light hover:from-[#c0a46c] hover:to-[#e0b972] transition-all duration-500 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full py-4 bg-gradient-to-r from-[#d4b985] to-[#f7ce83] text-black text-base font-light hover:from-[#c0a46c] hover:to-[#e0b972] transition-all duration-500 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? (
                       <div className="flex items-center gap-2">
-                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-black"></div>
+                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-black"></div>
                         Processing...
                       </div>
                     ) : product.stock <= 0 ? (
                       "Out of Stock"
                     ) : (
                       <>
-                        <ShoppingBag className="w-4 h-4 mr-2" />
+                        <ShoppingBag className="w-5 h-5 mr-2" />
                         Submit Order - DZD {totalPrice.toLocaleString()}
                       </>
                     )}
