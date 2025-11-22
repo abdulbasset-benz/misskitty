@@ -560,7 +560,7 @@ const ProductDetails = () => {
                       }
                       placeholder={t("productDetails.placeholderAdress")}
                       className="min-h-[70px] text-sm resize-none"
-                      required
+                    
                     />
                   </div>
 
