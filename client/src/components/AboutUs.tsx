@@ -4,8 +4,8 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "gsap/SplitText";
 
-import woman from "@/assets/woman.png";
-import scissors from "@/assets/scissors.png";
+import woman from "@/assets/woman.webp";
+import scissors from "@/assets/scissors.webp";
 import { useTranslation } from "react-i18next";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger, SplitText);

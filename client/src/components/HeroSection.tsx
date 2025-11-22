@@ -4,11 +4,11 @@ import { SplitText } from "gsap/SplitText";
 import { useRef } from "react";
 import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
-import pic1 from "@/assets/pic1.jpg";
-import pic2 from "@/assets/pic2.png";
-import pic3 from "@/assets/pic3.png";
-import pic4 from "@/assets/pic4.jpg";
-import pic5 from "@/assets/pic5.jpg";
+import pic1 from "@/assets/pic1.webp";
+import pic2 from "@/assets/pic2.webp";
+import pic3 from "@/assets/pic3.webp";
+import pic4 from "@/assets/pic4.webp";
+import pic5 from "@/assets/pic5.webp";
 
 gsap.registerPlugin(useGSAP, SplitText);
 
